@@ -1,6 +1,7 @@
 const sobreNosContainer = document.getElementById("sobre-nos-container");
 const sobreNosBtn = document.getElementById("sobre-nos-btn");
 const textosSobreNos = document.getElementById("sobre-nos-textos");
+const nossaEquipeDiv = document.getElementById("nossa-equipe");
 
 sobreNosBtn.addEventListener("click", () => {
     const textoMaisSobreNosAtivo = textosSobreNos.childElementCount > 2;
@@ -8,6 +9,7 @@ sobreNosBtn.addEventListener("click", () => {
     if (textoMaisSobreNosAtivo) {
         textosSobreNos.children[2].remove();
         sobreNosContainer.style.margin = "0px";
+        nossaEquipeDiv.style.marginBottom = "0px";
     }
     else {
         const maisSobreNos = document.createElement("p");
@@ -25,8 +27,8 @@ sobreNosBtn.addEventListener("click", () => {
         `;
 
         textosSobreNos.appendChild(maisSobreNos);
-        sobreNosContainer.style.marginTop = "40vh";
-        sobreNosContainer.style.marginBottom = "25vh";
+        sobreNosContainer.style.marginBottom = "20vh";
+        nossaEquipeDiv.style.marginBottom = "40vh";
     }
 
     sobreNosBtn.textContent = 

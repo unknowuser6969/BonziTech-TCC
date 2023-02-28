@@ -128,6 +128,7 @@ header button{
 #nossa-equipe{
     margin-top: 20vh;
     padding: 0 4rem;
+    text-align: center;
 }
 
 #nossa-equipe h2{
@@ -252,7 +253,7 @@ footer{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 2rem;
+    padding: 1.5rem calc(50% - 3.5rem) 1.5rem 2rem;
     background-color: #1c1c1c;
     color: #f2f2f2;
 }
@@ -268,4 +269,75 @@ footer{
     padding: 1rem;
     color: #1c1c1c;
     background-color: #f2f2f2;
+}
+
+@media (max-width: 1100px) { 
+    .logo {
+        width: 64px;
+        height: 56px;
+    }
+    nav {
+        display: none;
+    }
+    header {
+        justify-content: center;
+        gap: 0;
+    }
+    header button {
+        display: none;
+    }
+
+    section {
+        height: auto;
+    }
+
+    #hero-section {
+        background-image: none;
+    }
+    #hero-section h1 {
+        font-size: 6vh;
+    }
+    .hero-section-text {
+        padding: 0px 8vw;
+    }
+
+    #nossa-equipe {
+        padding: 0px 2rem;
+    }
+    .equipe {
+        display: block;
+    }
+
+    #sobre-nos {
+        padding-left: 0px;
+        justify-content: center;
+    }
+    #sobre-nos-container {
+        width: 90vw;
+    }
+    #sobre-nos-container p{
+        font-size: 2.5vh;
+    }
+
+    #planos-section h2 {
+        font-size: 5vh;
+    }
+    #planos-section h4 {
+        font-size: 3vh;
+    }
+
+    #planos-container {
+        display: block;
+    }
+
+    .plano {
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+
+    footer{
+        flex-direction: column-reverse;
+        padding: 1.5rem 2rem;
+        gap: 2.5rem;
+    }
 }
