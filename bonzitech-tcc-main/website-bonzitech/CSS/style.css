@@ -1,0 +1,508 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+
+::-webkit-scrollbar{
+    width: 1rem;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: var(--branco);
+    border-radius: 2rem;
+}
+
+:root {
+    --branco: #f2f2f2;
+    --cinza-claro: #1d1d1d;
+    --cinza-escuro: #131313;
+    --roxo-claro: #8A36D2;
+    --roxo-escuro: #7B2CBF;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: var(--cinza-escuro);
+}
+section {
+    width: 100vw;
+    height: 100vh;
+}
+a {
+    color: var(--branco);
+}
+
+header{
+    padding: 3rem 5%;
+    width: 100vw;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header ul{
+    margin-left: 5vw;
+}
+
+header li{
+    display: inline-block;
+    padding: 0 2rem;
+}
+
+ul, a{
+    text-decoration: none;
+    list-style: none;
+}
+
+header .nav-link{
+    font-size: 2vh;
+    display: inline-block;
+    position: relative;
+}
+
+header .nav-link::after{
+    border-radius: 2rem;
+    content: '';
+    position: absolute;
+    width: 0;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: -5px;
+    left: 0;
+    background-color:#7B2CBF;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+header .nav-link:hover:after{
+    width: 100%;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.header-btn{
+    border: var(--branco) 2px solid;
+    border-radius: 0.8rem;
+    font-size: 2vh;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1.5rem 4rem;
+    background-color: transparent;
+    color: var(--branco);
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.header-btn:hover{
+    background-color: var(--branco);
+    color: var(--cinza-escuro);
+}
+
+.logo{
+    height: 3vw;
+}
+
+#hero-section{
+    background-image: url(../img/Desktop\ -\ 1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#hero-section h1 {
+    padding-top: 20vh;
+    font-size: 7.5vh;
+    color: var(--branco);
+    font-weight: bolder;
+}
+#hero-section p {
+    padding-top: 1.5rem;
+    font-size: 3vh;
+    color: #a5a5a5;
+}
+
+.hero-section-text{
+    padding: 0px 28vw;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20vh;
+}
+
+.hero-section-text a{
+    background-color: transparent;
+    border: none;
+    padding: 1rem;
+    font-size: 3vh;
+}
+
+.hero-section-btn{
+    margin-top: 8vh;
+
+}
+
+
+.hero-section-btn a{
+    color: #f2f2f2;
+    border: none;
+    border-radius: 0.6rem;
+    padding: 2rem 8rem;
+    background-color: var(--roxo-escuro);
+    cursor: pointer;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-out;
+}
+
+
+.hero-section-btn a:hover{
+    background-color: var(--roxo-claro);
+}
+
+.hero-section-btn a{
+    font-weight: bold;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.hero-section-btn i{
+    border: none;
+    border-radius: 0.6rem;
+    background-color: #7B2CBF;
+    padding: 0.6rem;
+    margin-left: 1rem;
+}
+
+/* nossa equipe */
+
+#nossa-equipe{
+    margin-top: 20vh;
+    padding: 0 4rem;
+    text-align: center;
+}
+
+#nossa-equipe h2{
+    font-size: 6vh;
+    text-align: center;
+    color: var(--branco);
+}
+
+#nossa-equipe p{
+    padding-top: 1.5rem;
+    font-size: 2vh;
+    color: var(--branco);
+}
+
+.equipe{
+    padding: 5% 0;
+    border-top: #a0a0a0 0.5px solid;
+    border-bottom: #a0a0a0 0.5px solid;
+    margin-top: 10vh;
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pessoas{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pessoas h3{
+    font-size: 4vh;
+    padding-top: 2rem;
+    color: var(--branco);
+}
+
+.profile{
+    background-color: rgb(136, 136, 136);
+    width: 20vh;
+    height: 20vh;
+    border: none;
+    border-radius: 20rem;
+}
+
+#sobre-nos {
+    padding-left: 20vw;
+    display: flex;
+    align-items: center;
+}
+#sobre-nos-container {
+    background-color: var(--cinza-claro);
+    color: white;
+    width: calc(60vw - 5rem);
+    padding: 4rem 4rem;
+    border-radius: 10px;
+    transition: all ease-in-out 0.4s;
+}
+#sobre-nos-container h2 {
+    font-size: 5.5vh;
+    padding-bottom: 1rem;
+    color: var(--branco);
+}
+#sobre-nos-container p {
+    font-size: 3vh;
+    padding-bottom: 2rem;
+}
+#sobre-nos-btn {
+    background-color: var(--roxo-claro);
+    margin-top: 6vh;
+    padding: 1.5rem 3rem;
+    color: var(--branco);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 3vh;
+    cursor: pointer;
+}
+
+#projetos-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 10%;
+}
+
+#projeto1{
+    background-image: url(../img/prj1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.projeto button{
+    border: none;
+    border-radius: 4rem;
+    text-transform: uppercase;
+    font-size: 2vh;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    margin-left: 5vw;
+    margin-top: 40vh;
+    cursor: pointer;
+    background-color: var(--branco);
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+#planos-section {
+    text-align: center;
+    margin-bottom: 10vh;
+}
+#planos-section h2 {
+    font-size: 8vh;
+    padding-top: 10vh;
+    padding-bottom: 1rem;
+    font-weight: bolder;
+    color: var(--branco);
+}
+#planos-section h4 {
+    font-size: 3vh;
+    padding-bottom: 10vh;
+    font-weight: normal;
+    color: var(--branco);
+}
+#planos-container {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    padding: 0px 10vw;
+}
+.plano {
+    display: flex;
+    gap: 4rem;
+    flex-direction: column;
+    background-color: var(--cinza-claro);
+    width: calc(80vw / 3 - 1rem);
+    box-shadow: 0px 10px 15px rgb(0, 0, 0, 0.25);
+    border-radius: 15px;
+    padding: 4rem 4rem;
+    margin-bottom: 10vh;
+}
+
+.plano-text{
+    height: 100%;
+}
+
+.plano h3 {
+    font-size: 5vh;
+    padding-bottom: 3rem;
+    color: var(--branco);
+}
+.plano p {
+    font-size: 2.5vh;
+    color: var(--branco);
+}
+.plano button {
+    background-color: var(--roxo-claro);
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 3vh;
+    font-weight: bold;
+    padding: 1.5rem 4rem;
+    border-radius: 4px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.plano button:hover{
+    background-color: #9D4EDD;
+}
+
+footer{
+    position: absolute;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 5%;
+    background-color: #1c1c1c;
+    color: #f2f2f2;
+}
+
+footer h2{
+    font-size: 3vh;
+    margin-right: 7vw;
+}
+
+.icons{
+    display: flex;
+    gap: 2rem;
+}
+
+.icons i{
+    font-size: 2vh;
+    border: none;
+    border-radius: 4rem;
+    padding: 1rem;
+    color: #1c1c1c;
+    background-color: #f2f2f2;
+    transition: all 0.2s ease-out;
+}
+
+.icons i:hover{
+    background-color: #d3d3d3;
+    color: var(--cinza-escuro);
+}
+
+@media (max-width: 1100px) { 
+    .logo {
+        width: 64px;
+        height: 56px;
+    }
+    nav {
+        display: none;
+    }
+    header {
+        justify-content: center;
+        gap: 0;
+    }
+    header .header-btn {
+        display: none;
+    }
+
+    section {
+        height: auto;
+    }
+
+    #hero-section h1 {
+        font-size: 6vh;
+    }
+    .hero-section-text {
+        padding: 0px 8vw;
+    }
+
+    .hero-section-btn a{
+        padding: 1.5rem;
+        
+    }
+
+    #nossa-equipe {
+        padding: 0px 2rem;
+    }
+    .equipe {
+        display: block;
+    }
+
+    #sobre-nos {
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        padding-left: 0px;
+        justify-content: center;
+    }
+    #sobre-nos-container {
+        margin-top: 5vh;
+        padding: 2rem;
+        width: 90vw;
+    }
+
+    #sobre-nos-btn{
+        padding: 1rem;
+    }
+
+    #sobre-nos-container p{
+        font-size: 2.5vh;
+    }
+
+    #projetos-section{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .projeto button{
+        margin-bottom: 5vh;
+    }
+
+    #planos-section h2 {
+        font-size: 5vh;
+    }
+    #planos-section h4 {
+        font-size: 3vh;
+    }
+
+    #planos-container {
+        display: block;
+    }
+
+    .plano {
+        padding: 2rem;
+        width: 100%;
+        margin-bottom: 5vh;
+    }
+
+    .plano-btn button{
+        padding: 1rem 2rem;
+    }
+
+    footer{
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    footer h2{
+        width: 100%;
+        margin-right: 0vw;
+    }
+}
