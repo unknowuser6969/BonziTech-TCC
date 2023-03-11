@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f4f13ff542.js" crossorigin="anonymous"></script>
+    <script src="script.js" defer> </script>
+    <script src="darkMode.js" defer> </script>
+    <link href="/dist/output.css" rel="stylesheet">
+    <title>Bonzitech</title>
+</head>
+<body class="overflow-x-hidden transition-all ease-out duration-300 bg-white dark:bg-black">
+    <header class="top-0 fixed dark:bg-grey bg-white shadow-md w-screen flex phone:flex-col items-center justify-between px-20 phone:px-10 py-8 phone:shadow-none phone:absolute">
+        <a href="#home"><img class="w-14" src="../img/logo.png" alt="logo"></a>
+
+        <nav class="flex phone:hidden">
+            <ul id="nav-list" class="flex px-20 phone:px-10 gap-10 items-center dark:text-white ">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <i class="sun fa-regular fa-sun fa-lg cursor-pointer"></i>
+                <i class="moon fa-solid fa-moon fa-lg cursor-pointer"></i>
+            </ul>
+            <button class="text-xl px-8 py-2 dark:bg-white dark:text-black bg-grey text-white  rounded-md phone:hidden">Contato</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="w-screen h-screen text-center flex flex-col gap-8 items-center justify-center phone:px-5">
+            <h1 class="dark:text-white text-6xl font-bold w-2/5 phone:w-full">Levando sua empresa para outro nível</h1>
+            <p class="dark:text-white text-2xl w-3/4">Transformando ideias em soluções tecnológicas e eficientes</p>
+            <button class="text-2xl bg-violet text-white uppercase font-semibold px-12 py-3 rounded-md shadow-lg hover:bg-light-violet hover:shadow-violet transition ease-out duration-300">Ver projetos</button>
+        </section>
+
+        <section class="text-center dark:text-white px-20 mb-40">
+            <h1 class="dark:text-white text-6xl pb-40 font-bold py-40">Nossa Equipe</h1>
+            <div class="grid grid-cols-3 phone:grid-cols-1 phone:py-10 phone:px-5 gap-20 border-y-2 dark:border-white border-solid p-20 border-opacity-50">
+                <div class="flex flex-col items-center">
+                    <div style="background-image: url('../img/guedes.jpg'); background-position: center; background-size: cover;" class="w-40 h-40 bg-violet rounded-full mb-5"></div>
+                    <h3 class="text-2xl font-bold">Lucas Guedes</h3>
+                    <p>Dev Full Stack</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div style="background-image: url('../img/raffles.jfif'); background-position: center; background-size: cover;" class="w-40 h-40 bg-violet rounded-full mb-5"></div>
+                    <h3 class="text-2xl font-bold">Rafael Giorgi</h3>
+                    <p>Administrador Banco de Dados</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div style="background-image: url('../img/luis.jfif'); background-position: center; background-size: cover;" class="w-40 h-40 bg-violet rounded-full mb-5"></div>
+                    <h3 class="text-2xl font-bold">Luis Dias</h3>
+                    <p>Pentester</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div style="background-image: url('../img/pedro.jpg'); background-position: center; background-size: cover;" class="w-40 h-40 bg-violet rounded-full mb-5"></div>
+                    <h3 class="text-2xl font-bold">Pedro Caiafa</h3>
+                    <p>UI/Ux Designer & Dev Front-End</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div style="background-image: url('../img/vicius.jfif'); background-position: center; background-size: cover;" class="w-40 h-40 bg-violet rounded-full mb-5"></div>
+                    <h3 class="text-2xl font-bold">Vinicius Chaves</h3>
+                    <p>Dev Front-End</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div style="background-image: url('../img/araujo.jfif'); background-position: center; background-size: cover;" class="w-40 h-40 bg-violet rounded-full mb-5"></div>
+                    <h3 class="text-2xl font-bold">Arthur Araújo</h3>
+                    <p>Dev Front-End</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="w-screen h-screen phone:h-full py-20 phone:py-20 flex items-center justify-center phone:px-10">
+            <div id="sobre-nos-container" class="w-3/6 phone:w-full dark:bg-grey dark:text-white p-14 shadow-2xl rounded-md transition-all ease-in-out delay-04">
+                <div id="sobre-nos-textos">
+                <h1 class="text-4xl dark:text-white">Sobre nós</h1>
+                <p class="text-xl py-5 dark:text-white">A BonziTech é uma equipe especializada em facilitar seu trabalho, trazendo soluções tecnológicas para o seu negócio por um preço acessível.</p>
+                </div>
+                <button id="sobre-nos-btn" class="text-white mt-10 text-2xl px-5 py-3 font-semibold rounded-md bg-violet shadow-lg">Saiba mais</button>
+            </div>
+        </section>
+
+        <section class="text-center w-screen h-screen flex-col items-center justify-center dark:text-white">
+            <h1 id="projetos" class="text-6xl font-bold pb-40">Alguns de nossos projetos</h1>
+
+            <div class="grid grid-cols-2 phone:grid-cols-1 h-4/5 phone:h-full pb-20">
+                <div class=" flex place-items-end pl-20 pb-10 phone:pl-10 bg-violet">
+                    <button class="text-2xl font-bold uppercase bg-white text-black px-7 py-3 rounded-full phone:text-xl">Ver Projeto</button>
+                </div>
+
+                <div class=" flex place-items-end pl-20 pb-10 phone:pl-10 bg-violet">
+                    <button class="text-2xl font-bold uppercase bg-white text-black px-7 py-3 rounded-full phone:text-xl">Ver Projeto</button>
+                </div>
+
+                <div class=" flex place-items-end pl-20 pb-10 phone:pl-10 bg-violet">
+                    <button class="text-2xl font-bold uppercase bg-white text-black px-7 py-3 rounded-full phone:text-xl">Ver Projeto</button>
+                </div>
+
+                <div class=" flex place-items-end pl-20 phone:pl-10 pb-10  bg-violet">
+                    <button class="text-2xl font-bold uppercase bg-white text-black px-7 py-3 rounded-full phone:text-xl">Ver Projeto</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center w-screen h-3/6 phone:mt-60 pb-40 dark:text-white phone:px-5">
+            <h1 id="planos" class="text-6xl font-bold pt-40">Se interessou?</h1>
+            <p class="text-2xl mt-5">Veja nossos planos abaixo</p>
+
+            <div class="flex phone:flex-col phone:w-full desktop2:flex-col w-screen h-full phone:p-5 items-center justify-center gap-20 p-20 mt-10">
+                <div class="dark:bg-grey w-screen desktop2:w-4/5 text-center items-center justify-center h-5/6 phone:w-full phone:p-10 p-20 shadow-lg rounded-lg">
+                    <div>
+                        <h3 class="text-4xl font-bold pb-5">Website</h3>
+                        <p class="text-2xl pb-10">Desenvolvemos páginas web para você poder mostrar seu serviço para o mundo e mostrar seus serviços a clientes em qualquer lugar a qualquer momento.</p>
+                    </div>
+                    <button class="text-3xl text-white bg-violet hover:bg-light-violet transition ease-out duration-300 px-7 py-3 rounded-md shadow-lg">Contratar</button>
+                </div>
+
+                <div class="dark:bg-grey w-full h-full phone:w-full phone:p-10 p-20 shadow-lg rounded-lg">
+                    <div>
+                        <h3 class="text-4xl font-bold pb-5">Aplicativo</h3>
+                        <p class="text-2xl pb-10">Produzimos aplicativos completos para facilitar a vida de funcionários, clientes e administradores de negócio, permitindo que você acesse tudo na palma de sua mão!</p>
+                    </div>
+                    <button class="text-3xl text-white bg-violet hover:bg-light-violet transition ease-out duration-300 px-7 py-3 rounded-md shadow-lg">Contratar</button>
+                </div>
+
+                <div class="dark:bg-grey w-full h-full phone:w-full phone:p-10 p-20 shadow-lg rounded-lg">
+                    <div>
+                    <h3 class="text-4xl font-bold pb-5">Sistema</h3>
+                    <p class="text-2xl pb-10">Desenvolvemos sistemas para automatizar tarefas repetitivas e complexas, facilitando seu trabalho e beneficiando seu negócio.</p>
+                </div>
+                    <button class="text-3xl text-white bg-violet hover:bg-light-violettransition ease-out duration-300 px-7 py-3 rounded-md shadow-lg">Contratar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="grid grid-cols-3 phone:grid-cols-1 phone:justify-center items-center text-center px-10 py-10 bg-grey w-screen phone:w-full phone:gap-10 absolute">
+       <div class="flex items-center justify-center gap-10 text-3xl">
+        <a href="#"><i class="fa-brands fa-instagram p-2 bg-white hover:bg-pink hover:text-white rounded-full transition-all ease-in-out duration-300"></i></a>
+        <a href="#"><i class="fa-brands fa-github p-2 bg-white hover:bg-blue hover:text-white rounded-full transition-all ease-in-out duration-300"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp p-2 bg-white hover:bg-green hover:text-white rounded-full transition-all ease-in-out duration-300"></i></a>
+        
+       </div>
+
+       <div class="text-white">
+        <h3 class="text-2xl font-bold">BonziTech</h3>
+       </div>
+
+    </footer>
+</body>
+</html>
