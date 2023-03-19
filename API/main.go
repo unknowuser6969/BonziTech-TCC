@@ -98,6 +98,22 @@ func adicionarUsuario(c *gin.Context) {
 		return
 	}
 
+	if novoUsuario.Permissoes == "" {
+		novoUsuario.Permissoes = "Leitura"
+	}
+	if novoUsuario.Nome == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nome de usuário não pode estar vazio." })
+		return
+	}
+	if novoUsuario.Email == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Email inválido." })
+		return
+	}
+	if len(novoUsuario.Senha) != 128 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
+		return
+	}
+
 	insert := "INSERT INTO usuarios (permissoes, nome, email, senha) VALUES(?, ?, ?, ?);"
 	_, err = db.Exec(insert, novoUsuario.Permissoes, novoUsuario.Nome, novoUsuario.Email, novoUsuario.Senha)
 	if err != nil {
@@ -107,5 +123,66 @@ func adicionarUsuario(c *gin.Context) {
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário cadastrado com sucesso!" })
+
+}
+
+func atualizarUsuario(c *gin.Context) {
+	//codUsu := c.Param("codUsu")
+
+	permissoes := c.Query("permissoes")
+	nome := c.Query("nome")
+	email := c.Query("email")
+	senha := c.Query("senha")
+
+	if permissoes == "" && nome == "" && email == "" && senha == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
+		return
+	}
+
+	if senha != "" && len(senha) != 128 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
+		return
+	}
+
+	if permissoes != "" {
+		// update permissoes
+	}
+	if nome != "" {
+		// update nome
+	}
+	if email != "" {
+		// update email
+	}
+	if senha != "" {
+		// update senha
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário atualizado com sucesso!" })
+
+}
+
+func deletarUsuario(c *gin.Context) {
+	codUsu := c.Param("codUsu")
+
+	query := "SELECT cod_usu FROM usuarios WHERE cod_usu = ? AND permissoes <> 'Administrador';"
+	rows := db.QueryRow(query, codUsu)
+
+	var codUsuRows int
+	err := rows.Scan(&codUsuRows)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Usuário não existe, ou não pode ser deletado." })
+		return
+	}
+
+	delete := "DELETE FROM usuarios WHERE cod_usu = ?;"
+	_, err = db.Exec(delete, codUsu)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao deletar usuário." })
+		return
+	}
+
+	c.IndentedJSON(http.StatusInternalServerError, gin.H{ "message": "Usuário deletado com sucesso!" })
 
 }
