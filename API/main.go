@@ -23,6 +23,25 @@ type usuario struct {
 var db *sql.DB
 
 func main() {
+	
+	conectarBD()
+
+	r := gin.Default()
+
+	r.Use(validacaoRequest)
+
+	r.GET("/api/ping", pong)
+	r.GET("/api/usuarios", mostrarTodosUsuarios)
+	r.POST("/api/usuarios", adicionarUsuario)
+	r.PUT("/api/usuarios/:codUsu", atualizarUsuario)
+	r.DELETE("/api/usuarios/:codUsu", deletarUsuario)
+
+	r.Run("127.0.0.1:4000")
+
+}
+
+
+func conectarBD() {
 	// Pega dados de .env
 	err := godotenv.Load()
 	if err != nil {
@@ -39,17 +58,14 @@ func main() {
 	if err = db.Ping(); err != nil {
 		log.Fatal(err)
 	}
+} 
 
-	r := gin.Default()
+func validacaoRequest(c *gin.Context) {
+	// Verificar sessão de usuário
 
-	r.GET("/api/ping", pong)
-	r.GET("/api/usuarios", mostrarTodosUsuarios)
-	r.POST("/api/usuarios", adicionarUsuario)
-	r.PUT("/api/usuarios/:codUsu", atualizarUsuario)
-	r.DELETE("/api/usuarios/:codUsu", deletarUsuario)
+	// Validar permissões de usuário
 
-	r.Run("127.0.0.1:4000")
-
+	c.Next()
 }
 
 func pong(c *gin.Context) {
@@ -127,34 +143,30 @@ func adicionarUsuario(c *gin.Context) {
 }
 
 func atualizarUsuario(c *gin.Context) {
-	//codUsu := c.Param("codUsu")
+	codUsu := c.Param("codUsu")
 
-	permissoes := c.Query("permissoes")
-	nome := c.Query("nome")
-	email := c.Query("email")
-	senha := c.Query("senha")
+	var u usuario
+	err := c.BindJSON(&u)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
+		return
+	}
 
-	if permissoes == "" && nome == "" && email == "" && senha == "" {
+	if u.Permissoes == "" || u.Nome == "" || u.Email == "" || u.Senha == "" {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
 		return
 	}
-
-	if senha != "" && len(senha) != 128 {
+	
+	if u.Senha != "" && len(u.Senha) != 128 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
 		return
 	}
-
-	if permissoes != "" {
-		// update permissoes
-	}
-	if nome != "" {
-		// update nome
-	}
-	if email != "" {
-		// update email
-	}
-	if senha != "" {
-		// update senha
+	
+	update := "UPDATE usuarios SET permissoes = ?, nome = ?, email = ?, senha = ? WHERE cod_usu = ?;"
+	_, err = db.Exec(update, u.Permissoes, u.Nome, u.Email, u.Senha, codUsu)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário atualizado com sucesso!" })

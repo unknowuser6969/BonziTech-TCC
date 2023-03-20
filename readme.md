@@ -1,7 +1,7 @@
 # TCC BonziTech
 
 Este repositório contém todos os códigos do TCC de 3º ano do Colégio Politécnico
-Bento Quirino do grupo BonziTech. 
+Bento Quirino do grupo BonziTech (2023). 
 
 Neste repositório você encontra:
 * Landing Page da BonziTech 
@@ -18,4 +18,4 @@ Neste repositório você encontra:
 * <a href="https://github.com/Vinicius-Chaves22"> Vinicius-Chaves22 </a> - Dev Front-End
 * <a href="https://github.com/rafaelnator"> Raffles Giorgi </a> - Administrador de banco de dados 
 * <a href="https://github.com/luizinfrd"> luizinfrd </a> - Pentester
-* <a href="https://github.com/unknowuser6969"> unkarauajo </a> - Dev Mobile 
+* <a href="https://github.com/unknowuser6969"> unkaraujo </a> - Dev Mobile 
