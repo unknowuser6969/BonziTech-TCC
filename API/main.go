@@ -32,6 +32,7 @@ func main() {
 
 	r.GET("/api/ping", pong)
 	r.GET("/api/usuarios", mostrarTodosUsuarios)
+	r.GET("/api/usuarios/:codUsu", mostrarUsuario)
 	r.POST("/api/usuarios", adicionarUsuario)
 	r.PUT("/api/usuarios/:codUsu", atualizarUsuario)
 	r.DELETE("/api/usuarios/:codUsu", deletarUsuario)
@@ -70,6 +71,10 @@ func validacaoRequest(c *gin.Context) {
 
 func pong(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "pong!" })
+}
+
+func mostrarUsuario(c *gin.Context) {
+	
 }
 
 func mostrarTodosUsuarios(c *gin.Context) {
