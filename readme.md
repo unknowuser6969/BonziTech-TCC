@@ -4,7 +4,7 @@ Este repositório contém todos os códigos do TCC de 3º ano do Colégio Polit�
 Bento Quirino do grupo BonziTech (2023). 
 
 Neste repositório você encontra:
-* Landing Page da BonziTech 
+* Landing page da BonziTech 
 * Sistema desktop Connect
 * Sistema mobile Connect
 * API
