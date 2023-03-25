@@ -1,14 +1,14 @@
-package usuarios
+// usuarios.go contém o microserviço de usuários
+package main
 
 import (
 	"database/sql"
 	"log"
 	"net/http"
-	"os"
 
+	"connect-ms-usuarios/utils"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
 )
 
 type usuario struct {
@@ -19,7 +19,11 @@ type usuario struct {
 	Senha	   string `json:"senha"`
 }
 
+var db *sql.DB
+
 func main() {
+
+	db = utils.ConectarBD()
 
 	r := gin.Default()
 
@@ -29,13 +33,30 @@ func main() {
 	r.PUT("/api/usuarios/:codUsu", atualizarUsuario)
 	r.DELETE("/api/usuarios/:codUsu", deletarUsuario)
 
-	r.Run("127.0.0.1:4001")
+	r.Run("127.0.0.1:4002")
 
 }
 
 
 func mostrarUsuario(c *gin.Context) {
-	
+	codUsu := c.Param("codUsu")
+
+	rows := db.QueryRow("SELECT cod_usu, permissoes, nome, email FROM usuarios WHERE cod_usu = ?;", codUsu)
+
+	var u usuario
+	err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro procurar usuário. Tente novamente." })
+		return
+	}
+
+	if u.Permissoes == "" {
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário não encontrado." })
+		return
+	} 
+
+	c.IndentedJSON(http.StatusOK, u)
 }
 
 func mostrarTodosUsuarios(c *gin.Context) {

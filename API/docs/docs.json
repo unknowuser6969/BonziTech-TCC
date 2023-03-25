@@ -108,8 +108,8 @@ paths:
     get:
       tags:
         - usuarios
-      summary: Mostra um usuários cadastrado
-      description: Mostra um usuários por meio de seu cod_usu
+      summary: Mostra um usuário
+      description: Retorna os dados de um usuário por meio de seu cod_usu
       operationId: getUsuario
       parameters:
         - name: cod_usu
@@ -126,8 +126,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/message'
-        '400':
-          
+        '404':
+          description: Usuário não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '500':
           description: Erro ao retornar usuário
           content:

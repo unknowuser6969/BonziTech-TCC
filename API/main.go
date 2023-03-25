@@ -1,3 +1,4 @@
+// main.go é a API gateway do sistema
 package main
 
 import (
@@ -6,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"connect-API/utils"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -15,7 +17,12 @@ var db *sql.DB
 
 func main() {
 	
-	conectarBD()
+	db = utils.ConectarBD()
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	r := gin.Default()
 
@@ -33,25 +40,6 @@ func main() {
 }
 
 
-func conectarBD() {
-	// Pega dados de .env
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Conecta ao banco de dados
-	db, err = sql.Open("mysql", os.Getenv("DSN"))
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Checa conexão com o banco de dados
-	if err = db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-} 
-
 func validacaoRequest(c *gin.Context) {
 	// Verificar sessão de usuário
 
@@ -65,7 +53,14 @@ func pong(c *gin.Context) {
 }
 
 func mostrarTodosUsuarios(c *gin.Context) {
-	
+	res, err := http.Get(os.Getenv("UsuariosMS") + "/usuarios")
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Não foi possível acessar o serviço de usuários." })
+		return
+	}
+
+	c.IndentedJSON(res.StatusCode, res.Body)
 }
 
 func mostrarUsuario(c *gin.Context) {
