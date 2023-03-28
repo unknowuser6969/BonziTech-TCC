@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 
 	"connect-API/utils"
@@ -29,11 +31,11 @@ func main() {
 	r.Use(validacaoRequest)
 
 	r.GET("/api/ping", pong)
-	r.GET("/api/usuarios", mostrarTodosUsuarios)
-	r.GET("/api/usuarios/:codUsu", mostrarUsuario)
-	r.POST("/api/usuarios", adicionarUsuario)
-	r.PUT("/api/usuarios/:codUsu", atualizarUsuario)
-	r.DELETE("/api/usuarios/:codUsu", deletarUsuario)
+	r.GET("/api/usuarios", usuariosHandler)
+	r.GET("/api/usuarios/:codUsu", usuariosHandler)
+	r.POST("/api/usuarios", usuariosHandler)
+	r.PUT("/api/usuarios/:codUsu", usuariosHandler)
+	r.DELETE("/api/usuarios/:codUsu", usuariosHandler)
 
 	r.Run("127.0.0.1:4000")
 
@@ -52,29 +54,14 @@ func pong(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "pong!" })
 }
 
-func mostrarTodosUsuarios(c *gin.Context) {
-	res, err := http.Get(os.Getenv("UsuariosMS") + "/usuarios")
+func usuariosHandler(c *gin.Context) {
+	reqUrl, err := url.Parse(os.Getenv("UsuariosMS"))
 	if err != nil {
-		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Não foi possível acessar o serviço de usuários." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return
 	}
 
-	c.IndentedJSON(res.StatusCode, res.Body)
-}
+	proxy := httputil.NewSingleHostReverseProxy(reqUrl)
 
-func mostrarUsuario(c *gin.Context) {
-
-}
-
-func adicionarUsuario(c *gin.Context) {
-
-}
-
-func atualizarUsuario(c *gin.Context) {
-
-}
-
-func deletarUsuario(c *gin.Context) {
-
+	proxy.ServeHTTP(c.Writer, c.Request)
 }

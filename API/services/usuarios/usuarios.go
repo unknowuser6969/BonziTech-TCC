@@ -154,6 +154,7 @@ func atualizarUsuario(c *gin.Context) {
 	_, err = db.Exec(update, u.Permissoes, u.Nome, u.Email, u.Senha, codUsu)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário atualizado com sucesso!" })
