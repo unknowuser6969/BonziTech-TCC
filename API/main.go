@@ -37,6 +37,8 @@ func main() {
 	r.PUT("/api/usuarios/:codUsu", usuariosHandler)
 	r.DELETE("/api/usuarios/:codUsu", usuariosHandler)
 
+	r.POST("/api/auth/login", authHandler)
+
 	r.Run("127.0.0.1:4000")
 
 }
@@ -56,6 +58,18 @@ func pong(c *gin.Context) {
 
 func usuariosHandler(c *gin.Context) {
 	reqUrl, err := url.Parse(os.Getenv("UsuariosMS"))
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		return
+	}
+
+	proxy := httputil.NewSingleHostReverseProxy(reqUrl)
+
+	proxy.ServeHTTP(c.Writer, c.Request)
+}
+
+func authHandler(c *gin.Context) {
+	reqUrl, err := url.Parse(os.Getenv("AuthMS"))
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return

@@ -29,6 +29,7 @@ func main() {
 
 	r.GET("/api/usuarios", mostrarTodosUsuarios)
 	r.GET("/api/usuarios/:codUsu", mostrarUsuario)
+	r.POST("/api/usuarios/login", validarLogin)
 	r.POST("/api/usuarios", adicionarUsuario)
 	r.PUT("/api/usuarios/:codUsu", atualizarUsuario)
 	r.DELETE("/api/usuarios/:codUsu", deletarUsuario)
@@ -88,7 +89,39 @@ func mostrarTodosUsuarios(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "usuarios": usuarios })
+	c.IndentedJSON(http.StatusOK, gin.H{ "usuarios": usuarios, "message": "Usuários encontrados com sucesso!" })
+
+}
+
+func validarLogin(c *gin.Context) {
+	var u usuario
+	err := c.BindJSON(&u)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de usuário inválidos." })
+		return
+	}
+
+	if u.Nome == "" || u.Senha == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nome de usuário e senha não podem estar vazios." })
+		return
+	}
+	if len(u.Senha) != 128 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
+		return
+	}
+
+	query := "SELECT cod_usu FROM usuarios WHERE BINARY nome = ? AND BINARY senha = ?;"
+	rows := db.QueryRow(query, u.Nome, u.Senha)
+
+	var codUsu int
+	err = rows.Scan(&codUsu)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário ou senha incorretos." })
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{ "codUsu": codUsu, "message": "Usuário encontrado com sucesso!" })
 
 }
 
