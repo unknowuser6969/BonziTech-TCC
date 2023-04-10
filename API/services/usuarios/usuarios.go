@@ -102,8 +102,8 @@ func validarLogin(c *gin.Context) {
 		return
 	}
 
-	if u.Nome == "" || u.Senha == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nome de usuário e senha não podem estar vazios." })
+	if u.Email == "" || u.Senha == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Email e senha não podem estar vazios." })
 		return
 	}
 	if len(u.Senha) != 128 {
@@ -111,8 +111,8 @@ func validarLogin(c *gin.Context) {
 		return
 	}
 
-	query := "SELECT cod_usu FROM usuarios WHERE BINARY nome = ? AND BINARY senha = ?;"
-	rows := db.QueryRow(query, u.Nome, u.Senha)
+	query := "SELECT cod_usu FROM usuarios WHERE BINARY email = ? AND BINARY senha = ?;"
+	rows := db.QueryRow(query, u.Email, u.Senha)
 
 	var codUsu int
 	err = rows.Scan(&codUsu)
@@ -121,7 +121,7 @@ func validarLogin(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "codUsu": codUsu, "message": "Usuário encontrado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{ "codUsuario": codUsu, "message": "Usuário encontrado com sucesso!" })
 
 }
 

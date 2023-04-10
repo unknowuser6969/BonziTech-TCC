@@ -15,10 +15,10 @@ import (
 )
 
 type sessao struct {
-	CodSessao int    		 `json:"codSessao"`
-	CodUsu    int    		 `json:"codUsu"`
-	Entrada   string 		 `json:"entrada"`
-	Saida     sql.NullString `json:"saida"`
+	CodSessao  int    		  `json:"codSessao"`
+	CodUsuario int    		  `json:"codUsuario"`
+	Entrada    string 		  `json:"entrada"`
+	Saida      sql.NullString `json:"saida"`
 }
 
 var db *sql.DB
@@ -43,7 +43,7 @@ func getSessao(c *gin.Context) {
 	rows := db.QueryRow(query, codSessao)
 
 	var s sessao
-	err := rows.Scan(&s.CodSessao, &s.CodUsu, &s.Entrada, &s.Saida)
+	err := rows.Scan(&s.CodSessao, &s.CodUsuario, &s.Entrada, &s.Saida)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Erro ao encontrar sessão" })
@@ -62,7 +62,7 @@ func criarSessao(c *gin.Context) {
 		return
 	}
 
-	if s.CodUsu == 0 {
+	if s.CodUsuario == 0 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Código de usuário não pode estar vazio." })
 		return
 	}
@@ -70,7 +70,7 @@ func criarSessao(c *gin.Context) {
 	s.CodSessao = gerarCodigoSessao()
 
 	insert := "INSERT INTO sessao (cod_sessao, cod_usu, entrada) VALUES(?, ?, ?);"
-	_, err := db.Exec(insert, s.CodSessao, s.CodUsu, time.Now().Format("2006-01-02 15:04:05"))
+	_, err := db.Exec(insert, s.CodSessao, s.CodUsuario, time.Now().Format("2006-01-02 15:04:05"))
 	if err != nil {
 		log.Println(err)
 		// Existe a chance muito pequena de uma sessão nova ser criada com o
