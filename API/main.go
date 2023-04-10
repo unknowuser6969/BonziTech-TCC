@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"connect-API/utils"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -27,6 +28,12 @@ func main() {
 	}
 
 	r := gin.Default()
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+        AllowMethods:     []string{"PUT", "GET", "POST", "DELETE"},
+        AllowHeaders: 	  []string{"*"},
+        AllowCredentials: true,
+	}))
 
 	r.Use(validacaoRequest)
 
