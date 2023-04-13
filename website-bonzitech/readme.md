@@ -5,11 +5,3 @@
 Esse é um site criado para a empresa BonziTech, feito para contratação serviços para de aplicativos, paginas web e sistemas.
 
 Link para o site: https://bonzitech-dev.web.app/
-
-
-
-
-## Autor
-
-- [@TulioTheGreat](https://github.com/TulioTheGreat)
-
