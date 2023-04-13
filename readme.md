@@ -1,21 +1,15 @@
-# TCC BonziTech
+![Logo](https://cdn.discordapp.com/attachments/765540918051733514/1095875836046999562/Frame_1.png)
 
-Este repositório contém todos os códigos do TCC de 3º ano do Colégio Politécnico
-Bento Quirino do grupo BonziTech (2023). 
+# Landing Page da BonziTech
 
-Neste repositório você encontra:
-* Landing page da BonziTech 
-* Sistema desktop Connect
-* Sistema mobile Connect
-* API
-* Documentação do projeto
+Esse é um site criado para a empresa BonziTech, feito para contratação serviços para de aplicativos, paginas web e sistemas.
+
+Link para o site: https://bonzitech-dev.web.app/
 
 
-## Feito por:
 
-* <a href="https://github.com/vidacalura"> vidacalura </a> - Dev Fullstack
-* <a href="https://github.com/TulioTheGreat"> TulioTheGreat </a> - UI/UX Designer & Dev Front-End
-* <a href="https://github.com/Vinicius-Chaves22"> Vinicius-Chaves22 </a> - Dev Front-End
-* <a href="https://github.com/rafaelnator"> Raffles Giorgi </a> - Administrador de banco de dados 
-* <a href="https://github.com/luizinfrd"> luizinfrd </a> - Pentester
-* <a href="https://github.com/unknowuser6969"> unkaraujo </a> - Dev Mobile 
+
+## Autor
+
+- [@TulioTheGreat](https://github.com/TulioTheGreat)
+
