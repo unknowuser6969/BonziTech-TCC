@@ -3,7 +3,10 @@
 
 ## Sumário
 
-* <a href="#/api/">  </a>
+* [Status Codes](#status-codes)
+* [Responses](#responses)
+* [/api/usuarios](#apiusuarios)
+* [/api/auth](#apiauth)
 
 ## Status Codes
 
@@ -46,7 +49,7 @@ serão retornados estes dois atributos.
 #### Verificar conexão com API
 
 ```http
-  GET /api/ping
+GET /api/ping
 ```
 
 ### /api/usuarios
@@ -54,7 +57,7 @@ serão retornados estes dois atributos.
 #### Retornar todos os usuários do sistema
 
 ```http
-  GET /api/usuarios
+GET /api/usuarios
 ```
 
 Response:
@@ -68,7 +71,7 @@ Response:
 #### Retornar um usuário do sistema
 
 ```http
-  GET /api/usuarios/${cod_usu}
+GET /api/usuarios/${cod_usu}
 ```
 
 | Parameter | Type     | Description                       |
@@ -86,7 +89,7 @@ Response:
 #### Criar novo usuário
 
 ```http
-  POST /api/usuarios
+POST /api/usuarios
 ```
 
 Request body:
@@ -113,7 +116,7 @@ Exemplo:
 #### Atualizar um usuário
 
 ```http
-  PUT /api/usuarios/${cod_usu}
+PUT /api/usuarios/${cod_usu}
 ```
 
 | Parameter | Type     | Description                       |
@@ -144,7 +147,7 @@ Exemplo:
 #### Excluir um usuário
 
 ```http
-  DELETE /api/usuarios/${cod_usu}
+DELETE /api/usuarios/${cod_usu}
 ```
 
 | Parameter | Type     | Description                       |
@@ -156,7 +159,7 @@ Exemplo:
 #### Validar login
 
 ```http
-  POST /api/auth/login
+POST /api/auth/login
 ```
 
 Request body:
