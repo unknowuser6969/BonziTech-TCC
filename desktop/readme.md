@@ -9,13 +9,19 @@ Para abrir o projeto é simples. Basta dar um **Fork** no projeto e seguir essas
 
 ### Instalar as Depêndencias
 
-`npm i`
+```
+npm i
+```
 
 e após isso
 
-`npm i electron`
+```
+npm i electron
+```
 
 ### Abrir o projeto
 
-`npm run dev`
+```
+npm run dev
+```
 
