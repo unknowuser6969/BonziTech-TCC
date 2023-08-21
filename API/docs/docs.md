@@ -5,8 +5,9 @@
 
 * [Status Codes](#status-codes)
 * [Responses](#responses)
-* [/api/usuarios](#apiusuarios)
 * [/api/auth](#apiauth)
+* [/api/sessao](#apisessao)
+* [/api/usuarios](#apiusuarios)
 
 ## Status Codes
 
@@ -51,6 +52,44 @@ serão retornados estes dois atributos.
 ```http
 GET /api/ping
 ```
+
+### /api/auth 
+
+#### Validar login
+
+```http
+POST /api/auth/login
+```
+
+Request body:
+
+```javascript
+{
+  "email": String
+  "senha": String
+}
+```
+
+Exemplo:
+
+```javascript
+{
+  "email": "teste",
+  "senha": "CvNWmufjpBqmAVNgAFf2U6KEvrPEY8g4hnMUpjLRjT3HBHCZYaSHE6xUPUJdWYMHDejgALzzaurpLsLcQSpan2sPjtMk8YVbahRUkwTUJDJQRmFUe2eMrgQcrjggBgPz"
+}
+```
+
+Response:
+
+```javascript
+{
+  "codSessao": Number
+}
+```
+
+### /api/sessao
+
+
 
 ### /api/usuarios
 
@@ -144,7 +183,7 @@ Exemplo:
 }
 ```
 
-#### Excluir um usuário
+#### Desativar um usuário
 
 ```http
 DELETE /api/usuarios/${cod_usu}
@@ -152,38 +191,5 @@ DELETE /api/usuarios/${cod_usu}
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `cod_usu`      | `string` | **Required**. Código do usuário a ser excluído |
+| `cod_usu`      | `string` | **Required**. Código do usuário a ser inativado |
 
-### /api/auth 
-
-#### Validar login
-
-```http
-POST /api/auth/login
-```
-
-Request body:
-
-```javascript
-{
-  "email": String
-  "senha": String
-}
-```
-
-Exemplo:
-
-```javascript
-{
-  "email": "teste",
-  "senha": "CvNWmufjpBqmAVNgAFf2U6KEvrPEY8g4hnMUpjLRjT3HBHCZYaSHE6xUPUJdWYMHDejgALzzaurpLsLcQSpan2sPjtMk8YVbahRUkwTUJDJQRmFUe2eMrgQcrjggBgPz"
-}
-```
-
-Response:
-
-```javascript
-{
-  "codSessao": Number
-}
-```
