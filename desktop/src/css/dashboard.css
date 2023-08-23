@@ -14,23 +14,23 @@
 }
 
 body{
-    overflow-y: hidden;
     width: 100vw;
     height: 100vh;
     font-family: 'inter';
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     background-color: var(--bg);
     transition: 0.3s;
 }
 
-nav{
+aside{
     display: flex;
     flex-direction: column;
     gap: 4rem;
     align-items: center;
     padding: 3rem 3rem;
-    position: fixed;
+    height: 100vh;
+    width: 20%;
     top: 0;
     bottom: 0;
     background-color: #E03150;
@@ -87,17 +87,15 @@ li{
     background-color: #FFF;
 }
 
-.hero{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-left: 20%;
+
+/* ASIDE END */
+
+main{
+    width: 80%;
 }
 
 
 .top{
-    position: fixed;
     padding: 3rem 6rem;
     display: flex;
     align-items: center;
@@ -107,7 +105,6 @@ li{
 }
 
 .top h1{
-    margin-left: 20%;
     font-size: 2.5rem;
 }
 
@@ -200,9 +197,23 @@ li{
 }
 
 .hero{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+
     animation: fadeInAnimation ease 0.5s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+}
+
+.hero-content{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes fadeInAnimation {
@@ -219,26 +230,18 @@ li{
     color: #212529;
 }
 
-.hero-mid img{
-    width: 60%;
-    padding-top: 5%;
-    margin-right: 10%;
-}
-
 .squares{
-    margin-top: 10%;
-    padding: 0 4rem;
-    width: 80%;
+    padding: 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: minmax(100px, auto);
-    gap: 2rem;
+    gap: 4rem;
 }
 
 .square{
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
     border-radius: 1rem;
     padding: 3rem;
     width: 20rem;
@@ -247,27 +250,18 @@ li{
     box-shadow: 0px 10px 20px rgba(134, 134, 134, 0.1);
 }
 
-
-.funcionarios{
-    display: none;
-    flex-direction: column;
+.table-area{
+    padding: 1rem;
+    display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
-    margin-left: 20%;
-    margin-top: 2%;
-}
-
-.funcionarios h1{
-    font-size: 2.5rem;
-    color: #212529;
 }
 
 table {
-    margin-left: 10%;
-    margin-top: 10%;
     border-top: 1px solid #cccccc;
     border-collapse: collapse;
-    width: 60%;
+    width: 80%;
 }
 th, td {
     text-align: left;
@@ -350,7 +344,7 @@ tr th{
     color: #f2f2f2;
 }
 
-#add-form{
+.add-form{
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     padding: 4rem;
     position: fixed;
@@ -367,7 +361,7 @@ tr th{
 }
 
 
-#add-form form{
+.add-form form{
     padding-top: 4rem;
     width: 70%;
     display: flex;
@@ -376,11 +370,18 @@ tr th{
     z-index: 20;
 }
 
-#add-form h1{
+.add-form-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.add-form h1{
     font-size: 2rem;
 }
 
-#add-form input{
+.add-form input{
     font-family: inter;
     margin-bottom: 1.2rem;
     padding: 0.6rem;
@@ -389,7 +390,7 @@ tr th{
     outline: none;
 }
 
-#add-form label{
+.add-form label{
     margin-bottom: 0.6rem;
 }
 
@@ -402,11 +403,11 @@ tr th{
     padding: 0.8rem 2rem;
     font-size: 1rem;
     border-radius: 0.4rem;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 #confirm-btn:hover{
-    background-color: #e03d5b;
+    opacity: 80%;
 }
 
 #cancel-btn{
@@ -417,6 +418,10 @@ tr th{
     font-size: 1rem;
     opacity: 60%;
     transition: all 0.2s ease-in-out;
+}
+
+#cancel-btn{
+
 }
 
 #close-form{
@@ -517,73 +522,33 @@ tr th{
     margin-left: 5%;
 }
 
+@media (max-width: 1370px){
 
-
-@media (max-width: 1440px){
-    #logo img{
-        width: 80%;
-    }
-
-    nav{
-        padding: 2rem 2rem;
-    }
-
-   /*  .hero{
-        overflow-x: hidden;
-    } */
-
-    .top{
-        padding: 3rem 4rem;
-    }
-
-
-    .top h1{
-        margin-left: 25%;
-    }
-
-    .square{
-        padding: 2rem;
-    }
-
-    .hero-bottom{
-        margin-top: 12%;
-        margin-left: 3%;
-    }
-
-
-    table{
-        margin-top: 15%;
-    }
-
-    #componentes table{
-        font-size: 0.8rem;
-        margin-left: 5%;
-    }
-
-    .square{
-        width: 15rem;
-        height: 15rem;
-        gap: 1rem;
-    }
-}
-
-@media (max-width: 1300px){
-
-    nav{
+    aside{
         width: fit-content;
         padding: 2rem 2rem;
+        height: 100%;
     }
 
-    nav ul{
+    aside ul{
         align-items: center;
     }
 
-    nav span{
+    aside span{
         display: none;
     }
 
-    nav img{
+    aside img{
         display: none;
+    }
+
+    .squares .square{
+        padding: 2rem;
+        width: 15rem;
+        height: 15rem;
+    }
+    .square h3{
+        font-size: 1rem;
     }
 
 }

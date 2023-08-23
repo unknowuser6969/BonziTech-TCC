@@ -5,6 +5,7 @@ const editForm = document.getElementById('edit-form');
 const closeEditForm = document.getElementById('close-form');
 const addForm = document.getElementById('add-form');
 const cancelBtn = document.getElementById('cancel-btn');
+const cancelIcon = document.getElementById('cancel-icon')
 const confirmBtn = document.getElementById('confirm-btn');
 
 profileBtn.addEventListener('click', () => {
@@ -47,10 +48,21 @@ botoesOpcao.forEach(function(botao) {
     });
 });
 
-addBtn.addEventListener('click', () => {
-    addForm.style.display = 'block';
-  });
-  
-  cancelBtn.addEventListener('click', () => {
-    formContainer.style.display = 'none';
-  });
+addBtn.addEventListener('click', (event) => {
+  event.stopPropagation();
+  addForm.style.display = 'block';
+});
+
+cancelBtn.addEventListener('click', () => {
+  addForm.style.display = 'none';
+});
+
+cancelIcon.addEventListener('click', ()=>{
+  addForm.style.display = 'none';
+});
+
+document.addEventListener('click', (event) => {
+  if (!addForm.contains(event.target) && event.target !== addBtn) {
+    addForm.style.display = 'none';
+  }
+});
