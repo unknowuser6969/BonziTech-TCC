@@ -45,6 +45,8 @@ func CriarSessao(c *gin.Context) {
 		return
 	}
 
+	// TODO: validar código de usuários
+
 	// Fecha sessões antigas
 	update := "UPDATE sessao SET saida = now() WHERE cod_usu = ? AND saida IS NULL;"
 	_, err := DB.Exec(update, s.CodUsuario)
@@ -83,8 +85,8 @@ func FecharSessao(c *gin.Context) {
 		return
 	}
 
-	delete := "UPDATE FROM sessao SET saida = now() WHERE cod_sessao = ?;"
-	_, err := DB.Exec(delete, s.CodSessao)
+	delete := "UPDATE FROM sessao SET saida = ? WHERE cod_sessao = ?;"
+	_, err := DB.Exec(delete, time.Now().Format("2006-01-02 15:04:05"), s.CodSessao)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao finalizar sessão. Tente novamente mais tarde." })

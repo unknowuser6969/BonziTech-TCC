@@ -14,31 +14,33 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/vidacalura/BonziTech-TCC/internal/models"
+	models "github.com/vidacalura/BonziTech-TCC/internal/models"
 )
 
 func ValidacaoRequest(c *gin.Context) {
-	log.Println(c.Request.URL.String())
+	log.Println(c.Request.Header)
+
 	if c.Request.URL.String() == "/api/auth/login" ||
 		c.Request.URL.String() == "/api/ping" {
 		c.Next()
 		return
 	}
 
-	if c.Request.Header["Codsessao"] == nil {
+	codSessaoStr := c.Request.Header["Codsessao"]
+	if codSessaoStr == nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Você precisa estar logado para ter acesso ao sistema" })
 		c.Abort()
 		return
 	}
 
-	codSessaoStr := c.Request.Header["Codsessao"][0]
-	codSessao, err := strconv.Atoi(codSessaoStr)
+	codSessao, err := strconv.Atoi(codSessaoStr[0])
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Código de sessão inválido" })
 		c.Abort()
 		return
 	}
 
+	// TODO: passar syskey
 	// Validar permissões de usuário
 	valuesSessao := map[string]int{ "codSessao": codSessao }
 	jsonValue, _ := json.Marshal(valuesSessao)
@@ -78,7 +80,7 @@ func ValidacaoRequest(c *gin.Context) {
 		return
 	}
 
-	// Validar se tipo de request bate com permissões de usuário
+	// TODO: Validar se tipo de request bate com permissões de usuário
 
 	c.Next()
 }

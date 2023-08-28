@@ -85,9 +85,25 @@ func ValidarLogin(c *gin.Context) {
 
 func ValidarPermissoesUsuario(c *gin.Context) {
 	var s models.SessaoResponse
-	if err := c.BindJSON(&s); err != nil {
+
+	codSessaoStr := c.Request.Header["Codsessao"]
+	if codSessaoStr == nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Você precisa estar logado para ter acesso ao sistema" })
+		c.Abort()
+		return
+	}
+
+	codSessao, err := strconv.Atoi(codSessaoStr[0])
+	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Erro ao receber sessão" })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao receber sessão de usuário." })
+		return
+	}
+	s.CodSessao = codSessao
+
+	if s.CodSessao == 0 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Você precisa estar logado para realizar esata ação." })
+		c.Abort()
 		return
 	}
 
@@ -113,7 +129,7 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 		return
 	}	
 
-	// verificar se sessão tem mais de 1 dia
+	// TODO: verificar se sessão tem mais de 1 dia
 
 	// verificar se sessão já está fechada
 	if s.Saida.Valid {
@@ -121,7 +137,7 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 		return
 	}
 
-	// Receber usuário
+	// TODO: Receber usuário
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "", "usuario": "" }) // trocar ""
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "", "usuario": "" }) // TODO: trocar ""
 }

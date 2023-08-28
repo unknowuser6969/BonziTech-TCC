@@ -16,10 +16,10 @@ import (
 func MostrarUsuario(c *gin.Context) {
 	codUsu := c.Param("codUsu")
 
-	rows := DB.QueryRow("SELECT cod_usu, permissoes, nome, email FROM usuarios WHERE cod_usu = ?;", codUsu)
+	rows := DB.QueryRow("SELECT cod_usu, permissoes, nome, email, ativo FROM usuarios WHERE cod_usu = ?;", codUsu)
 
 	var u models.Usuario
-	err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email)
+	err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Ativo)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro procurar usuário. Tente novamente." })
@@ -35,6 +35,7 @@ func MostrarUsuario(c *gin.Context) {
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
+	// TODO: mostrar apenas usuários ativos
 	rows, err := DB.Query("SELECT * FROM usuarios;")
 	if err != nil {
 		log.Println(err)
@@ -137,6 +138,7 @@ func AdicionarUsuario(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário cadastrado com sucesso!" })
 }
 
+// TODO: reescrever para aceitar apenas 1 argumento
 func AtualizarUsuario(c *gin.Context) {
 	codUsu := c.Param("codUsu")
 
@@ -182,6 +184,7 @@ func DeletarUsuario(c *gin.Context) {
 		return
 	}
 
+	// TODO: inativar ao invés de deletar
 	delete := "DELETE FROM usuarios WHERE cod_usu = ?;"
 	_, err = DB.Exec(delete, codUsu)
 	if err != nil {

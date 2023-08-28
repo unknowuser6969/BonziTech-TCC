@@ -18,6 +18,7 @@ func CriarRouter() *gin.Engine {
 
 	/* Middleware */
 	//r.Use(security.ValidacaoRequest)
+	r.Use(services.CriarLogDBMiddleware)
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},

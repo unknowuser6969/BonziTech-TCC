@@ -5,6 +5,7 @@
 
 * [Status Codes](#status-codes)
 * [Responses](#responses)
+* [Código de sessão](#código-de-sessão-codsessao) 
 * [/api/auth](#apiauth)
 * [/api/sessao](#apisessao)
 * [/api/usuarios](#apiusuarios)
@@ -44,6 +45,14 @@ O atributo `error` estará presente caso uma request não seja devidamente concl
 
 Além disso, os endpoints podem retornar outros atributos específicos daquele endpoint, mas sempre
 serão retornados estes dois atributos.
+
+## Código de sessão (codSessao):
+
+Muitas funções da API necessitam da identificação do usuário para serem efetudas, por isso, sempre, ao
+fazer uma request à API, deve ser passado, pelos headers, o código de sessão do usuário, pela chave (key)
+`codSessao` ou `Codsessao`.
+
+Para ações como login, ou ping, não é necessário o código de sessão do usuário.
 
 ## Endpoints:
 

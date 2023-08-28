@@ -1,9 +1,13 @@
 # Connect API
 
-A API da Connect foi desenvolvida como backend tanto aplicativo mobile, quanto o 
-client para desktop da empresa Connect.
+Esta pasta engloba todos os códigos relacionados à API do sistema Connect.
 
-Esta API foi feita 100% em Golang e é, e sempre será 100% aberta e open source.
+Aqui, você encontra:
+* Documentação dos endpoints
+* Binário de execução da API
+* Rotas e serviços da API
+* Modelagem dos dados da API
+* Toda a lógica de programação do sistema
 
 #
 
