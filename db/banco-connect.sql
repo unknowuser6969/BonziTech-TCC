@@ -174,7 +174,8 @@ cod_log INT(8) PRIMARY KEY AUTO_INCREMENT,
 tipo_req VARCHAR(6) NOT NULL,
 caminho VARCHAR(255) NOT NULL,
 status_res INT(3) NOT NULL,
-cod_sessao INT(8)
+cod_sessao INT(8),
+data DATETIME NOT NULL
 );
 
 alter table usuarios auto_increment = 100000;
