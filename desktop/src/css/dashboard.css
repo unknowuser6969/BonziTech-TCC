@@ -7,6 +7,16 @@
     --text: #212529;
 }
 
+.icon::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  details summary::-webkit-details-marker {
+    display:none;
+  }
+
 *{
     margin: 0;
     padding: 0;
@@ -352,7 +362,7 @@ tr th{
     right: 0;
     background-color: #fff;
     width: 30vw;
-    height: 80vh;
+    height: 100%;
     border-radius: 0px 0px 0px 14px;
     -webkit-border-radius: 0px 0px 0px 14px;
     -moz-border-radius: 0px 0px 0px 14px;
@@ -374,7 +384,18 @@ tr th{
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.add-form-title span{
+    border-radius: 50%;
+    font-size: 1.5rem;
+    padding: 0.5rem;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.add-form-title span:hover{
+    background-color: #e4e4e4;
 }
 
 .add-form h1{
@@ -403,7 +424,7 @@ tr th{
     padding: 0.8rem 2rem;
     font-size: 1rem;
     border-radius: 0.4rem;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 #confirm-btn:hover{
@@ -418,10 +439,11 @@ tr th{
     font-size: 1rem;
     opacity: 60%;
     transition: all 0.2s ease-in-out;
+    border-radius: 0.4rem;
 }
 
-#cancel-btn{
-
+#cancel-btn:hover{
+    background-color: #e4e4e4;
 }
 
 #close-form{
@@ -480,6 +502,10 @@ tr th{
 
 .form-btns{
     margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
 }
 
 
