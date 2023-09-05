@@ -80,10 +80,6 @@ func ValidarDadosLogin(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Email e senha não podem estar vazios." })
 		return
 	}
-	if len(u.Senha) != 128 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
-		return
-	}
 
 	u.Senha = utils.CriptografarSenha(u.Senha)
 
