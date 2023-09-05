@@ -154,6 +154,8 @@ func AtualizarUsuario(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
 		return
 	}
+
+	// TODO: criptografar senha
 	
 	if u.Senha != "" && len(u.Senha) != 128 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })

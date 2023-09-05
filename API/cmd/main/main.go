@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
+	//err := godotenv.Load()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
 	router := routes.CriarRouter()
 
-	if err := router.Run(os.Getenv("dominio")); err != nil {
+	if err := router.Run(":" + os.Getenv("PORT")); err != nil {
 		log.Fatal(err.Error())
 	}
 }
