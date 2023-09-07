@@ -7,6 +7,7 @@
 * [Responses](#responses)
 * [Código de sessão](#código-de-sessão-codsessao) 
 * [/api/auth](#apiauth)
+* [/api/categorias](#apicategorias)
 * [/api/estoque](#apiestoque)
 * [/api/sessao](#apisessao)
 * [/api/usuarios](#apiusuarios)
@@ -30,13 +31,13 @@ sendo elas:
 ```javascript
 {
   ...
-  "message": String
+  "message": string
 }
 ```
 
 ```javascript
 {
-  "error": String
+  "error": string
 }
 ```
 
@@ -63,7 +64,8 @@ Para ações como login, ou ping, não é necessário o código de sessão do us
 GET /api/ping
 ```
 
-### /api/auth 
+
+## /api/auth 
 
 #### Validar login
 
@@ -75,8 +77,8 @@ Request body:
 
 ```javascript
 {
-  "email": String
-  "senha": String
+  "email": string
+  "senha": string
 }
 ```
 
@@ -85,7 +87,7 @@ Exemplo:
 ```javascript
 {
   "email": "teste",
-  "senha": "CvNWmufjpBqmAVNgAFf2U6KEvrPEY8g4hnMUpjLRjT3HBHCZYaSHE6xUPUJdWYMHDejgALzzaurpLsLcQSpan2sPjtMk8YVbahRUkwTUJDJQRmFUe2eMrgQcrjggBgPz"
+  "senha": "teste123"
 }
 ```
 
@@ -97,7 +99,99 @@ Response:
 }
 ```
 
-### /api/estoque
+
+## /api/categorias
+
+#### Retornar todas categorias
+
+```http
+GET /api/categorias
+```
+
+Response:
+```javascript
+{
+  "categorias": []object || null
+}
+```
+
+#### Retornar dados de uma categoria
+
+```http
+GET /api/categorias/${codCat}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codCat`      | `string` | **Required**. Código da categoria a ser mostrada |
+
+Response:
+```javascript
+{
+  "componentes": []object,
+  "codCat": Number,
+  "nomeCat": string,
+  "unidMedida": string,
+  "montagem": boolean,
+  "apelido": string
+}
+```
+
+#### Criar categoria
+
+```http
+POST /api/categorias
+```
+
+Request body:
+```javascript
+{
+  "nomeCat": string,
+  "unidMedida": string,
+  "montagem": boolean,
+  "apelido": string
+}
+```
+
+Exemplo:
+```javascript
+{
+  "nomeCat": "Mangueiras mais brabas de 2012",
+  "unidMedida": "cm",
+  "montagem": false,
+  "apelido": "M.M.B.D.2012"
+}
+```
+
+#### Editar categoria
+
+```http
+PUT /api/categorias
+```
+
+Request body:
+```javascript
+{
+  "codCat": Number,
+  "nomeCat": string,
+  "unidMedida": string,
+  "montagem": boolean,
+  "apelido": string
+}
+```
+
+#### Excluir categoria
+
+```http
+DELETE /api/categorias/${codCat}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codCat`      | `string` | **Required**. Código da categoria a ser mostrada |
+
+
+## /api/estoque
 
 #### Mostrar estoque
 
@@ -121,10 +215,20 @@ POST /api/estoque
 Request body:
 ```javascript
 {
-  "CodComp": Number,
+  "codComp": Number,
   "min": Number,
   "max": Number,
   "quantidade": Number 
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codComp": 12,
+  "min": 1,        // caso min seja nulo, ele será 0
+  "max": 100,      // caso max seja nulo, ele será 10000000
+  "quantidade": 20
 }
 ```
 
@@ -137,7 +241,7 @@ PUT /api/estoque
 Request body:
 ```javascript
 {
-  "CodComp": Number,
+  "codComp": Number,
   "min": Number,
   "max": Number,
   "quantidade": Number 
@@ -154,7 +258,8 @@ DELETE /api/estoque/${codComp}
 | :-------- | :------- | :-------------------------------- |
 | `codComp`      | `string` | **Required**. Código do componente a ser removido do estoque |
 
-### /api/sessao
+
+## /api/sessao
 
 #### Retornar informações de sessão de usuário
 
@@ -172,7 +277,7 @@ Response:
 {
   "codSessao": Number,
   "codUsuario": Number,
-  "entrada": String,
+  "entrada": string,
   "saida": object
 }
 ```
@@ -211,7 +316,8 @@ Response:
 DELETE /api/sessao
 ```
 
-### /api/usuarios
+
+## /api/usuarios
 
 #### Retornar todos os usuários do sistema
 
@@ -255,10 +361,10 @@ Request body:
 
 ```javascript
 {
-  "permissoes": String,
-  "nome": String,
-  "email": String,
-  "senha": String
+  "permissoes": string,
+  "nome": string,
+  "email": string,
+  "senha": string
 }
 ```
 
@@ -268,7 +374,7 @@ Exemplo:
   "permissoes": "Leitura",
   "nome": "Adalberto R.",
   "email": "adalbertorocha@gmail.com",
-  "senha": "CvNWmufjpBqmAVNgAFf2U6KEvrPEY8g4hnMUpjLRjT3HBHCZYaSHE6xUPUJdWYMHDejgALzzaurpLsLcQSpan2sPjtMk8YVbahRUkwTUJDJQRmFUe2eMrgQcrjggBgPz"
+  "senha": "teste123"
 }
 ```
 
@@ -286,10 +392,10 @@ Request body:
 
 ```javascript
 {
-  "permissoes": String,
-  "nome": String,
-  "email": String,
-  "senha": String
+  "permissoes": string,
+  "nome": string,
+  "email": string,
+  "senha": string
 }
 ```
 
@@ -299,7 +405,7 @@ Exemplo:
   "permissoes": "Leitura",
   "nome": "Adalberto R.",
   "email": "adalbertorocha@gmail.com",
-  "senha": "CvNWmufjpBqmAVNgAFf2U6KEvrPEY8g4hnMUpjLRjT3HBHCZYaSHE6xUPUJdWYMHDejgALzzaurpLsLcQSpan2sPjtMk8YVbahRUkwTUJDJQRmFUe2eMrgQcrjggBgPz"
+  "senha": "teste123"
 }
 ```
 
