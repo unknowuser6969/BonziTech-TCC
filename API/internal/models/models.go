@@ -4,6 +4,22 @@ package models
 
 import "database/sql"
 
+type Categoria struct {
+
+}
+
+type Componente struct {
+	
+}
+
+type Estoque struct {
+	CodEstq    int     `json:"codEstq"`
+	CodComp    int     `json:"codComp"`
+	QuantMin   int     `json:"min"`
+	QuantMax   int     `json:"max"`
+	QuantAtual float64 `json:"quantidade"`
+}
+
 type Log struct {
 	CodLog    int    `json:"codLog"`
 	TipoReq   string `json:"tipoReq"`
@@ -29,6 +45,10 @@ type SessaoResponse struct {
 	Message    string         `json:"message"`
 }
 
+type Subcategoria struct {
+
+}
+
 type Usuario struct {
 	CodUsuario int 	  `json:"codUsuario"`
 	Permissoes string `json:"permissoes"`
@@ -36,6 +56,12 @@ type Usuario struct {
 	Email	   string `json:"email"`
 	Senha	   string `json:"senha"`
 	Ativo      bool   `json:"ativo"`
+}
+
+type UsuarioPublico struct {
+	Permissoes string `json:"permissoes"`
+	Nome 	   string `json:"nome"`
+	Email	   string `json:"email"`
 }
 
 type UsuarioResponse struct {

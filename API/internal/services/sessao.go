@@ -15,6 +15,7 @@ import (
 	"github.com/vidacalura/BonziTech-TCC/internal/models"
 )
 
+// TODO: funcionar apenas com sysKey
 func GetSessao(c *gin.Context) {
 	codSessao := c.Param("codSessao")
 
@@ -32,6 +33,7 @@ func GetSessao(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, s)
 }
 
+// TODO: funcionar apenas com sysKey
 func CriarSessao(c *gin.Context) {
 	var s models.Sessao
 	if err := c.BindJSON(&s); err != nil {
@@ -78,15 +80,15 @@ func CriarSessao(c *gin.Context) {
 }
 
 func FecharSessao(c *gin.Context) {
-	var s models.Sessao
-	if err := c.BindJSON(&s); err != nil {
-		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de sessão inválidos" })
+	codSessao := c.Request.Header["Codsessao"]
+	if codSessao == nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Você precisa estar logado para ter acesso ao sistema" })
+		c.Abort()
 		return
 	}
 
-	delete := "UPDATE FROM sessao SET saida = ? WHERE cod_sessao = ?;"
-	_, err := DB.Exec(delete, time.Now().Format("2006-01-02 15:04:05"), s.CodSessao)
+	delete := "UPDATE sessao SET saida = ? WHERE cod_sessao = ?;"
+	_, err := DB.Exec(delete, time.Now().Format("2006-01-02 15:04:05"), codSessao[0])
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao finalizar sessão. Tente novamente mais tarde." })

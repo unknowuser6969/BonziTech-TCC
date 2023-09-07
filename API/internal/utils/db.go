@@ -8,15 +8,14 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-	// "github.com/joho/godotenv"
+	//"github.com/joho/godotenv"
 )
 
 func ConectarBD() *sql.DB {
-	// Pega dados de .env
-	// err := godotenv.Load()
-	// if err != nil {
+	//err := godotenv.Load()
+	//if err != nil {
 	//	log.Fatal(err)
-	// }
+	//}
 
 	// Conecta ao banco de dados
 	db, err := sql.Open("mysql", os.Getenv("DSN"))

@@ -107,6 +107,7 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 		return
 	}
 
+	// TODO: arrumar
 	respSessao, err := http.Get("http://" + os.Getenv("dominio") + "/api/sessao/" + strconv.Itoa(s.CodSessao))
 	if err != nil {
 		log.Println(err)

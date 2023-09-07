@@ -34,11 +34,43 @@ func CriarRouter() *gin.Engine {
 		//auth.POST("/usuario", services.ValidarPermissoesUsuario)
 	}
 
+	cat := r.Group("/api/categorias")
+	{
+		cat.GET("/:codCat", services.MostrarComponentesCategoria) // mostrar componentes da categoria + dados categoria
+		cat.POST("/", services.CriarCategoria)
+		cat.PUT("/", services.AtualizarCategoria)
+		cat.DELETE("/", services.DeletarCategoria)
+	}
+
+	comp := r.Group("/api/componentes")
+	{
+		comp.GET("/:codComp", services.MostrarComponente)
+		comp.POST("/", services.AdicionarComponente)
+		comp.PUT("/", services.AtualizarComponente)
+		comp.DELETE("/", services.DeletarComponente)
+	}
+
+	estq := r.Group("/api/estoque")
+	{
+		estq.GET("/", services.MostrarEstoque)
+		estq.POST("/", services.AdicionarComponenteEstoque)
+		estq.PUT("/", services.AtualizarEstoque)
+		estq.DELETE("/:codComp", services.DeletarComponenteEstoque)
+	}
+
 	sessao := r.Group("/api/sessao")
 	{
 		sessao.GET("/:codSessao", services.GetSessao)
 		sessao.POST("/", services.CriarSessao)
 		sessao.DELETE("/", services.FecharSessao)
+	}
+
+	subcat := r.Group("/api/subcategorias")
+	{
+		subcat.GET("/:codCat", services.MostrarComponentesSubcategoria) // mostrar componentes da categoria + dados categoria
+		subcat.POST("/", services.CriarSubcategoria)
+		subcat.PUT("/", services.AtualizarSubcategoria)
+		subcat.DELETE("/", services.DeletarSubcategoria)
 	}
 
 	usu := r.Group("/api/usuarios") 

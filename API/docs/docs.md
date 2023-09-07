@@ -7,6 +7,7 @@
 * [Responses](#responses)
 * [Código de sessão](#código-de-sessão-codsessao) 
 * [/api/auth](#apiauth)
+* [/api/estoque](#apiestoque)
 * [/api/sessao](#apisessao)
 * [/api/usuarios](#apiusuarios)
 
@@ -96,9 +97,119 @@ Response:
 }
 ```
 
+### /api/estoque
+
+#### Mostrar estoque
+
+```http
+GET /api/estoque
+```
+
+Response:
+```javascript
+{
+  "estoque": []object || null
+}
+```
+
+#### Adicionar componente ao estoque
+
+```http
+POST /api/estoque
+```
+
+Request body:
+```javascript
+{
+  "CodComp": Number,
+  "min": Number,
+  "max": Number,
+  "quantidade": Number 
+}
+```
+
+#### Editar dados de componente em estoque
+
+```http
+PUT /api/estoque
+```
+
+Request body:
+```javascript
+{
+  "CodComp": Number,
+  "min": Number,
+  "max": Number,
+  "quantidade": Number 
+}
+```
+
+#### Remover componente de estoque
+
+```http
+DELETE /api/estoque/${codComp}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codComp`      | `string` | **Required**. Código do componente a ser removido do estoque |
+
 ### /api/sessao
 
+#### Retornar informações de sessão de usuário
 
+```http
+GET /api/sessao/${codSessao}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codSessao`      | `string` | **Required**. Código da sessão a ser procurada |
+
+Response:
+
+```javascript
+{
+  "codSessao": Number,
+  "codUsuario": Number,
+  "entrada": String,
+  "saida": object
+}
+```
+
+#### Criar sessão
+
+```http
+POST /api/sessao
+```
+
+Request body:
+
+```javascript
+{
+  "codUsuario": Number
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codUsuario": 10000000
+}
+```
+
+Response:
+```javascript
+{
+  "codSessao": Number
+}
+```
+
+#### Encerrar sessão
+
+```http
+DELETE /api/sessao
+```
 
 ### /api/usuarios
 
@@ -112,19 +223,19 @@ Response:
 
 ```javascript
 {
-  "usuarios": []object
+  "usuarios": []object || null
 }
 ```
 
 #### Retornar um usuário do sistema
 
 ```http
-GET /api/usuarios/${cod_usu}
+GET /api/usuarios/${codUsu}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `cod_usu`      | `string` | **Required**. Código do usuário a ser  procurado |
+| `codUsu`      | `string` | **Required**. Código do usuário a ser  procurado |
 
 Response:
 
@@ -164,12 +275,12 @@ Exemplo:
 #### Atualizar um usuário
 
 ```http
-PUT /api/usuarios/${cod_usu}
+PUT /api/usuarios/${codUsu}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `cod_usu`      | `string` | **Required**. Código do usuário a ser  atualizado |
+| `codUsu`      | `string` | **Required**. Código do usuário a ser  atualizado |
 
 Request body:
 
@@ -195,10 +306,10 @@ Exemplo:
 #### Desativar um usuário
 
 ```http
-DELETE /api/usuarios/${cod_usu}
+DELETE /api/usuarios/${codUsu}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `cod_usu`      | `string` | **Required**. Código do usuário a ser inativado |
+| `codUsu`      | `string` | **Required**. Código do usuário a ser inativado |
 

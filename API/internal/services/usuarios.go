@@ -35,18 +35,17 @@ func MostrarUsuario(c *gin.Context) {
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
-	// TODO: mostrar apenas usuários ativos
-	rows, err := DB.Query("SELECT * FROM usuarios;")
+	rows, err := DB.Query("SELECT permissoes, nome, email FROM usuarios WHERE ativo = TRUE;")
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
 		return
 	}
 
-	var usuarios []models.Usuario
+	var usuarios []models.UsuarioPublico
 	for rows.Next() {
-		var u models.Usuario
-		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Senha, &u.Ativo)
+		var u models.UsuarioPublico 
+		err := rows.Scan(&u.Permissoes, &u.Nome, &u.Email)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
@@ -134,7 +133,7 @@ func AdicionarUsuario(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário cadastrado com sucesso!" })
 }
 
-// TODO: reescrever para aceitar apenas 1 argumento
+// TODO: pegar codUsu não por param, mas sim, request body
 func AtualizarUsuario(c *gin.Context) {
 	codUsu := c.Param("codUsu")
 
@@ -151,12 +150,14 @@ func AtualizarUsuario(c *gin.Context) {
 		return
 	}
 
-	// TODO: criptografar senha
-	
+	u.Senha = utils.CriptografarSenha(u.Senha)
+
 	if u.Senha != "" && len(u.Senha) != 128 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
 		return
 	}
+
+	// TODO: verificar se usuário com codUsu existe
 	
 	update := "UPDATE usuarios SET permissoes = ?, nome = ?, email = ?, senha = ? WHERE cod_usu = ?;"
 	_, err = DB.Exec(update, u.Permissoes, u.Nome, u.Email, u.Senha, codUsu)
@@ -171,7 +172,7 @@ func AtualizarUsuario(c *gin.Context) {
 func DeletarUsuario(c *gin.Context) {
 	codUsu := c.Param("codUsu")
 
-	query := "SELECT cod_usu FROM usuarios WHERE cod_usu = ? AND permissoes <> 'Administrador';"
+	query := "SELECT cod_usu FROM usuarios WHERE cod_usu = ?;"
 	rows := DB.QueryRow(query, codUsu)
 
 	var codUsuRows int
@@ -182,14 +183,13 @@ func DeletarUsuario(c *gin.Context) {
 		return
 	}
 
-	// TODO: inativar ao invés de deletar
-	delete := "DELETE FROM usuarios WHERE cod_usu = ?;"
-	_, err = DB.Exec(delete, codUsu)
+	update := "UPDATE usuarios SET ativo = FALSE WHERE cod_usu = ?;"
+	_, err = DB.Exec(update, codUsu)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao deletar usuário." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao desativar usuário." })
 		return
 	}
 
-	c.IndentedJSON(http.StatusInternalServerError, gin.H{ "message": "Usuário deletado com sucesso!" })
+	c.IndentedJSON(http.StatusInternalServerError, gin.H{ "message": "Usuário desativado com sucesso!" })
 }

@@ -18,8 +18,6 @@ import (
 )
 
 func ValidacaoRequest(c *gin.Context) {
-	log.Println(c.Request.Header)
-
 	if c.Request.URL.String() == "/api/auth/login" ||
 		c.Request.URL.String() == "/api/ping" {
 		c.Next()
