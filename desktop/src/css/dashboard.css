@@ -13,10 +13,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  details summary::-webkit-details-marker {
-    display:none;
-  }
-
 *{
     margin: 0;
     padding: 0;
@@ -226,15 +222,6 @@ main{
     justify-content: center;
 }
 
-@keyframes fadeInAnimation {
-    0% {
-        opacity: 0.3;
-    }
-    100% {
-        opacity: 1;
-     }
-}
-
 .hero h1{
     font-size: 2.5rem;
     color: #212529;
@@ -269,7 +256,7 @@ main{
 }
 
 table {
-    border-top: 1px solid #cccccc;
+    border-top: rgba(0, 0, 0, 0.151) 1px solid;
     border-collapse: collapse;
     width: 80%;
 }
@@ -284,26 +271,24 @@ th {
 
 tr td{
     padding: 1rem 1rem;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: rgba(0, 0, 0, 0.151) 1px solid;
 }
 
 tr th{
     color: #929292;
     font-weight: 100;
-    border-bottom: 1px solid #cccccc;
 }
+
+tr{
+    border-bottom: rgba(0, 0, 0, 0.151) 1px solid;
+}
+
 
 
 .table-icons{
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-.table-icons button{
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
 }
 
 .table-icons i{
@@ -314,11 +299,6 @@ tr th{
     color: #212529;
 }
 
-.fa-trash-can{
-    color: #212529;
-    transition: all ease-in-out 0.2s;
-}
-
 .delete-btn{
     padding: 0.6rem;
     border: none;
@@ -326,7 +306,11 @@ tr th{
     color: #212529;
     border-radius: 0.4rem;
     cursor: pointer;
-    transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.2s;
+}
+
+.delete-btn:hover{
+    background-color: #d6d6d6;
 }
 
 .delete-btn:hover .fa-trash-can{

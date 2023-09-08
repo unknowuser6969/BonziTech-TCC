@@ -35,11 +35,35 @@
 ul{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
 }
 
 ul h3{
     font-size: 1.8rem;
+}
+
+.nav-title{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-title ion-icon{
+    font-size: 1.8rem;
+    color: var(--cinzaEscuro);
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-title a{
+    text-decoration: none;
+}
+
+.nav-title ion-icon:hover{
+    background-color: #f2f2f2;
 }
 
 .nav-options a{
@@ -50,14 +74,14 @@ ul h3{
     font-weight: 400;
 }
 
-a{
+.nav-options a{
     width: fit-content;
     color: var(--preto);
     cursor: pointer;
     transition: all 0.1s ease-in-out;
 }
 
-a:hover{
+.nav-options a:hover{
     opacity: 40%;
 }
 

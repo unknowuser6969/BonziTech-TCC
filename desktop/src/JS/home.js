@@ -1,6 +1,6 @@
-const option = document.getElementById('option');
+const btnAdmin = document.getElementById('btn-admin');
 
-option.addEventListener('click', function() {
+btnAdmin.addEventListener('click', function() {
   
   window.location.href = './dashboard.html';
 });

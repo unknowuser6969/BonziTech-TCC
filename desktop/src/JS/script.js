@@ -1,7 +1,7 @@
 const btnLogin = document.getElementById("btn-login");
 btnLogin.addEventListener("click", login);
 
-const urlAPI = "http://45.33.122.214:4000/api";
+const urlAPI = "https://bonzitech-tcc.onrender.com/api";
 async function login(e) {
     const senhaTextbox = document.getElementById("password-textbox");
     const emailTextbox = document.getElementById("email-textbox");
@@ -24,9 +24,13 @@ async function login(e) {
             alert(error);
             return;
         }
-        window.location.href = "../home.html";
+        window.location.href = "./home.html";
     }).catch (error => console.log(error));
 
+}
+
+btnLogin.onclick = function() {
+    this.innerHTML = "<span class='loader'></span>";
 }
 
 
