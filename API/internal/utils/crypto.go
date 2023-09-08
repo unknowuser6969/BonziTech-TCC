@@ -5,7 +5,7 @@ package utils
 import (
 	"crypto/sha512"
 	"encoding/base64"
-	"log"
+	//"log"
 	"os"
 
 	//"github.com/joho/godotenv"
