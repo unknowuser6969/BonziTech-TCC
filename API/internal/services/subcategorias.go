@@ -13,6 +13,10 @@ import (
 	//utils "github.com/vidacalura/BonziTech-TCC/internal/utils"
 )
 
+func MostrarSubcategoriasDeCategoria(c *gin.Context) {
+
+}
+
 func MostrarComponentesSubcategoria(c *gin.Context) {
 
 }

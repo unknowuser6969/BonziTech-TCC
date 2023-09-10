@@ -5,11 +5,31 @@ package models
 import "database/sql"
 
 type Categoria struct {
-
+	CodCat     int    `json:"codCat"`
+	NomeCat    string `json:"nomeCat"`
+	UnidMedida string `json:"unidMedida"`
+	Montagem   bool   `json:"montagem"`
+	Apelido    string `json:"apelido"`
 }
 
 type Componente struct {
-	
+	CodComp          int             `json:"codComp"`
+	CodPeca          string          `json:"codPeca"`
+	Especificacao    string          `json:"especificacao"`
+	CodCat           int             `json:"codCat"`
+	CodSubcat        sql.NullInt64   `json:"codCat"`
+	DiamInterno      sql.NullString  `json:"diamInterno"`
+	DiamExterno      sql.NullFloat64 `json:"diamExterno"`
+	DiamNominal      sql.NullString  `json:"diamNominal"`
+	MedidaD          sql.NullInt64   `json:"medidaD"`
+	Costura          sql.NullBool    `json:"costura"`
+	PrensadoReusavel sql.NullString  `json:"prensadoReusavel"`
+	Mangueira        sql.NullString  `json:"mangueira"`
+	Material         sql.NullString  `json:"material"`
+	Norma            sql.NullString  `json:"norma"`
+	Bitola           sql.NullInt64   `json:"bitola"`
+	ValorEntrada     float64         `json:"valorEntrada"`
+	ValorSaida       float64         `json:"valorEntrada"`
 }
 
 type Estoque struct {
@@ -46,7 +66,9 @@ type SessaoResponse struct {
 }
 
 type Subcategoria struct {
-
+	CodSubcat int    `json:"codSubcat"`
+	CodCat    int    `json:"codCat"`
+	Nome      string `json:"nome"`
 }
 
 type Usuario struct {

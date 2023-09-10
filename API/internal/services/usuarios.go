@@ -133,10 +133,7 @@ func AdicionarUsuario(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário cadastrado com sucesso!" })
 }
 
-// TODO: pegar codUsu não por param, mas sim, request body
 func AtualizarUsuario(c *gin.Context) {
-	codUsu := c.Param("codUsu")
-
 	var u models.Usuario
 	err := c.BindJSON(&u)
 	if err != nil {
@@ -145,23 +142,32 @@ func AtualizarUsuario(c *gin.Context) {
 		return
 	}
 
-	if u.Permissoes == "" || u.Nome == "" || u.Email == "" || u.Senha == "" {
+	if u.CodUsuario == 0 || u.Permissoes == "" || u.Nome == "" || u.Email == "" || u.Senha == "" {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
+		return
+	}
+	
+	if len(u.Senha) < 8 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha deve conter no mínimo 8 caracteres." })
 		return
 	}
 
 	u.Senha = utils.CriptografarSenha(u.Senha)
 
-	if u.Senha != "" && len(u.Senha) != 128 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha inválida." })
+	rows := DB.QueryRow("SELECT cod_usu FROM usuarios WHERE cod_usu = ?;", u.CodUsuario)
+
+	var codUsuRows int
+	err = rows.Scan(&codUsuRows)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário não existe, ou não pode ser atualizado." })
 		return
 	}
-
-	// TODO: verificar se usuário com codUsu existe
 	
 	update := "UPDATE usuarios SET permissoes = ?, nome = ?, email = ?, senha = ? WHERE cod_usu = ?;"
-	_, err = DB.Exec(update, u.Permissoes, u.Nome, u.Email, u.Senha, codUsu)
+	_, err = DB.Exec(update, u.Permissoes, u.Nome, u.Email, u.Senha, u.CodUsuario)
 	if err != nil {
+		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
 		return
 	}
@@ -172,14 +178,13 @@ func AtualizarUsuario(c *gin.Context) {
 func DeletarUsuario(c *gin.Context) {
 	codUsu := c.Param("codUsu")
 
-	query := "SELECT cod_usu FROM usuarios WHERE cod_usu = ?;"
-	rows := DB.QueryRow(query, codUsu)
+	rows := DB.QueryRow("SELECT cod_usu FROM usuarios WHERE cod_usu = ?;", codUsu)
 
 	var codUsuRows int
 	err := rows.Scan(&codUsuRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Usuário não existe, ou não pode ser deletado." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário não existe, ou não pode ser deletado." })
 		return
 	}
 

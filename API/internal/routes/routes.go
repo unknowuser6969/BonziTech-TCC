@@ -36,23 +36,26 @@ func CriarRouter() *gin.Engine {
 
 	cat := r.Group("/api/categorias")
 	{
-		cat.GET("/:codCat", services.MostrarComponentesCategoria) // mostrar componentes da categoria + dados categoria
+		cat.GET("/", services.MostrarTodasCategorias)
+		cat.GET("/:codCat", services.MostrarComponentesCategoria) 
 		cat.POST("/", services.CriarCategoria)
 		cat.PUT("/", services.AtualizarCategoria)
-		cat.DELETE("/", services.DeletarCategoria)
+		cat.DELETE("/:codCat", services.DeletarCategoria)
 	}
 
 	comp := r.Group("/api/componentes")
 	{
+		comp.GET("/", services.MostrarTodosComponentes)
 		comp.GET("/:codComp", services.MostrarComponente)
 		comp.POST("/", services.AdicionarComponente)
 		comp.PUT("/", services.AtualizarComponente)
-		comp.DELETE("/", services.DeletarComponente)
+		comp.DELETE("/:codComp", services.DeletarComponente)
 	}
 
 	estq := r.Group("/api/estoque")
 	{
 		estq.GET("/", services.MostrarEstoque)
+		//estq.GET("/:???", services.MostrarComponenteEstoque)
 		estq.POST("/", services.AdicionarComponenteEstoque)
 		estq.PUT("/", services.AtualizarEstoque)
 		estq.DELETE("/:codComp", services.DeletarComponenteEstoque)
@@ -67,10 +70,11 @@ func CriarRouter() *gin.Engine {
 
 	subcat := r.Group("/api/subcategorias")
 	{
-		subcat.GET("/:codCat", services.MostrarComponentesSubcategoria) // mostrar componentes da categoria + dados categoria
+		subcat.GET("/categoria/:codCat", services.MostrarSubcategoriasDeCategoria)
+		subcat.GET("/subcategoria/:codSubcat", services.MostrarComponentesSubcategoria) // mostrar componentes da subcategoria + dados subcategoria
 		subcat.POST("/", services.CriarSubcategoria)
 		subcat.PUT("/", services.AtualizarSubcategoria)
-		subcat.DELETE("/", services.DeletarSubcategoria)
+		subcat.DELETE("/:codSubcat", services.DeletarSubcategoria)
 	}
 
 	usu := r.Group("/api/usuarios") 
@@ -79,7 +83,7 @@ func CriarRouter() *gin.Engine {
 		usu.GET("/:codUsu", services.MostrarUsuario)
 		usu.POST("/login", services.ValidarDadosLogin)
 		usu.POST("/", services.AdicionarUsuario)
-		usu.PUT("/:codUsu", services.AtualizarUsuario)
+		usu.PUT("/", services.AtualizarUsuario)
 		usu.DELETE("/:codUsu", services.DeletarUsuario)
 	}
 

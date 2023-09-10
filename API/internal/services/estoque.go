@@ -119,7 +119,7 @@ func DeletarComponenteEstoque(c *gin.Context) {
 	var codEstqRow int
 	if err := row.Scan(&codEstqRow); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Componente não existe no estoque." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Componente não existe no estoque." })
 		return
 	}
 

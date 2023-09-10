@@ -115,7 +115,7 @@ Response:
 }
 ```
 
-#### Retornar dados de uma categoria
+#### Retornar dados e componentes de uma categoria
 
 ```http
 GET /api/categorias/${codCat}
@@ -129,11 +129,13 @@ Response:
 ```javascript
 {
   "componentes": []object,
-  "codCat": Number,
-  "nomeCat": string,
-  "unidMedida": string,
-  "montagem": boolean,
-  "apelido": string
+  "categoria": {
+    "codCat": Number,
+    "nomeCat": string,
+    "unidMedida": string,
+    "montagem": boolean,
+    "apelido": string
+  }
 }
 ```
 
@@ -159,7 +161,7 @@ Exemplo:
   "nomeCat": "Mangueiras mais brabas de 2012",
   "unidMedida": "cm",
   "montagem": false,
-  "apelido": "M.M.B.D.2012"
+  "apelido": "MMB"
 }
 ```
 
@@ -381,17 +383,14 @@ Exemplo:
 #### Atualizar um usuário
 
 ```http
-PUT /api/usuarios/${codUsu}
+PUT /api/usuarios
 ```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `codUsu`      | `string` | **Required**. Código do usuário a ser  atualizado |
 
 Request body:
 
 ```javascript
 {
+  "codUsu": Number,
   "permissoes": string,
   "nome": string,
   "email": string,

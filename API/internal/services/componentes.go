@@ -13,6 +13,10 @@ import (
 	//utils "github.com/vidacalura/BonziTech-TCC/internal/utils"
 )
 
+func MostrarTodosComponentes(c *gin.Context) {
+
+}
+
 func MostrarComponente(c *gin.Context) {
 
 }
@@ -26,5 +30,5 @@ func AtualizarComponente(c *gin.Context) {
 }
 
 func DeletarComponente(c *gin.Context) {
-
+	// deletar tbm do estoque
 }
