@@ -35,6 +35,7 @@ func MostrarUsuario(c *gin.Context) {
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
+	log.Println("here")
 	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, ativo FROM usuarios WHERE ativo = TRUE;")
 	if err != nil {
 		log.Println(err)
