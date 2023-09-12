@@ -12,8 +12,8 @@ app.on('ready', () =>{
         center: true,
         titleBarStyle: 'hidden',
         titleBarOverlay: {
-        color: '#E03150',
-        symbolColor: '#fff',
+        color: '#fff',
+        symbolColor: '#131313',
         height: 40
         }
     });
