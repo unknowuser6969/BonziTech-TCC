@@ -489,7 +489,7 @@ Request body:
 
 ```javascript
 {
-  "codUsu": Number,
+  "codUsuario": Number,
   "permissoes": string,
   "nome": string,
   "email": string,

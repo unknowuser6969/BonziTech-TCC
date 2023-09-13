@@ -52,10 +52,13 @@ func CriarRouter() *gin.Engine {
 		comp.DELETE("/:codComp", services.DeletarComponente)
 	}
 
+	// compEnt := r.Group("/api/componentes/entrada")
+
+	// compSaida := r.Group("/api/componentes/saida")
+
 	estq := r.Group("/api/estoque")
 	{
 		estq.GET("/", services.MostrarEstoque)
-		//estq.GET("/:???", services.MostrarComponenteEstoque)
 		estq.POST("/", services.AdicionarComponenteEstoque)
 		estq.PUT("/", services.AtualizarEstoque)
 		estq.DELETE("/:codComp", services.DeletarComponenteEstoque)

@@ -55,7 +55,44 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 }
 
 func MostrarComponentesSubcategoria(c *gin.Context) {
+	codSubcat := c.Param("codSubcat")
 
+	var subcat models.Subcategoria
+	row := DB.QueryRow("SELECT * FROM subcategorias WHERE cod_subcat = ?;", codSubcat)
+	err := row.Scan(&subcat.CodSubcat, &subcat.CodCat, &subcat.Nome)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Erro ao encontrar subcategoria." })
+		return
+	}
+
+	rows, err := DB.Query("SELECT * FROM componentes WHERE cod_subcat = ?;", subcat.CodSubcat)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde." })
+		return
+	}
+
+	var componentes []models.Componente
+	for rows.Next() {
+		var comp models.Componente
+		err := rows.Scan(
+			&comp.CodComp, &comp.CodPeca, &comp.Especificacao, &comp.CodCat, &comp.CodSubcat,
+			&comp.DiamInterno, &comp.DiamExterno, &comp.DiamNominal, &comp.MedidaD, &comp.Costura,
+			&comp.PrensadoReusavel, &comp.Mangueira, &comp.Material, &comp.Norma, &comp.Bitola,
+			&comp.ValorEntrada, &comp.ValorSaida)
+
+		if err != nil {
+			log.Println(err)
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde." })
+			return
+		}
+
+		componentes = append(componentes, comp)
+	}
+
+	defer rows.Close()
+
+	c.IndentedJSON(http.StatusOK, gin.H{ "componentes": componentes, "subcategoria": subcat, "message": "Componentes de categoria encontrados com sucesso!" })	
 }
 
 func CriarSubcategoria(c *gin.Context) {

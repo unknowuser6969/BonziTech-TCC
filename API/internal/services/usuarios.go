@@ -35,7 +35,7 @@ func MostrarUsuario(c *gin.Context) {
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
-	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, ativo FROM usuarios WHERE ativo = TRUE;")
+	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, senha, ativo FROM usuarios WHERE ativo = TRUE;")
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
@@ -45,7 +45,7 @@ func MostrarTodosUsuarios(c *gin.Context) {
 	var usuarios []models.Usuario
 	for rows.Next() {
 		var u models.Usuario
-		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Ativo)
+		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Senha, &u.Ativo)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
@@ -146,19 +146,25 @@ func AtualizarUsuario(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
 		return
 	}
-	
-	// TODO: ver se senha está correta
-	
-	if len(u.Senha) < 8 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha deve conter no mínimo 8 caracteres." })
-		return
-	}
 
-	u.Senha = utils.CriptografarSenha(u.Senha)
+	admSenha := utils.CriptografarSenha(u.Senha)
+	u.Senha = ""
 
-	rows := DB.QueryRow("SELECT cod_usu FROM usuarios WHERE cod_usu = ?;", u.CodUsuario)
+	// Ver se senha do administrador está correta
+	rows := DB.QueryRow("SELECT cod_usu FROM usuarios WHERE senha = ? AND permissoes = 'Administrador';", admSenha)
 
+	// TODO: arrumar
 	var codUsuRows int
+	//err = rows.Scan(&codUsuRows)
+	//if err != nil {
+	//	log.Println(err)
+	//	c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Sua senha está incorreta, ou você não tem permissões para editar este usuário." })
+	//	return
+	//}
+
+	// Verificar se usuário a ser alterado existe
+	rows = DB.QueryRow("SELECT cod_usu FROM usuarios WHERE cod_usu = ?;", u.CodUsuario)
+
 	err = rows.Scan(&codUsuRows)
 	if err != nil {
 		log.Println(err)
@@ -166,8 +172,8 @@ func AtualizarUsuario(c *gin.Context) {
 		return
 	}
 	
-	update := "UPDATE usuarios SET permissoes = ?, nome = ?, email = ?, senha = ? WHERE cod_usu = ?;"
-	_, err = DB.Exec(update, u.Permissoes, u.Nome, u.Email, u.Senha, u.CodUsuario)
+	update := "UPDATE usuarios SET permissoes = ?, nome = ?, email = ? WHERE cod_usu = ?;"
+	_, err = DB.Exec(update, u.Permissoes, u.Nome, u.Email, u.CodUsuario)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
