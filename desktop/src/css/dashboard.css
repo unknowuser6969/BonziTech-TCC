@@ -283,6 +283,10 @@ tr{
     border-bottom: rgba(0, 0, 0, 0.151) 1px solid;
 }
 
+td button{
+    margin: 0 0.4rem;
+}
+
 
 
 .table-icons{
@@ -307,6 +311,20 @@ tr{
     border-radius: 0.4rem;
     cursor: pointer;
     transition: all ease-in-out 0.2s;
+}
+
+.update-btn-icon{
+    padding: 0.6rem;
+    border: none;
+    background-color: #f8f9fa;
+    color: #212529;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+}
+
+.update-btn-icon:hover{
+    background-color: #d6d6d6;
 }
 
 .delete-btn:hover{
@@ -339,6 +357,7 @@ tr{
 }
 
 .add-form{
+    display: none;
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     padding: 4rem;
     position: fixed;
@@ -351,7 +370,7 @@ tr{
     -webkit-border-radius: 0px 0px 0px 14px;
     -moz-border-radius: 0px 0px 0px 14px;
     animation: transform 0.3s ease-in;
-    z-index: 20;
+    z-index: 30;
 }
 
 
@@ -399,7 +418,7 @@ tr{
     margin-bottom: 0.6rem;
 }
 
-#confirm-btn{
+.confirm-btn{
     cursor: pointer;
     font-family: inter;
     border: none;
@@ -411,11 +430,11 @@ tr{
     transition: all 0.2s ease-in-out;
 }
 
-#confirm-btn:hover{
+.confirm-btn:hover{
     opacity: 80%;
 }
 
-#cancel-btn{
+.cancel-btn{
     padding: 0.8rem 2rem;
     cursor: pointer;
     background-color: transparent;
@@ -426,7 +445,7 @@ tr{
     border-radius: 0.4rem;
 }
 
-#cancel-btn:hover{
+.cancel-btn:hover{
     background-color: #e4e4e4;
 }
 
@@ -448,15 +467,17 @@ tr{
     display: none;
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     padding: 4rem;
+    position: fixed;
     top: 0;
     right: 0;
     background-color: #fff;
     width: 30vw;
-    height: 80vh;
+    height: 100%;
     border-radius: 0px 0px 0px 14px;
     -webkit-border-radius: 0px 0px 0px 14px;
     -moz-border-radius: 0px 0px 0px 14px;
-    transition: right 0.5s ease-in-out;
+    animation: transform 0.3s ease-in;
+    z-index: 20;
 }
 
 
