@@ -33,7 +33,7 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 	var subcats []models.Subcategoria
 	for rows.Next() {
 		var subcat models.Subcategoria
-		err := rows.Scan(&subcat.CodSubcat, &subcat.CodCat, &subcat.NomeCat)
+		err := rows.Scan(&subcat.CodSubcat, &subcat.CodCat, &subcat.Nome)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
