@@ -35,17 +35,17 @@ func MostrarUsuario(c *gin.Context) {
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
-	rows, err := DB.Query("SELECT permissoes, nome, email FROM usuarios WHERE ativo = TRUE;")
+	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, ativo FROM usuarios WHERE ativo = TRUE;")
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
 		return
 	}
 
-	var usuarios []models.UsuarioPublico
+	var usuarios []models.Usuario
 	for rows.Next() {
-		var u models.UsuarioPublico 
-		err := rows.Scan(&u.Permissoes, &u.Nome, &u.Email)
+		var u models.Usuario
+		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Ativo)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
@@ -146,6 +146,8 @@ func AtualizarUsuario(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
 		return
 	}
+	
+	// TODO: ver se senha está correta
 	
 	if len(u.Senha) < 8 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha deve conter no mínimo 8 caracteres." })

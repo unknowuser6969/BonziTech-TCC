@@ -80,12 +80,6 @@ type Usuario struct {
 	Ativo      bool   `json:"ativo"`
 }
 
-type UsuarioPublico struct {
-	Permissoes string `json:"permissoes"`
-	Nome 	   string `json:"nome"`
-	Email	   string `json:"email"`
-}
-
 type UsuarioResponse struct {
 	CodUsuario int 	  `json:"codUsuario"`
 	Permissoes string `json:"permissoes"`

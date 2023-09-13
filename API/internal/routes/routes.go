@@ -71,7 +71,7 @@ func CriarRouter() *gin.Engine {
 	subcat := r.Group("/api/subcategorias")
 	{
 		subcat.GET("/categoria/:codCat", services.MostrarSubcategoriasDeCategoria)
-		subcat.GET("/subcategoria/:codSubcat", services.MostrarComponentesSubcategoria) // mostrar componentes da subcategoria + dados subcategoria
+		subcat.GET("/subcategoria/:codSubcat", services.MostrarComponentesSubcategoria) // 
 		subcat.POST("/", services.CriarSubcategoria)
 		subcat.PUT("/", services.AtualizarSubcategoria)
 		subcat.DELETE("/:codSubcat", services.DeletarSubcategoria)

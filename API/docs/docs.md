@@ -10,6 +10,7 @@
 * [/api/categorias](#apicategorias)
 * [/api/estoque](#apiestoque)
 * [/api/sessao](#apisessao)
+* [/api/subcategorias](#apisubcategorias)
 * [/api/usuarios](#apiusuarios)
 
 ## Status Codes
@@ -319,6 +320,104 @@ DELETE /api/sessao
 ```
 
 
+## /api/subcategorias
+
+#### Retornar subcategorias de categoria
+
+```http
+GET /api/subcategorias/categoria/${codCat}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codCat`      | `string` | **Required**. Código da categoria principal |
+
+Response:
+```javascript
+{
+  "subcategorias": []object || null
+}
+```
+
+#### Mostrar componentes da subcategoria e dados subcategoria
+
+```http
+GET /api/subcategorias/subcategoria/${codSubcat}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codSubcat`      | `string` | **Required**. Código da subcategoria a ser procurada |
+
+Response:
+```javascript
+{
+  "componentes": []object || null,
+  "subcategoria": {
+    "codSubcat": Number,
+    "codCat": Number,
+    "nome": string
+  }
+}
+```
+
+#### Criar subcategoria
+
+```http
+POST /api/subcategorias
+```
+
+Request body:
+```javascript
+{
+  "codCat": Number, // Código da categoria principal da subcategoria
+  "nome": string
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codCat": 12, 
+  "nome": "Mangueiras teste" 
+}
+```
+
+#### Atualizar subcategoria
+
+```http
+PUT /api/subcategorias
+```
+
+Request body:
+```javascript
+{
+  "codSubcat": Number,
+  "codCat": Number, // Código da categoria principal da subcategoria
+  "nome": string
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codSubcat": 10,
+  "codCat": 12, 
+  "nome": "Mangueiras teste" 
+}
+```
+
+#### Deletar subcategoria
+
+```http
+DELETE /api/subcategorias/${codSubcat}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codSubcat`      | `string` | **Required**. Código da subcategoria a ser excluída |
+
+
 ## /api/usuarios
 
 #### Retornar todos os usuários do sistema
@@ -417,4 +516,3 @@ DELETE /api/usuarios/${codUsu}
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `codUsu`      | `string` | **Required**. Código do usuário a ser inativado |
-
