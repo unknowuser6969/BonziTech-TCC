@@ -35,7 +35,7 @@ func MostrarUsuario(c *gin.Context) {
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
-	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, senha, ativo FROM usuarios WHERE ativo = TRUE;")
+	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, ativo FROM usuarios WHERE ativo = TRUE;")
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
@@ -45,7 +45,7 @@ func MostrarTodosUsuarios(c *gin.Context) {
 	var usuarios []models.Usuario
 	for rows.Next() {
 		var u models.Usuario
-		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Senha, &u.Ativo)
+		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Ativo)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
