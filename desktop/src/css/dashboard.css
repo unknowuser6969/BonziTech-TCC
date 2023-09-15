@@ -414,6 +414,13 @@ td button{
     outline: none;
 }
 
+.add-form p{
+    border-radius: 0.8rem;
+    padding: 1rem;
+    background-color: #fff3f5;
+    color: #45131C;
+}
+
 .add-form label{
     margin-bottom: 0.6rem;
 }

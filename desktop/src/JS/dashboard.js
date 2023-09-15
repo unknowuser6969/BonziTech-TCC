@@ -5,8 +5,8 @@ const updateBtn = document.getElementById("update-btn");
 const editForm = document.getElementById("edit-form");
 const closeEditForm = document.getElementById("close-form");
 const cancelIcon = document.getElementById("cancel-icon");
-const editCancelBtn = document.getElementById("edit-cancel-btn")
-const cancelEditIcon = document.getElementById("cancel-edit-icon")
+const editCancelBtn = document.getElementById("edit-cancel-btn");
+const cancelEditIcon = document.getElementById("cancel-edit-icon");
 const addForm = document.getElementById("add-form");
 const cancelBtn = document.getElementById("cancel-btn");
 const confirmBtn = document.getElementById("confirm-btn");
@@ -55,7 +55,7 @@ profile.style.display = "block";
 const botoesOpcao = document.querySelectorAll(".opcao-nav");
 botoesOpcao.forEach(function (botao) {
   botao.addEventListener("click", function () {
-    mostrarSection(this.dataset.section, this);
+    mostrarSection(this.reqBodyset.section, this);
   });
 });
 
@@ -82,7 +82,7 @@ cancelEditIcon.addEventListener("click", () => {
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const data = {
+  const reqBody = {
     permissoes: permissoesInput.value.trim(),
     nome: nomeInput.value.trim(),
     email: emailInput.value.trim(),
@@ -94,22 +94,27 @@ confirmBtn.addEventListener("click", (event) => {
     headers: {
       "Content-type": "application/JSON",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(reqBody),
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then((res) => {
+      if (res.error != null) {
+        alert(res.error);
+        return;
+      }
+
       window.location.reload();
     })
-  	.catch((err) => {
+    .catch((err) => {
       console.log(err);
     });
 });
 
 fetch("https://bonzitech-tcc.onrender.com/api/usuarios")
   .then((response) => response.json())
-  .then((data) => {
-    if (typeof data === "object" && data !== null) {
-      for (const user of data.usuarios) {
+  .then((reqBody) => {
+    if (typeof reqBody === "object" && reqBody !== null) {
+      for (const user of reqBody.usuarios) {
         codUsers[user.nome] = user.codUsuario;
         const tabela = document.getElementById("tabela");
         const tbody = tabela.getElementsByTagName("tbody")[0];
@@ -128,106 +133,112 @@ fetch("https://bonzitech-tcc.onrender.com/api/usuarios")
 
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("delete-btn");
-        btnDelete.addEventListener("click", () => { fetchDelete(user); });
-        btnDelete.innerHTML = 
-          '<i class="fa-solid fa-ban"></i>';
-        
+        btnDelete.addEventListener("click", () => {
+          fetchDelete(user);
+        });
+        btnDelete.innerHTML = '<i class="fa-solid fa-ban"></i>';
+
         const btnEdit = document.createElement("button");
         btnEdit.classList.add("update-btn-icon");
         btnEdit.addEventListener("click", (e) => {
           e.preventDefault();
           puxarFormUpdate(user);
         });
-        btnEdit.innerHTML = 
-          '<i class="fa-solid fa-pen-to-square"></i>';
-        
+        btnEdit.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+
         acoesCell.appendChild(btnDelete);
         acoesCell.appendChild(btnEdit);
         row.appendChild(acoesCell);
-        
-        row.addEventListener("click", () => { console.log("linha clicada") });
+
+        row.addEventListener("click", () => {
+          console.log("linha clicada");
+        });
 
         tbody.appendChild(row);
       }
     } else {
-      console.error("Os dados não são um objeto:", data);
-      alert("Os dados não são um objeto:", data);
+      console.error("Os dados não são um objeto:", reqBody);
+      alert("Os dados não são um objeto:", reqBody);
     }
   })
   .catch((error) => {
     console.error("Ocorreu um erro:", error);
   });
 
-  function puxarFormUpdate(user) {
-    editForm.style.display = 'block'
+function puxarFormUpdate(user) {
+  editForm.style.display = "block";
 
-    const addpermission = document.getElementById('edit-permission');
-    const addnome = document.getElementById('edit-name');
-    const addemail = document.getElementById('edit-email');
+  const addpermission = document.getElementById("edit-permission");
+  const addnome = document.getElementById("edit-name");
+  const addemail = document.getElementById("edit-email");
 
-    addpermission.value = user.permissoes;
-    addnome.value = user.nome;
-    addemail.value = user.email;
+  addpermission.value = user.permissoes;
+  addnome.value = user.nome;
+  addemail.value = user.email;
 
-    updateBtn.replaceWith(updateBtn.cloneNode(true));
-    updateBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      fetchUpdate(user); 
-    });
-  }
-
-async function fetchDelete(user) {
-  fetch("https://bonzitech-tcc.onrender.com/api/usuarios/" + user.codUsuario, {
-   	method: "DELETE",
-    headers: {
-      "Content-type": "Application/JSON"
-    }
-  })
-  .then((res) => { return res.json(); })
-  .then((res) => {
-    if (res.error != null) {
-      alert(res.error);
-      return;
-    }
-    
-    window.location.reload();
-  })
-  .catch((err) => {
-    console.log(err);
+  updateBtn.replaceWith(updateBtn.cloneNode(true));
+  updateBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    fetchUpdate(user);
   });
 }
 
+async function fetchDelete(user) {
+  fetch("https://bonzitech-tcc.onrender.com/api/usuarios/" + user.codUsuario, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "Application/JSON",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      if (res.error != null) {
+        alert(res.error);
+        return;
+      }
+
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 async function fetchUpdate(user) {
-  const permissoesInput = document.getElementById('edit-permission');
-  const nomeInput = document.getElementById('edit-name');
-  const emailInput = document.getElementById('edit-email');
-  const senhaInput = document.getElementById('edit-password');
-  
+  const permissoesInput = document.getElementById("edit-permission");
+  const nomeInput = document.getElementById("edit-name");
+  const emailInput = document.getElementById("edit-email");
+  const senhaInput = document.getElementById("edit-password");
+
   fetch("https://bonzitech-tcc.onrender.com/api/usuarios/", {
     method: "PUT",
     headers: {
-      "Content-type": "Application/JSON"
+      "Content-type": "Application/JSON",
     },
     body: JSON.stringify({
       codUsuario: user.codUsuario,
       permissoes: permissoesInput.value.trim(),
       nome: nomeInput.value.trim(),
       email: emailInput.value.trim(),
-      senha: senhaInput.value.trim()
+      senha: senhaInput.value.trim(),
+    }),
+  })
+    .then((res) => {
+      return res.json();
     })
-  })
-  .then((res) => { return res.json(); })
-  .then((res) => {
-    if (res.error) {
-      alert(res.error);
-      return;
-    }
-    
-    window.location.reload();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then((res) => {
+      if (res.error) {
+        alert(res.error);
+        return;
+      }
+
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 profileBtn.addEventListener("click", () => {

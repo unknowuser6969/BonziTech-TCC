@@ -146,18 +146,19 @@
                     <span><i id="cancel-icon" class="fa-solid fa-xmark fa-fw"></i></span>
                 </div>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form action="">
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
                         <label for="nome">Nome</label>
-                        <input type="text" id="add-name">
+                        <input type="text" id="add-name" required>
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email">
+                        <input type="text" id="add-email" required>
 
                         <label for="senha">Senha</label>
-                        <input type="text" id="add-password">
+                        <input type="password" id="add-password" required title="Senha deve ter no mínimo 8 caracteres." pattern=".{8,}">
+                        <p>Senha deve ter no mínimo 8 caracteres.</p>
 
 
                         <div class="form-btns">
@@ -184,7 +185,7 @@
                         <input type="text" id="edit-email" required>
 
                         <label for="senha">Confirme sua senha</label>
-                        <input type="text" id="edit-password" required>
+                        <input type="password" id="edit-password" required title="Senha deve ter no mínimo 8 caracteres." pattern=".{8,}">
 
 
                         <div class="form-btns">
