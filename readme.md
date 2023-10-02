@@ -1,22 +1,19 @@
-# TCC BonziTech
+# Web Client
 
-Este repositório contém todos os códigos do TCC de 3º ano do Colégio Politécnico
-Bento Quirino do grupo BonziTech (2023). 
+## 🧾 Sobre
+Este é um sistema web de gerenciamento de estoque e orçamento para a empresa Connect
 
-Neste repositório você encontra:
-* Landing page da BonziTech
-* Banco de dados do sistema
-* Sistema desktop Connect
-* Sistema mobile Connect
-* API
-* Documentação do projeto
+## Como abrir o projeto?
+Para abrir o projeto é simples. Basta dar um **Fork** no projeto e seguir essas etapas 👇
 
+### Instalar as Depêndencias
 
-## Feito por:
+```
+npm i
+```
 
-* <a href="https://github.com/vidacalura"> vidacalura </a> - Dev Fullstack
-* <a href="https://github.com/TulioTheGreat"> TulioTheGreat </a> - UI/UX Designer & Dev Front-End
-* <a href="https://github.com/Vinicius-Chaves22"> Vinicius-Chaves22 </a> - Dev Front-End
-* <a href="https://github.com/rafaelnator"> Raffles Giorgi </a> - Documentação
-* <a href="https://github.com/luizinfrd"> luizinfrd </a> - Pentester
-* <a href="https://github.com/unknowuser6969"> unkaraujo </a> - Dev Mobile 
+### Abrir o projeto
+
+```
+node server.js
+```
