@@ -1,123 +1,121 @@
-const profileBtn = document.getElementById('profile');
-const profileMenu = document.getElementById('profile-menu');
-const addBtn = document.getElementById('add-table-row');
-const editForm = document.getElementById('edit-form');
-const closeEditForm = document.getElementById('close-form');
-const addForm = document.getElementById('add-form');
-const cancelBtn = document.getElementById('cancel-btn')
-const confirmBtn = document.getElementById('confirm-btn');
-const attBtn = document.getElementById('update-btn')
-const tableBody = document.querySelector('tbody');
-const permissoesInput = document.getElementById('add-permission');
-const nomeInput = document.getElementById('add-name');
-const emailInput = document.getElementById('add-email');
-const senhaInput = document.getElementById('add-password');
-const codUsers = [];
+let dadosFuncionarios;
 
-addBtn.addEventListener('click', () => {
-  addForm.style.display = 'block';
-});
+mostrarTabelaFuncionarios();
 
-cancelBtn.addEventListener('click', () => {
-  formContainer.style.display = 'none';
-});
+/**
+ * Mostra tabela de funcionários com seus devidos dados
+ */
+async function mostrarTabelaFuncionarios() {
+    dadosFuncionarios = await fetchFuncionarios();
 
-confirmBtn.addEventListener('click', (event) => {
-  event.preventDefault();
-
-  const data = {
-    permissoes: permissoesInput.value.trim(),
-    nome: nomeInput.value.trim(),
-    email: emailInput.value.trim(),
-    senha: senhaInput.value.trim()
-  }
-
-  fetch('http://45.33.122.214:4000/api/usuarios', {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/JSON'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(res => res.json())
-    .then(data => {
-      window.location.reload();
-    })
-
-});
-
-
-fetch('http://45.33.122.214:4000/api/usuarios')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    if (typeof data === 'object' && data !== null) {
-
-      for (const user of data.usuarios) {
-
-        codUsers[user.nome] = user.codUsuario;
-        const tabela = document.getElementById('tabela');
-        const tbody = tabela.getElementsByTagName('tbody')[0];
-
-        const row = document.createElement('tr');
-
-        const nomeCell = document.createElement('td');
-        nomeCell.textContent = user.nome;
-        row.appendChild(nomeCell);
-
-        const emailCell = document.createElement('td');
-        emailCell.textContent = user.email;
-        row.appendChild(emailCell);
-
-        const cargoCell = document.createElement('td');
-        cargoCell.textContent = user.cargo;
-        row.appendChild(cargoCell);
-
-        const acoesCell = document.createElement('td');
-        acoesCell.innerHTML = '<button class="delete-btn"><i class="fa-solid fa-trash-can fa-lg"></i></button>';
-        row.appendChild(acoesCell);
-
-        tbody.appendChild(row);
-      }
-    } else {
-      console.error('Os dados não são um objeto:', data);
+    if (dadosFuncionarios.error) {
+        alert(dadosFuncionarios.error);
+        return;
     }
-  })
-  .catch(error => {
-    console.error('Ocorreu um erro:', error);
-  });
 
-attBtn.addEventListener('click', (event) => {
-  event.preventDefault();
+    const tbody = document.getElementById("tbody-funcionarios");
+    for (const func of dadosFuncionarios) {
+        const coluna = document.createElement("tr");
+        coluna.innerHTML = `
+        <td> ${func.nome} </td>
+        <td> ${func.email} </td>
+        `;
 
-  const data = {
-    permissoes: permissoesInput.value.trim(),
-    nome: nomeInput.value.trim(),
-    email: emailInput.value.trim(),
-    senha: senhaInput.value.trim()
-  }
+        const acoesCell = document.createElement("td");
 
-  console.log(data)
+        // Botão de inativação de funcionário
+        const btnDelete = document.createElement("button");
+        btnDelete.classList.add("delete-btn");
+        btnDelete.addEventListener("click", () => {
+            inativarFuncionario(func.codUsuario);
+        });
+        btnDelete.innerHTML = '<i class="fa-solid fa-ban"> </i>';
 
-  fetch('http://45.33.122.214:4000/api/usuarios/' + codUsers[data.nome], {
-    method: 'PUT',
-    headers: {
-      'Content-type': 'Application/JSON'
-    },
-    body: JSON.stringify(data)
-  })
-});
+        // Botão de edição de funcionário
+        const btnEdit = document.createElement("button");
+        btnEdit.classList.add("update-btn-icon");
+        btnEdit.addEventListener("click", (event) => {
+            event.preventDefault();
+            mostrarFormEdicaoFuncionario(func);
+        });
+        btnEdit.innerHTML = '<i class="fa-solid fa-pen-to-square"> </i>';
 
-profileBtn.addEventListener('click', () => {
-    if (profileMenu.style.display === 'block') {
-        profileMenu.style.display = 'none';
-    } else {
-        profileMenu.style.display = 'block';
+        acoesCell.appendChild(btnDelete);
+        acoesCell.appendChild(btnEdit);
+
+        coluna.appendChild(acoesCell);
+
+        tbody.appendChild(coluna)
     }
-});
+}
 
-document.addEventListener('click', (event) => {
-    if (!profileMenu.contains(event.target) && event.target !== profileBtn) {
-        profileMenu.style.display = 'none';
+/**
+ * Pega todos os funcionários cadastrados pela API e
+ * os insere na tabela
+ * @returns {object} - Resposta da API ou Objeto de erro
+ */
+async function fetchFuncionarios() {
+    try {
+        const res = await fetch("https://bonzitech-tcc.onrender.com/api/usuarios");
+        return res.json();
+    } catch(error) {
+        console.log(error);
+        return { error: "Erro ao conectar com a API. Tente novamente mais tarde ou contate o suporte." };
     }
-});
+}
+
+/**
+ * Envia dados de funcionário para criação à api
+ * @param {string} permisssoes - Permissões do funcionário
+ * @param {string} nome - Nome do novo funcionário
+ * @param {string} email - Email do novo funcionário
+ * @param {string} senha - Senha do novo funcionário
+ * @returns {object} - Mensagem de erro ou sucesso
+ */
+async function criarFuncionario(permisssoes, nome, email, senha) {
+    try {
+
+    } catch(error) {
+        console.log(error);
+        return { error: "Erro ao conectar com a API. Tente novamente mais tarde ou contate o suporte." };
+    }
+}
+
+/**
+ * Envia dados de funcionário para atualização à API
+ * @param {string} permisssoes - Permissões do funcionário
+ * @param {string} nome - Nome funcionário
+ * @param {string} email - Email funcionário
+ * @param {string} confSenha - Senha do usuário a alterar funcionário
+ * @returns {object} - Mensagem de erro ou sucesso
+ */
+async function atualizarFuncionario(permisssoes, nome, email, confSenha) {
+    try {
+
+    } catch(error) {
+        console.log(error);
+        return { error: "Erro ao conectar com a API. Tente novamente mais tarde ou contate o suporte." };
+    }
+}
+
+/**
+ * Inativa funcionário no banco de dados
+ * @param {string} codUsu - Código do funcionário a ser inativado
+ * @returns {object} - Mensagem de erro ou sucesso
+ */
+async function inativarFuncionario(codUsu) {
+    try {
+
+    } catch(error) {
+        console.log(error);
+        return { error: "Erro ao conectar com a API. Tente novamente mais tarde ou contate o suporte." };
+    }
+}
+
+/**
+ * Mostra o forms para edição de funcionário
+ * @param {object} func - Dados do funcionário a ser alterado
+ */
+function mostrarFormEdicaoFuncionario(func) {
+
+}
