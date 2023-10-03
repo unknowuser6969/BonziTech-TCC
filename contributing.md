@@ -3,7 +3,7 @@
 Este é um manual de contribuição para este repositório. Antes de fazer uma contribuição
 leia-o atentamente. 
 
-Em caso de contribuições que não sigam este manual serão imediatamente rejeitadas.
+Caso sua contribuição não siga este manual, esta será imediatamente rejeitada.
 
 ## Pull Requests (PRs)
 
@@ -27,6 +27,22 @@ tudo o que deve ser baixado para utilizar sua atualização (bibliotecas, módul
 Caso sua Pull Request não siga as diretrizes acima, ela será fechada e será requisitada
 uma nova.
 
+## Issues
+
+Caso você encontre algum problema em alguma parte do código não feita por você durante a
+execução da aplicação, não hesite em abrir uma issue! Ao abrir uma issue você ajuda que nos
+posicionemos de forma mais rápida e organizada para lidar com o problema de forma eficiente.
+
+Não avise aos colaboradores do projeto por meio de mensagens privativas de problemas no sistema,
+isso apenas atrasa o processo de resolução de problemas! Caso você encontre um bug ou uma funcionalidade
+faltando na execução do programa, siga os seguintes passos:
+
+1. Cheque se uma issue com seu problema já não existe;
+2. Caso não, crie uma nova issue com o problema a ser solucionado brevemente no título;
+3. Nos comentários da issue, fale detalhadamente sobre o problema, e, caso seja um bug,
+dê os passos exatos para reproduzí-lo. Caso uma issue não tenha os passos para reprodução
+do problema, ou seja muito vaga, esta será fechada e desconsiderada.
+4. Aguarde a validação da issue por um dono do repositório.
 
 ## Práticas de código
 
