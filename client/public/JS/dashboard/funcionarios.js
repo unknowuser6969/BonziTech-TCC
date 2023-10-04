@@ -1,123 +1,226 @@
-const profileBtn = document.getElementById('profile');
-const profileMenu = document.getElementById('profile-menu');
-const addBtn = document.getElementById('add-table-row');
-const editForm = document.getElementById('edit-form');
-const closeEditForm = document.getElementById('close-form');
-const addForm = document.getElementById('add-form');
-const cancelBtn = document.getElementById('cancel-btn')
-const confirmBtn = document.getElementById('confirm-btn');
-const attBtn = document.getElementById('update-btn')
-const tableBody = document.querySelector('tbody');
-const permissoesInput = document.getElementById('add-permission');
-const nomeInput = document.getElementById('add-name');
-const emailInput = document.getElementById('add-email');
-const senhaInput = document.getElementById('add-password');
-const codUsers = [];
+let dadosFuncionarios, codFunc;
 
-addBtn.addEventListener('click', () => {
-  addForm.style.display = 'block';
+mostrarTabelaFuncionarios();
+
+const addFuncionarioFormBtn = document.getElementById("add-funcionario-table-row");
+const cancelarCriacaoFuncionarioIcone = document.getElementById("cancel-funcionario-post-icon");
+const cancelarCriacaoFuncionarioBtn = document.getElementById("cancel-criacao-funcionario-btn");
+addFuncionarioFormBtn.addEventListener("click", mostrarFormCriacaoFuncionario);
+cancelarCriacaoFuncionarioIcone.addEventListener("click", mostrarFormCriacaoFuncionario);
+cancelarCriacaoFuncionarioBtn.addEventListener("click", mostrarFormCriacaoFuncionario);
+
+const cancelarEdicaoFuncionarioIcone = document.getElementById("cancel-funcionario-edit-icon");
+const cancelarEdicaoFuncionarioBtn = document.getElementById("edit-funcionario-cancel-btn");
+cancelarEdicaoFuncionarioIcone.addEventListener("click", mostrarFormEdicaoFuncionario);
+cancelarEdicaoFuncionarioBtn.addEventListener("click", mostrarFormEdicaoFuncionario);
+
+const confirmarCriacaoFuncionarioBtn = document.getElementById("confirm-criacao-funcionario-btn");
+// Criação de funcionário
+confirmarCriacaoFuncionarioBtn.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const permissaoTextbox = document.getElementById("add-funcionario-permission");
+    const nomeTextbox = document.getElementById("add-funcionario-name");
+    const emailTextbox = document.getElementById("add-funcionario-email");
+    const senhaTextbox = document.getElementById("add-funcionario-password");
+
+    const res = await criarFuncionario(
+        permissaoTextbox.value.trim(),
+        nomeTextbox.value.trim(),
+        emailTextbox.value.trim(),
+        senhaTextbox.value.trim()
+    );
+
+    if (res.error) {
+        mostrarMensagemErro(res.error);
+        return;
+    }
+
+    window.location.reload();
 });
 
-cancelBtn.addEventListener('click', () => {
-  formContainer.style.display = 'none';
+const confirmarAtualizacaoFuncionarioBtn = document.getElementById("update-funcionario-btn");
+// Edição de funcionário
+confirmarAtualizacaoFuncionarioBtn.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const permissaoTextbox = document.getElementById("edit-funcionario-permission");
+    const nomeTextbox = document.getElementById("edit-funcionario-name");
+    const emailTextbox = document.getElementById("edit-funcionario-email");
+    const confSenhaTextbox = document.getElementById("edit-funcionario-password");
+
+    const res = await atualizarFuncionario(
+        codFunc,
+        permissaoTextbox.value.trim(),
+        nomeTextbox.value.trim(),
+        emailTextbox.value.trim(),
+        confSenhaTextbox.value.trim()
+    );
+
+    if (res.error) {
+        mostrarMensagemErro(res.error);
+        return;
+    }
+
+    window.location.reload();
 });
 
-confirmBtn.addEventListener('click', (event) => {
-  event.preventDefault();
 
-  const data = {
-    permissoes: permissoesInput.value.trim(),
-    nome: nomeInput.value.trim(),
-    email: emailInput.value.trim(),
-    senha: senhaInput.value.trim()
-  }
+/**
+ * Mostra tabela de funcionários com seus devidos dados
+ */
+async function mostrarTabelaFuncionarios() {
+    dadosFuncionarios = await fetchFuncionarios();
 
-  fetch('http://45.33.122.214:4000/api/usuarios', {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/JSON'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(res => res.json())
-    .then(data => {
-      window.location.reload();
+    if (dadosFuncionarios.error) {
+        mostrarMensagemErro(dadosFuncionarios.error);
+        return;
+    }
+
+    const tbody = document.getElementById("tbody-funcionarios");
+    for (const func of dadosFuncionarios) {
+        const coluna = document.createElement("tr");
+        coluna.innerHTML = `
+        <td> ${func.nome} </td>
+        <td> ${func.email} </td>
+        `;
+
+        const acoesCell = document.createElement("td");
+
+        // Botão de inativação de funcionário
+        const btnDelete = document.createElement("button");
+        btnDelete.classList.add("delete-btn");
+        btnDelete.addEventListener("click", () => {
+            inativarFuncionario(func.codUsuario);
+        });
+        btnDelete.innerHTML = '<i class="fa-solid fa-ban"> </i>';
+
+        // Botão de edição de funcionário
+        const btnEdit = document.createElement("button");
+        btnEdit.classList.add("update-btn-icon");
+        btnEdit.addEventListener("click", (event) => {
+            event.preventDefault();
+            mostrarFormEdicaoFuncionario(func);
+            codFunc = func.codUsuario;
+        });
+        btnEdit.innerHTML = '<i class="fa-solid fa-pen-to-square"> </i>';
+
+        acoesCell.appendChild(btnDelete);
+        acoesCell.appendChild(btnEdit);
+
+        coluna.appendChild(acoesCell);
+
+        tbody.appendChild(coluna);
+    }
+}
+
+/**
+ * Pega todos os funcionários cadastrados pela API e
+ * os insere na tabela
+ * @returns {object} - Resposta da API ou Objeto de erro
+ */
+async function fetchFuncionarios() {
+    const res = await fetch(`/funcionarios`);
+    return res.json();
+}
+
+/**
+ * Envia dados de funcionário para criação à api
+ * @param {string} permissoes - Permissões do funcionário
+ * @param {string} nome - Nome do novo funcionário
+ * @param {string} email - Email do novo funcionário
+ * @param {string} senha - Senha do novo funcionário
+ * @returns {object} - Mensagem de erro ou sucesso
+ */
+async function criarFuncionario(permissoes, nome, email, senha) {
+    const res = await fetch(`/funcionarios`, {
+        method: "POST",
+        headers: {
+            "Content-type": "Application/JSON"
+        },
+        body: JSON.stringify({
+            permissoes,
+            nome,
+            email,
+            senha
+        })
     })
+    return res.json();
+}
 
-});
+/**
+ * Envia dados de funcionário para atualização à API
+ * @param {string} permissoes - Permissões do funcionário
+ * @param {string} nome - Nome funcionário
+ * @param {string} email - Email funcionário
+ * @param {string} confSenha - Senha do usuário a alterar funcionário
+ * @returns {object} - Mensagem de erro ou sucesso
+ */
+async function atualizarFuncionario(codUsuario, permissoes, nome, email, confSenha) {
+    const res = await fetch(`/funcionarios`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "Application/JSON"
+        },
+        body: JSON.stringify({
+            codUsuario,
+            permissoes,
+            nome,
+            email,
+            senha: confSenha
+        })
+    })
+    return res.json();
+}
 
+/**
+ * Inativa funcionário no banco de dados e mostra resposta
+ * @param {string} codUsu - Código do funcionário a ser inativado
+ */
+async function inativarFuncionario(codUsu) {
+    const res = await fetch(`/funcionarios/${codUsu}`, {
+        method: "DELETE"
+    });
 
-fetch('http://45.33.122.214:4000/api/usuarios')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    if (typeof data === 'object' && data !== null) {
+    if (res.error) {
+        mostrarMensagemErro(res.error);
+        return;
+    }
 
-      for (const user of data.usuarios) {
+    window.location.reload();
+}
 
-        codUsers[user.nome] = user.codUsuario;
-        const tabela = document.getElementById('tabela');
-        const tbody = tabela.getElementsByTagName('tbody')[0];
+/**
+ * Mostra o forms para edição de funcionário
+ * @param {object} func - Dados do funcionário a ser alterado
+ */
+function mostrarFormEdicaoFuncionario(func) {
+    const editFuncionarioForm = document.getElementById("edit-funcionario-form");
+    
+    if (editFuncionarioForm.style.display === "none") {
+        editFuncionarioForm.style.display = "block";
 
-        const row = document.createElement('tr');
+        const permissaoTextbox = document.getElementById("edit-funcionario-permission");
+        const nomeTextbox = document.getElementById("edit-funcionario-name");
+        const emailTextbox = document.getElementById("edit-funcionario-email");
 
-        const nomeCell = document.createElement('td');
-        nomeCell.textContent = user.nome;
-        row.appendChild(nomeCell);
-
-        const emailCell = document.createElement('td');
-        emailCell.textContent = user.email;
-        row.appendChild(emailCell);
-
-        const cargoCell = document.createElement('td');
-        cargoCell.textContent = user.cargo;
-        row.appendChild(cargoCell);
-
-        const acoesCell = document.createElement('td');
-        acoesCell.innerHTML = '<button class="delete-btn"><i class="fa-solid fa-trash-can fa-lg"></i></button>';
-        row.appendChild(acoesCell);
-
-        tbody.appendChild(row);
-      }
+        permissaoTextbox.value = func.permissoes;
+        nomeTextbox.value = func.nome;
+        emailTextbox.value = func.email;
     } else {
-      console.error('Os dados não são um objeto:', data);
+        editFuncionarioForm.style.display = "none";
     }
-  })
-  .catch(error => {
-    console.error('Ocorreu um erro:', error);
-  });
+}
 
-attBtn.addEventListener('click', (event) => {
-  event.preventDefault();
-
-  const data = {
-    permissoes: permissoesInput.value.trim(),
-    nome: nomeInput.value.trim(),
-    email: emailInput.value.trim(),
-    senha: senhaInput.value.trim()
-  }
-
-  console.log(data)
-
-  fetch('http://45.33.122.214:4000/api/usuarios/' + codUsers[data.nome], {
-    method: 'PUT',
-    headers: {
-      'Content-type': 'Application/JSON'
-    },
-    body: JSON.stringify(data)
-  })
-});
-
-profileBtn.addEventListener('click', () => {
-    if (profileMenu.style.display === 'block') {
-        profileMenu.style.display = 'none';
+/**
+ * Mostra forms para criação de funcionário
+ */
+function mostrarFormCriacaoFuncionario() {
+    const addFuncionarioForm = document.getElementById("add-funcionario-form");
+    
+    if (addFuncionarioForm.style.display === "none") {
+        addFuncionarioForm.style.display = "block";
     } else {
-        profileMenu.style.display = 'block';
+        addFuncionarioForm.style.display = "none";
     }
-});
-
-document.addEventListener('click', (event) => {
-    if (!profileMenu.contains(event.target) && event.target !== profileBtn) {
-        profileMenu.style.display = 'none';
-    }
-});
+}

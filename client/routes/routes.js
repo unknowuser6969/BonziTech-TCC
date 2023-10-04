@@ -21,8 +21,14 @@ router.get("/perfil", (req, res) => {
     res.sendFile(path.join(__dirname, publicFolder, "profile.html"));
 });
 
-router.post("/auth/login", (req, res) => {
+router.post("/login", (req, res) => {
+    const { email, senha } = req.body;
 
+    // Validação dos dados
+
+    // Fetch API
+
+    // Sessão de usuário
 });
 
 module.exports = router;

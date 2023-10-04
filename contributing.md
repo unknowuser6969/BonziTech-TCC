@@ -44,6 +44,9 @@ dê os passos exatos para reproduzí-lo. Caso uma issue não tenha os passos par
 do problema, ou seja muito vaga, esta será fechada e desconsiderada.
 4. Aguarde a validação da issue por um dono do repositório.
 
+Ao fazer isso, você auxilia o bom andamento do projeto, e garante que a aplicação siga livre de
+bugs ou problemas não reportados.
+
 ## Práticas de código
 
 Antes de suas alterações serem adicionadas à branch main, elas serão cautelosamente 
