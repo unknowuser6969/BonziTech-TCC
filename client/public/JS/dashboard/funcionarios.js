@@ -197,7 +197,7 @@ async function inativarFuncionario(codUsu) {
 function mostrarFormEdicaoFuncionario(func) {
     const editFuncionarioForm = document.getElementById("edit-funcionario-form");
     
-    if (editFuncionarioForm.style.display === "none") {
+    if (editFuncionarioForm.style.display !== "block") {
         editFuncionarioForm.style.display = "block";
 
         const permissaoTextbox = document.getElementById("edit-funcionario-permission");
@@ -218,7 +218,7 @@ function mostrarFormEdicaoFuncionario(func) {
 function mostrarFormCriacaoFuncionario() {
     const addFuncionarioForm = document.getElementById("add-funcionario-form");
     
-    if (addFuncionarioForm.style.display === "none") {
+    if (addFuncionarioForm.style.display !== "block") {
         addFuncionarioForm.style.display = "block";
     } else {
         addFuncionarioForm.style.display = "none";
