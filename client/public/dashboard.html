@@ -143,14 +143,13 @@
 
                 <div id="add-funcionario-form" class="add-form">
                     <div class="add-form-title">
-                    <h1>Adicionar Funcionário</h1>
-                    <span><i id="cancel-icon" class="fa-solid fa-xmark fa-fw"></i></span>
-                </div>
-
-                <div>
+                        <h1>Adicionar Funcionário</h1>
+                        <span id="cancel-funcionario-post-icon"><i class="fa-solid fa-xmark fa-fw"></i></span>
+                    </div>
+                    
                     <form>
                         <label>Permissão</label>
-                        <input type="text" id="add-funcionario-permission">
+                        <input type="text" id="add-funcionario-permission" required>
 
                         <label for="nome">Nome</label>
                         <input type="text" id="add-funcionario-name" required>
@@ -164,16 +163,16 @@
 
 
                         <div class="form-btns">
-                            <button class="confirm-btn" id="confirm-btn">Adicionar</button>
-                            <button class="cancel-btn" id="cancel-btn">Cancelar</button>
+                            <button class="confirm-btn" id="confirm-criacao-funcionario-btn">Adicionar</button>
+                            <button class="cancel-btn" id="cancel-criacao-funcionario-btn">Cancelar</button>
                         </div>
                     </form>
                 </div>
 
-                <div id="edit-form">
+                <div id="edit-funcionario-form" class="edit-form">
                     <div class="add-form-title">
                         <h1>Editar Funcionário</h1>
-                        <span><i id="cancel-edit-icon" class="fa-solid fa-xmark fa-fw"></i></span>
+                        <span><i id="cancel-funcionario-edit-icon" class="fa-solid fa-xmark fa-fw"></i></span>
                     </div>
 
                     <form>
@@ -198,7 +197,7 @@
                 </div>
             </div>
 
-            <button id="add-funcionario-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
+            <button id="add-funcionario-table-row" class="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
         <!-- Clientes 

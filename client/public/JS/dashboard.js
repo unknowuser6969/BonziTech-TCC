@@ -5,9 +5,8 @@ const profileMenu = document.getElementById("profile-menu");
 profileBtn.addEventListener("click", mostrarMenuPerfilUsuario);
 document.addEventListener("click", (event) => {
     // Fecha o menu de perfil quando a página é clicada
-    if (!profileMenu.contains(event.target) && event.target !== profileBtn) {
+    if (!profileMenu.contains(event.target) && event.target !== profileBtn)
         profileMenu.style.display = "none";
-    }
 });
 
 /**
@@ -42,4 +41,12 @@ function mostrarMenuPerfilUsuario() {
     } else {
         profileMenu.style.display = "block";
     }
+}
+
+/**
+ * Mostra uma mensagem de erro ao usuário
+ * @param {string} erro 
+ */
+function mostrarMensagemErro(erro) {
+    alert(erro);
 }
