@@ -18,43 +18,42 @@
                 <img src="/img/logo-connect.png" alt="logo">
             </li>
 
-            <li><a class="nav-option" id="nav-visao" data-section="visao-geral" onclick="mostrarSection('visao-geral')">
+            <li><a class="nav-option" href="/dashboard" id="nav-visao" data-section="visao-geral">
                     <i class="fa-solid fa-house"></i>
                     <span class="nav-item">Visão Geral</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-funcionarios" data-section="funcionarios"
-                    onclick="mostrarSection('funcionarios')">
+            <li><a class="nav-option" href="/dashboard?tabela=funcionarios" id="nav-funcionarios" data-section="funcionarios">
                     <i class="fa-solid fa-user"></i>
                     <span class="nav-item">Funcionários</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-clientes" data-section="visao-geral" onclick="mostrarSection('clientes')">
+            <li><a class="nav-option" href="/dashboard?tabela=clientes" id="nav-clientes" data-section="visao-geral">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-item">Clientes</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-fabricantes" onclick="mostrarSection('fabricantes')">
+            <li><a class="nav-option" href="/dashboard?tabela=fabricantes" id="nav-fabricantes">
                     <i class="fa-solid fa-boxes-packing"></i>
                     <span class="nav-item">Fabricantes</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-componentes" onclick="mostrarSection('componentes')">
+            <li><a class="nav-option" href="/dashboard?tabela=componentes" id="nav-componentes">
                     <i class="fa-solid fa-layer-group"></i>
                     <span class="nav-item">Componentes</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-estoque" onclick="mostrarSection('estoque')">
+            <li><a class="nav-option" href="/dashboard?tabela=estoque" id="nav-estoque">
                     <i class="fa-solid fa-box-archive"></i>
                     <span class="nav-item">Estoque</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-entradas" onclick="mostrarSection('entradas')">
+            <li><a class="nav-option" href="/dashboard?tabela=entradas" id="nav-entradas">
                     <i class="fa-solid fa-circle-arrow-up"></i>
                     <span class="nav-item">Entradas</span>
                 </a></li>
 
-            <li><a class="nav-option" id="nav-saidas" onclick="mostrarSection('saidas')">
+            <li><a class="nav-option" href="/dashboard?tabela=saidas" id="nav-saidas">
                     <i class="fa-solid fa-circle-arrow-down"></i>
                     <span class="nav-item">Saídas</span>
                 </a></li>
@@ -86,6 +85,7 @@
             </div>
         </div>
 
+        <!-- Visão geral -->
         <section id="visao-geral" class="hero">
             <div class="hero-content">
                 <div class="squares">
@@ -124,10 +124,11 @@
             </div>
         </section>
 
+        <!-- Funcionários -->
         <section id="funcionarios" class="hero">
 
             <div class="table-area">
-                <table id="tabela">
+                <table class="tabela">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -135,71 +136,72 @@
                             <th>Ação</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-funcionarios">
 
                     </tbody>
                 </table>
 
-                <div id="add-form" class="add-form">
+                <div id="add-funcionario-form" class="add-form">
                     <div class="add-form-title">
-                    <h1>Adicionar Funcionário</h1>
-                    <span><i id="cancel-icon" class="fa-solid fa-xmark fa-fw"></i></span>
-                </div>
-
-                    <form action="">
-                        <label for="permissao">Permissão</label>
-                        <input type="text" id="add-permission">
+                        <h1>Adicionar Funcionário</h1>
+                        <span id="cancel-funcionario-post-icon"><i class="fa-solid fa-xmark fa-fw"></i></span>
+                    </div>
+                    
+                    <form>
+                        <label>Permissão</label>
+                        <input type="text" id="add-funcionario-permission" required>
 
                         <label for="nome">Nome</label>
-                        <input type="text" id="add-name" required>
+                        <input type="text" id="add-funcionario-name" required>
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email" required>
+                        <input type="text" id="add-funcionario-email" required>
 
                         <label for="senha">Senha</label>
-                        <input type="password" id="add-password" required title="Senha deve ter no mínimo 8 caracteres." pattern=".{8,}">
+                        <input type="password" id="add-funcionario-password" required title="Senha deve ter no mínimo 8 caracteres." pattern=".{8,}">
                         <p>Senha deve ter no mínimo 8 caracteres.</p>
 
 
                         <div class="form-btns">
-                            <button class="confirm-btn" id="confirm-btn">Adicionar</button>
-                            <button class="cancel-btn" id="cancel-btn">Cancelar</button>
+                            <button class="confirm-btn" id="confirm-criacao-funcionario-btn">Adicionar</button>
+                            <button class="cancel-btn" id="cancel-criacao-funcionario-btn">Cancelar</button>
                         </div>
                     </form>
                 </div>
 
-                <div id="edit-form">
+                <div id="edit-funcionario-form" class="edit-form">
                     <div class="add-form-title">
                         <h1>Editar Funcionário</h1>
-                        <span><i id="cancel-edit-icon" class="fa-solid fa-xmark fa-fw"></i></span>
+                        <span><i id="cancel-funcionario-edit-icon" class="fa-solid fa-xmark fa-fw"></i></span>
                     </div>
 
-                    <form action="">
+                    <form>
                         <label for="permissao">Permissão</label>
-                        <input type="text" id="edit-permission" required>
+                        <input type="text" id="edit-funcionario-permission" required>
 
                         <label for="nome">Nome</label>
-                        <input type="text" id="edit-name" required>
+                        <input type="text" id="edit-funcionario-name" required>
 
                         <label for="email">Email</label>
-                        <input type="text" id="edit-email" required>
+                        <input type="text" id="edit-funcionario-email" required>
 
                         <label for="senha">Confirme sua senha</label>
-                        <input type="password" id="edit-password" required title="Senha deve ter no mínimo 8 caracteres." pattern=".{8,}">
+                        <input type="password" id="edit-funcionario-password" required title="Senha deve ter no mínimo 8 caracteres." pattern=".{8,}">
 
 
                         <div class="form-btns">
-                            <button class="confirm-btn" id="update-btn">Atualizar</button>
-                            <button class="cancel-btn" id="edit-cancel-btn">Cancelar</button>
+                            <button class="confirm-btn" id="update-funcionario-btn">Atualizar</button>
+                            <button class="cancel-btn" id="edit-funcionario-cancel-btn">Cancelar</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <button id="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
+            <button id="add-funcionario-table-row" class="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
-  <!--     <section id="clientes" class="hero">
+        <!-- Clientes 
+        <section id="clientes" class="hero">
 
             <div class="table-area">
                 <table id="tabela">
@@ -222,58 +224,59 @@
                     </tbody>
                 </table>
 
-                <div id="add-form" style="display: none;">
+                <div id="add-cliente-form" style="display: none;">
                     <h1>Adicionar Cliente</h1>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form>
                         <label for="permissao">Permissão</label>
-                        <input type="text" id="add-permission">
+                        <input type="text" id="add-cliente-permission">
 
                         <label for="nome">Nome</label>
-                        <input type="email" id="add-name">
+                        <input type="email" id="add-cliente-name">
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email">
+                        <input type="text" id="add-cliente-email">
 
                         <label for="senha">Senha</label>
-                        <input type="text" id="add-password">
+                        <input type="text" id="add-cliente-password">
 
 
                         <div class="form-btns">
                             <button id="confirm-btn">Adicionar</button>
                             <button id="fgfcancel-btn">Cancelar</button>
                         </div>
-                    </form>
+                    </form> 
                 </div>
 
                 <div id="edit-form">
                     <h1>Editar Cliente</h1>
 
-                    <form action="">
+                    <form>
                         <label for="permissao">Permissão</label>
-                        <input type="text" id="add-permission">
+                        <input type="text" id="edit-cliente-permission">
 
                         <label for="nome">Nome</label>
-                        <input type="email" id="add-name">
+                        <input type="email" id="edit-cliente-name">
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email">
+                        <input type="text" id="edit-cliente-email">
 
                         <label for="senha">Senha</label>
-                        <input type="text" id="add-password">
+                        <input type="text" id="edit-cliente-password">
 
 
                         <div class="form-btns">
-                            <button id="update-btn">Atualizar</button>
-                            <button id="2cancel-btn">Cancelar</button>
+                            <button id="update-cliente-btn">Atualizar</button>
+                            <button id="cancel-update-cliente-btn">Cancelar</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <button id="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
+            <button id="add-cliente-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
+        <!-- Fabricantes
         <section id="fabricantes" class="hero">
 
             <div class="table-area">
@@ -297,21 +300,21 @@
                     </tbody>
                 </table>
 
-                <div id="add-form" style="display: none;">
+                <div id="add-fabricante-form" style="display: none;">
                     <h1>Adicionar Fabricante</h1>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form>
                         <label for="permissao">Permissão</label>
-                        <input type="text" id="add-permission">
+                        <input type="text" id="add-fabricante-permission">
 
                         <label for="nome">Nome</label>
-                        <input type="email" id="add-name">
+                        <input type="email" id="add-fabricante-name">
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email">
+                        <input type="text" id="add-fabricante-email">
 
                         <label for="senha">Senha</label>
-                        <input type="text" id="add-password">
+                        <input type="text" id="add-fabricante-password">
 
 
                         <div class="form-btns">
@@ -324,31 +327,32 @@
                 <div id="edit-form">
                     <h1>Editar Fabricante</h1>
 
-                    <form action="">
+                    <form>
                         <label for="permissao">Permissão</label>
-                        <input type="text" id="add-permission">
+                        <input type="text" id="edit-fabricante-permission">
 
                         <label for="nome">Nome</label>
-                        <input type="email" id="add-name">
+                        <input type="email" id="edit-fabricante-name">
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email">
+                        <input type="text" id="edit-fabricante-email">
 
                         <label for="senha">Senha</label>
-                        <input type="text" id="add-password">
+                        <input type="text" id="edit-fabricante-password">
 
 
                         <div class="form-btns">
-                            <button id="update-btn">Atualizar</button>
-                            <button id="gfgfcancel-btn">Cancelar</button>
+                            <button id="update-fabricante-btn">Atualizar</button>
+                            <button id="cancel-update-fabricante-btn">Cancelar</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <button id="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
+            <button id="add-fabricante-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
+        <!-- Componentes
         <section id="componentes" class="hero">
 
             <div class="table-area">
@@ -378,21 +382,21 @@
                     </tbody>
                 </table>
 
-                <div id="add-form" style="display: none;">
+                <div id="add-componente-form" style="display: none;">
                     <h1>Adicionar Componente</h1>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form>
                         <label for="permissao">Permissão</label>
-                        <input type="text" id="add-permission">
+                        <input type="text" id="add-componente-permission">
 
                         <label for="nome">Nome</label>
-                        <input type="email" id="add-name">
+                        <input type="email" id="add-componente-name">
 
                         <label for="email">Email</label>
-                        <input type="text" id="add-email">
+                        <input type="text" id="add-componente-email">
 
                         <label for="senha">Senha</label>
-                        <input type="text" id="add-password">
+                        <input type="text" id="add-componente-password">
 
 
                         <div class="form-btns">
@@ -405,7 +409,7 @@
                 <div id="edit-form">
                     <h1>Editar Componente</h1>
 
-                    <form action="">
+                    <form>
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
@@ -430,6 +434,7 @@
             <button id="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
+        <!-- Estoque
         <section id="estoque" class="hero">
 
             <div class="table-area">
@@ -451,7 +456,7 @@
                 <div id="add-form" style="display: none;">
                     <h1>Adicionar Item</h1>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form>
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
@@ -475,7 +480,7 @@
                 <div id="edit-form">
                     <h1>Editar Item</h1>
 
-                    <form action="">
+                    <form>
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
@@ -500,6 +505,7 @@
             <button id="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
+        <!-- Entradas
         <section id="entradas" class="hero">
 
             <div class="table-area">
@@ -521,7 +527,7 @@
                 <div id="add-form" style="display: none;">
                     <h1>Adicionar Entrada</h1>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form>
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
@@ -545,7 +551,7 @@
                 <div id="edit-form">
                     <h1>Editar Entrada</h1>
 
-                    <form action="">
+                    <form> 
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
@@ -570,6 +576,7 @@
             <button id="add-table-row"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
+        <!-- Saídas
         <section id="saidas" class="hero">
 
             <div class="table-area">
@@ -593,7 +600,7 @@
                 <div id="add-form" style="display: none;">
                     <h1>Adicionar Saída</h1>
 
-                    <form action="http://45.33.122.214:4000/api/usuarios" method="POST">
+                    <form>
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
@@ -617,7 +624,7 @@
                 <div id="edit-form">
                     <h1>Editar Saída</h1>
 
-                    <form action="">
+                    <form>
                         <label for="permissao">Permissão</label>
                         <input type="text" id="add-permission">
 
