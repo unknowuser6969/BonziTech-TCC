@@ -1,6 +1,9 @@
 let dadosFuncionarios, codFunc;
-
-mostrarTabelaFuncionarios();
+fetchFuncionarios()
+.then((res) => {
+    dadosFuncionarios = res;
+    mostrarTabelaFuncionarios(dadosFuncionarios);
+}); 
 
 const addFuncionarioFormBtn = document.getElementById("add-funcionario-table-row");
 const cancelarCriacaoFuncionarioIcone = document.getElementById("cancel-funcionario-post-icon");
@@ -14,8 +17,13 @@ const cancelarEdicaoFuncionarioBtn = document.getElementById("edit-funcionario-c
 cancelarEdicaoFuncionarioIcone.addEventListener("click", mostrarFormEdicaoFuncionario);
 cancelarEdicaoFuncionarioBtn.addEventListener("click", mostrarFormEdicaoFuncionario);
 
+const searchBar = document.getElementById("search-bar");
+searchBar.addEventListener("keyup", () => {
+    const funcArr = procurarFuncionarios(searchBar.value.trim(), dadosFuncionarios);
+    mostrarTabelaFuncionarios(funcArr);
+});
+
 const confirmarCriacaoFuncionarioBtn = document.getElementById("confirm-criacao-funcionario-btn");
-// Criação de funcionário
 confirmarCriacaoFuncionarioBtn.addEventListener("click", async (event) => {
     event.preventDefault();
 
@@ -24,23 +32,17 @@ confirmarCriacaoFuncionarioBtn.addEventListener("click", async (event) => {
     const emailTextbox = document.getElementById("add-funcionario-email");
     const senhaTextbox = document.getElementById("add-funcionario-password");
 
-    const res = await criarFuncionario(
+    await criarFuncionario(
         permissaoTextbox.value.trim(),
         nomeTextbox.value.trim(),
         emailTextbox.value.trim(),
         senhaTextbox.value.trim()
     );
 
-    if (res.error) {
-        mostrarMensagemErro(res.error);
-        return;
-    }
-
     window.location.reload();
 });
 
 const confirmarAtualizacaoFuncionarioBtn = document.getElementById("update-funcionario-btn");
-// Edição de funcionário
 confirmarAtualizacaoFuncionarioBtn.addEventListener("click", async (event) => {
     event.preventDefault();
 
@@ -49,7 +51,7 @@ confirmarAtualizacaoFuncionarioBtn.addEventListener("click", async (event) => {
     const emailTextbox = document.getElementById("edit-funcionario-email");
     const confSenhaTextbox = document.getElementById("edit-funcionario-password");
 
-    const res = await atualizarFuncionario(
+    await atualizarFuncionario(
         codFunc,
         permissaoTextbox.value.trim(),
         nomeTextbox.value.trim(),
@@ -57,28 +59,25 @@ confirmarAtualizacaoFuncionarioBtn.addEventListener("click", async (event) => {
         confSenhaTextbox.value.trim()
     );
 
-    if (res.error) {
-        mostrarMensagemErro(res.error);
-        return;
-    }
-
     window.location.reload();
 });
 
 
 /**
- * Mostra tabela de funcionários com seus devidos dados
+ * Mostra tabela de funcionários com seus devidos dados.
+ * @param {Array} dadosTabela - Lista de funcionários a
+ * serem mostrados.
  */
-async function mostrarTabelaFuncionarios() {
-    dadosFuncionarios = await fetchFuncionarios();
+async function mostrarTabelaFuncionarios(dadosTabela) {
+    const tbody = document.getElementById("tbody-funcionarios");
+    tbody.innerHTML = "";
 
-    if (dadosFuncionarios.error) {
-        mostrarMensagemErro(dadosFuncionarios.error);
-        return;
+    if (dadosTabela.length === 0) {
+        tbody.innerHTML = `
+            <h2 class="texto-404"> Nenhum funcionário encontrado. </h2>`;
     }
 
-    const tbody = document.getElementById("tbody-funcionarios");
-    for (const func of dadosFuncionarios) {
+    for (const func of dadosTabela) {
         const coluna = document.createElement("tr");
         coluna.innerHTML = `
         <td> ${func.nome} </td>
@@ -116,24 +115,40 @@ async function mostrarTabelaFuncionarios() {
 
 /**
  * Pega todos os funcionários cadastrados pela API e
- * os insere na tabela
- * @returns {object} - Resposta da API ou Objeto de erro
+ * os insere na tabela.
+ * @returns {object} - Resposta da API ou Objeto de erro.
+ * @throws Retorna erro em caso de falha de conexão com a 
+ * API ou servidor.
  */
 async function fetchFuncionarios() {
-    const res = await fetch(`/funcionarios`);
-    return res.json();
+    return await fetch("/funcionarios")
+    .then((res) => res.json())
+    .then((res) => {
+        if (res.error) {
+            mostrarMensagemErro(res.error);
+            return new Error(res.error);
+        }
+
+        return res;
+    })
+    .catch((err) => {
+        mostrarMensagemErro("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        return new Error(err);
+    });
 }
 
 /**
- * Envia dados de funcionário para criação à api
- * @param {string} permissoes - Permissões do funcionário
- * @param {string} nome - Nome do novo funcionário
- * @param {string} email - Email do novo funcionário
- * @param {string} senha - Senha do novo funcionário
- * @returns {object} - Mensagem de erro ou sucesso
+ * Envia dados de funcionário para criação à api.
+ * @param {string} permissoes - Permissões do funcionário.
+ * @param {string} nome - Nome do novo funcionário.
+ * @param {string} email - Email do novo funcionário.
+ * @param {string} senha - Senha do novo funcionário.
+ * @returns {object} - Mensagem de erro ou sucesso.
+ * @throws Retorna erro em caso de falha de conexão com a 
+ * API ou servidor.
  */
 async function criarFuncionario(permissoes, nome, email, senha) {
-    const res = await fetch(`/funcionarios`, {
+    return await fetch(`/funcionarios`, {
         method: "POST",
         headers: {
             "Content-type": "Application/JSON"
@@ -145,19 +160,33 @@ async function criarFuncionario(permissoes, nome, email, senha) {
             senha
         })
     })
-    return res.json();
+    .then((res) => res.json())
+    .then((res) => {
+        if (res.error) {
+            mostrarMensagemErro(res.error);
+            return new Error(res.error);
+        }
+
+        return res;
+    })
+    .catch((err) => {
+        mostrarMensagemErro("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        return new Error(err);
+    });
 }
 
 /**
- * Envia dados de funcionário para atualização à API
- * @param {string} permissoes - Permissões do funcionário
- * @param {string} nome - Nome funcionário
- * @param {string} email - Email funcionário
- * @param {string} confSenha - Senha do usuário a alterar funcionário
- * @returns {object} - Mensagem de erro ou sucesso
+ * Envia dados de funcionário para atualização à API.
+ * @param {string} permissoes - Permissões do funcionário.
+ * @param {string} nome - Nome funcionário.
+ * @param {string} email - Email funcionário.
+ * @param {string} confSenha - Senha do usuário a alterar funcionário.
+ * @returns {object} - Mensagem de erro ou sucesso.
+ * @throws Retorna erro em caso de falha de conexão com a 
+ * API ou servidor.
  */
 async function atualizarFuncionario(codUsuario, permissoes, nome, email, confSenha) {
-    const res = await fetch(`/funcionarios`, {
+    return await fetch(`/funcionarios`, {
         method: "PUT",
         headers: {
             "Content-type": "Application/JSON"
@@ -170,12 +199,26 @@ async function atualizarFuncionario(codUsuario, permissoes, nome, email, confSen
             senha: confSenha
         })
     })
-    return res.json();
+    .then((res) => res.json())
+    .then((res) => {
+        if (res.error) {
+            mostrarMensagemErro(res.error);
+            return new Error(res.error);
+        }
+
+        return res;
+    })
+    .catch((err) => {
+        mostrarMensagemErro("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        return new Error(err);
+    });
 }
 
 /**
- * Inativa funcionário no banco de dados e mostra resposta
- * @param {string} codUsu - Código do funcionário a ser inativado
+ * Inativa funcionário no banco de dados e mostra resposta.
+ * @param {string} codUsu - Código do funcionário a ser inativado.
+ * @throws Retorna erro em caso de falha de conexão com a 
+ * API ou servidor.
  */
 async function inativarFuncionario(codUsu) {
     const res = await fetch(`/funcionarios/${codUsu}`, {
@@ -184,15 +227,15 @@ async function inativarFuncionario(codUsu) {
 
     if (res.error) {
         mostrarMensagemErro(res.error);
-        return;
+        return new Error(res.error);
     }
 
     window.location.reload();
 }
 
 /**
- * Mostra o forms para edição de funcionário
- * @param {object} func - Dados do funcionário a ser alterado
+ * Mostra o forms para edição de funcionário.
+ * @param {object} func - Dados do funcionário a ser alterado.
  */
 function mostrarFormEdicaoFuncionario(func) {
     const editFuncionarioForm = document.getElementById("edit-funcionario-form");
@@ -213,7 +256,7 @@ function mostrarFormEdicaoFuncionario(func) {
 }
 
 /**
- * Mostra forms para criação de funcionário
+ * Mostra forms para criação de funcionário.
  */
 function mostrarFormCriacaoFuncionario() {
     const addFuncionarioForm = document.getElementById("add-funcionario-form");
@@ -223,4 +266,21 @@ function mostrarFormCriacaoFuncionario() {
     } else {
         addFuncionarioForm.style.display = "none";
     }
+}
+
+/**
+ * Retorna funcionários com nome contendo uma
+ * dada string.
+ * @param {string} str - String para busca de nome.
+ * @param {Array} funcArr - Array com funcionários 
+ * a serem buscados.
+ */
+function procurarFuncionarios(str, funcArr) {
+    const funcionarios = [];
+    for (const func of funcArr) {
+        if (func.nome.includes(str)) 
+            funcionarios.push(func);
+    }
+
+    return funcionarios;
 }
