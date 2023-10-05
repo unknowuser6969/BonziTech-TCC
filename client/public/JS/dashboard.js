@@ -72,7 +72,7 @@ function mostrarMenuPerfilUsuario() {
 
 /**
  * Mostra uma mensagem de erro ao usuário.
- * @param {string} erro - Erro a ser mostrado
+ * @param {string} erro - Erro a ser mostrado.
  */
 function mostrarMensagemErro(erro) {
     alert(erro);
