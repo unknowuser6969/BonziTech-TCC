@@ -90,7 +90,8 @@ async function mostrarTabelaFuncionarios(dadosTabela) {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("delete-btn");
         btnDelete.addEventListener("click", () => {
-            inativarFuncionario(func.codUsuario);
+            if(confirmarInativacaoFuncionario())
+                inativarFuncionario(func.codUsuario);
         });
         btnDelete.innerHTML = '<i class="fa-solid fa-ban"> </i>';
 
@@ -231,6 +232,14 @@ async function inativarFuncionario(codUsu) {
     }
 
     window.location.reload();
+}
+
+/**
+ * Confirma se o usuário realmente deseja inativar o funcionário.
+ * @returns {boolean} - Retorna confirmação do usuário
+ */
+function confirmarInativacaoFuncionario() {
+    return confirm("Você tem certeza que deseja inativar este funcionário?");
 }
 
 /**
