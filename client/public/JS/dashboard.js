@@ -75,5 +75,15 @@ function mostrarMenuPerfilUsuario() {
  * @param {string} erro - Erro a ser mostrado.
  */
 function mostrarMensagemErro(erro) {
-    alert(erro);
+    const mensagemErroContainer = document.getElementById("mensagem-erro-container");
+    const mensagemErro = document.getElementById("mensagem-erro");
+
+    mensagemErroContainer.style.display = "block";
+
+    mensagemErro.textContent = erro;
+
+    setTimeout(() => {
+        mensagemErroContainer.style.display = "none";
+    }, 5000)
+    
 }

@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/f4f13ff542.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/JS/dashboard.js" defer></script>
     <link rel="stylesheet" href="/css/dashboard.css">
     <title>Dashboard</title>
@@ -820,6 +822,14 @@
 
             <button class="add-table-row" id="add-table-row-saidas"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
+
+        <!-- Mensagem de Erro -->
+        <div id="mensagem-erro-container" class="error-message">
+            <div class="error-message-content">
+                <ion-icon name="close"></ion-icon>
+                <p id="mensagem-erro"></p>
+            </div>
+        </div>
 
     </main>
 
