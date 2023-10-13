@@ -100,9 +100,11 @@ func CriarCategoria(c *gin.Context) {
 
 	if len(cat.UnidMedida) > 3 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Unidade de medidade deve conter até no máximo 3 caracteres." })
+		return
 	}
 	if len(cat.Apelido) > 4 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Apelido deve conter até no máximo 4 caracteres." })
+		return
 	}
 
 	insert := "INSERT INTO categorias (nome_cat, unid_medida, montagem, apelido) VALUES(?, ?, ?, ?);"

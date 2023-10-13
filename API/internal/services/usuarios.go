@@ -82,7 +82,7 @@ func ValidarDadosLogin(c *gin.Context) {
 
 	u.Senha = utils.CriptografarSenha(u.Senha)
 
-	query := "SELECT cod_usu FROM usuarios WHERE BINARY email = ? AND BINARY senha = ?;"
+	query := "SELECT cod_usu FROM usuarios WHERE BINARY email = ? AND BINARY senha = ? AND ativo = TRUE;"
 	rows := DB.QueryRow(query, u.Email, u.Senha)
 
 	var codUsu int
@@ -151,16 +151,16 @@ func AtualizarUsuario(c *gin.Context) {
 	u.Senha = ""
 
 	// Ver se senha do administrador está correta
-	rows := DB.QueryRow("SELECT cod_usu FROM usuarios WHERE senha = ? AND permissoes = 'Administrador';", admSenha)
+	rows := DB.QueryRow(`SELECT cod_usu FROM usuarios WHERE senha = ? 
+		AND permissoes = 'Administrador' OR permissoes = 'ADM';`, admSenha)
 
-	// TODO: arrumar
 	var codUsuRows int
-	//err = rows.Scan(&codUsuRows)
-	//if err != nil {
-	//	log.Println(err)
-	//	c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Sua senha está incorreta, ou você não tem permissões para editar este usuário." })
-	//	return
-	//}
+	err = rows.Scan(&codUsuRows)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Sua senha está incorreta, ou você não tem permissões para editar este usuário." })
+		return
+	}
 
 	// Verificar se usuário a ser alterado existe
 	rows = DB.QueryRow("SELECT cod_usu FROM usuarios WHERE cod_usu = ?;", u.CodUsuario)

@@ -2,7 +2,7 @@
 // banco de dados da aplicação
 package models
 
-import "database/sql"
+import "gopkg.in/guregu/null.v3"
 
 type Categoria struct {
 	CodCat     int    `json:"codCat"`
@@ -13,23 +13,23 @@ type Categoria struct {
 }
 
 type Componente struct {
-	CodComp          int             `json:"codComp"`
-	CodPeca          string          `json:"codPeca"`
-	Especificacao    string          `json:"especificacao"`
-	CodCat           int             `json:"codCat"`
-	CodSubcat        sql.NullInt64   `json:"codCat"`
-	DiamInterno      sql.NullString  `json:"diamInterno"`
-	DiamExterno      sql.NullFloat64 `json:"diamExterno"`
-	DiamNominal      sql.NullString  `json:"diamNominal"`
-	MedidaD          sql.NullInt64   `json:"medidaD"`
-	Costura          sql.NullBool    `json:"costura"`
-	PrensadoReusavel sql.NullString  `json:"prensadoReusavel"`
-	Mangueira        sql.NullString  `json:"mangueira"`
-	Material         sql.NullString  `json:"material"`
-	Norma            sql.NullString  `json:"norma"`
-	Bitola           sql.NullInt64   `json:"bitola"`
-	ValorEntrada     float64         `json:"valorEntrada"`
-	ValorSaida       float64         `json:"valorEntrada"`
+	CodComp          int         `json:"codComp"`
+	CodPeca          string      `json:"codPeca"`
+	Especificacao    string      `json:"especificacao"`
+	CodCat           int         `json:"codCat"`
+	CodSubcat        null.Int    `json:"codCat"`
+	DiamInterno      null.String `json:"diamInterno"`
+	DiamExterno      null.Float  `json:"diamExterno"`
+	DiamNominal      null.String `json:"diamNominal"`
+	MedidaD          null.Int    `json:"medidaD"`
+	Costura          null.Bool   `json:"costura"`
+	PrensadoReusavel null.String `json:"prensadoReusavel"`
+	Mangueira        null.String `json:"mangueira"`
+	Material         null.String `json:"material"`
+	Norma            null.String `json:"norma"`
+	Bitola           null.Int    `json:"bitola"`
+	ValorEntrada     float64     `json:"valorEntrada"`
+	ValorSaida       float64     `json:"valorEntrada"`
 }
 
 type Estoque struct {
@@ -38,6 +38,20 @@ type Estoque struct {
 	QuantMin   int     `json:"min"`
 	QuantMax   int     `json:"max"`
 	QuantAtual float64 `json:"quantidade"`
+}
+
+type Fabricante struct {
+	CodFab      int         `json:"codFab"`
+	Nome        string      `json:"nome"`
+	NomeContato null.String `json:"nomeContato"`
+	RazaoSocial null.String `json:"razaoSocial"`
+	Telefone    null.String `json:"telefone"`
+	Celular     null.String `json:"celular"`
+	Fax         null.String `json:"fax"`
+	Endereco    null.String `json:"endereco"`
+	Cidade      null.String `json:"cidade"`
+	Estado      null.String `json:"estado"`
+	CEP         null.String `json:"cep"`
 }
 
 type Log struct {
@@ -50,19 +64,19 @@ type Log struct {
 }
 
 type Sessao struct {
-	CodSessao  int    		  `json:"codSessao"`
-	CodUsuario int    		  `json:"codUsuario"`
-	Entrada    string 		  `json:"entrada"`
-	Saida      sql.NullString `json:"saida"`
+	CodSessao  int    	   `json:"codSessao"`
+	CodUsuario int    	   `json:"codUsuario"`
+	Entrada    string 	   `json:"entrada"`
+	Saida      null.String `json:"saida"`
 }
 
 type SessaoResponse struct {
-	CodSessao  int    		  `json:"codSessao"`
-	CodUsuario int    		  `json:"codUsuario"`
-	Entrada    string 		  `json:"entrada"`
-	Saida      sql.NullString `json:"saida"`
-	Error      string         `json:"error"`
-	Message    string         `json:"message"`
+	CodSessao  int    	   `json:"codSessao"`
+	CodUsuario int    	   `json:"codUsuario"`
+	Entrada    string 	   `json:"entrada"`
+	Saida      null.String `json:"saida"`
+	Error      string      `json:"error"`
+	Message    string      `json:"message"`
 }
 
 type Subcategoria struct {

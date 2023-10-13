@@ -1,6 +1,8 @@
 
 # BonziTech-TCC API
 
+API hospedada em: https://bonzitech-tcc.onrender.com/
+
 ## Sumário
 
 * [Status Codes](#status-codes)
@@ -9,6 +11,7 @@
 * [/api/auth](#apiauth)
 * [/api/categorias](#apicategorias)
 * [/api/estoque](#apiestoque)
+* [/api/fabricantes](#apifabricantes)
 * [/api/sessao](#apisessao)
 * [/api/subcategorias](#apisubcategorias)
 * [/api/usuarios](#apiusuarios)
@@ -261,6 +264,123 @@ DELETE /api/estoque/${codComp}
 | :-------- | :------- | :-------------------------------- |
 | `codComp`      | `string` | **Required**. Código do componente a ser removido do estoque |
 
+## /api/fabricantes
+
+#### Retornar todos fabricantes
+
+```http
+GET /api/fabricantes
+```
+
+Response:
+```javascript
+{
+  "fabricantes": []object || null
+}
+```
+
+#### Retornar dados de um fabricante
+
+```http
+GET /api/fabricantes/${codFab}
+```
+
+Response:
+```javascript
+{
+  "fabricante": {
+    "nome": string,
+    "nomeContato": string || null,
+    "razaoSocial": string || null,
+    "telefone": string || null,
+    "celular": string || null,
+    "fax": string || null,
+    "endereco": string || null,
+    "cidade": string || null,
+    "estado": string || null,
+    "cep": string || null
+  }
+}
+```
+
+#### Cadastrar fabricante
+
+```http
+POST /api/fabricantes
+```
+
+Request body:
+```javascript
+{
+  "nome": string,
+  "nomeContato": string, // opcional
+  "razaoSocial": string, // opcional
+  "telefone": string,    // opcional
+  "celular": string,     // opcional
+  "fax": string,         // opcional
+  "endereco": string,    // opcional
+  "cidade": string,      // opcional
+  "estado": string,      // opcional
+  "cep": string          // opcional
+}
+```
+
+Exemplo:
+```javascript
+{
+  "nome": "Fabrício Caminhões & Motocas",
+  "nomeContato": "Fabrício", 
+  "telefone": "(19) 99999-9999",    
+  "cidade": "Campinas"
+}
+```
+
+#### Atualizar dados de fabricante
+
+```http
+PUT /api/fabricantes
+```
+
+Request body:
+```javascript
+{
+  "codFab": number,
+  "nome": string,
+  "nomeContato": string || null, 
+  "razaoSocial": string || null, 
+  "telefone": string || null,    
+  "celular": string || null,     
+  "fax": string || null,         
+  "endereco": string || null,
+  "cidade": string || null,      
+  "estado": string || null,      
+  "cep": string || null          
+}
+```
+
+Exemplo:
+```javascript
+{
+  "cidFab": 1,
+  "nome": "Fabrício Caminhões & Motocas",
+  "nomeContato": "Fabrício", 
+  "razaoSocial": null,
+  "telefone": "(19) 99999-9999",   
+  "celular": null,
+  "fax": null,
+  "endereco": null,
+  "cidade": "Campinas",
+  "estado": "SP",
+  "cep": null
+}
+```
+
+#### Excluir fabricante
+
+```http
+DELETE /api/fabricantes/${codFab}
+```
+
 
 ## /api/sessao
 
@@ -316,7 +436,7 @@ Response:
 #### Encerrar sessão
 
 ```http
-DELETE /api/sessao
+DELETE /api/sessao/${codSessao}
 ```
 
 

@@ -5,16 +5,16 @@ import (
 	"log"
 	"os"
 
-	//"github.com/joho/godotenv"
+	"github.com/joho/godotenv"
 
 	routes "github.com/vidacalura/BonziTech-TCC/internal/routes"
 )
 
 func main() {
-	//err := godotenv.Load()
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	router := routes.CriarRouter()
 

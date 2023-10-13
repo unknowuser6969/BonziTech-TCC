@@ -64,6 +64,15 @@ func CriarRouter() *gin.Engine {
 		estq.DELETE("/:codComp", services.DeletarComponenteEstoque)
 	}
 
+	fab := r.Group("/api/fabricantes")
+	{
+		fab.GET("/", services.MostrarTodosFabricantes)
+		fab.GET("/:codFab", services.MostrarFabricante)
+		fab.POST("/", services.AdicionarFabricante)
+		fab.PUT("/", services.AtualizarFabricante)
+		fab.DELETE("/:codFab", services.DeletarFabricante)
+	}
+
 	sessao := r.Group("/api/sessao")
 	{
 		sessao.GET("/:codSessao", services.GetSessao)

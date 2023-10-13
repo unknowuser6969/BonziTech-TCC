@@ -96,13 +96,13 @@ func MostrarComponentesSubcategoria(c *gin.Context) {
 }
 
 func CriarSubcategoria(c *gin.Context) {
-
+	// TODO
 }
 
 func AtualizarSubcategoria(c *gin.Context) {
-
+	// TODO
 }
 
 func DeletarSubcategoria(c *gin.Context) {
-
+	// TODO
 }
