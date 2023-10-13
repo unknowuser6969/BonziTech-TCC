@@ -5,17 +5,17 @@ package utils
 import (
 	"crypto/sha512"
 	"encoding/base64"
-	"log"
+	//"log"
 	"os"
 
-	"github.com/joho/godotenv"
+	//"github.com/joho/godotenv"
 )
 
 func CriptografarSenha(senha string) string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
+	//err := godotenv.Load()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
 	hash := sha512.New()
 	hash.Write([]byte(senha))
