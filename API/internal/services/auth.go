@@ -25,7 +25,8 @@ func ValidarLogin(c *gin.Context) {
 	err := c.BindJSON(&u)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de usuário inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"error": "Dados de usuário inválidos." })
 		return
 	}
 
@@ -33,10 +34,13 @@ func ValidarLogin(c *gin.Context) {
 	valuesUsuario := map[string]string{ "email": u.Email, "senha": u.Senha }
 	jsonValue, _ := json.Marshal(valuesUsuario)
 
-	respUsuariosLogin, err := http.Post("http://" + os.Getenv("dominio") + "/api/usuarios/login", "Application/JSON", bytes.NewBuffer(jsonValue))
+	respUsuariosLogin, err := http.Post(
+		"http://" + os.Getenv("dominio") + "/api/usuarios/login", "Application/JSON",
+		bytes.NewBuffer(jsonValue))
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return
 	}
 
@@ -45,7 +49,8 @@ func ValidarLogin(c *gin.Context) {
 
     if err := json.Unmarshal(resBody, &u); err != nil {
         log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return
     }
 
@@ -58,10 +63,13 @@ func ValidarLogin(c *gin.Context) {
 	valuesSessao := map[string]int{ "codUsuario": u.CodUsuario }
 	jsonValue, _ = json.Marshal(valuesSessao)
 
-	respSessao, err := http.Post("http://" + os.Getenv("dominio") + "/api/sessao", "Application/JSON", bytes.NewBuffer(jsonValue))
+	respSessao, err := http.Post(
+		"http://" + os.Getenv("dominio") + "/api/sessao", "Application/JSON",
+		bytes.NewBuffer(jsonValue))
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return
 	}
 
@@ -71,7 +79,8 @@ func ValidarLogin(c *gin.Context) {
 	var s models.SessaoResponse
     if err := json.Unmarshal(resBody, &s); err != nil {
         log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return
     }
 
@@ -80,7 +89,8 @@ func ValidarLogin(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário autenticado com sucesso!", "codSessao": s.CodSessao })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message": "Usuário autenticado com sucesso!", "codSessao": s.CodSessao })
 }
 
 func ValidarPermissoesUsuario(c *gin.Context) {
@@ -88,7 +98,8 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 
 	codSessaoStr := c.Request.Header["Codsessao"]
 	if codSessaoStr == nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Você precisa estar logado para ter acesso ao sistema" })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"error": "Você precisa estar logado para ter acesso ao sistema" })
 		c.Abort()
 		return
 	}
@@ -96,22 +107,26 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 	codSessao, err := strconv.Atoi(codSessaoStr[0])
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao receber sessão de usuário." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao receber sessão de usuário." })
 		return
 	}
 	s.CodSessao = codSessao
 
 	if s.CodSessao == 0 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Você precisa estar logado para realizar esata ação." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"error": "Você precisa estar logado para realizar esata ação." })
 		c.Abort()
 		return
 	}
 
 	// TODO: arrumar
-	respSessao, err := http.Get("http://" + os.Getenv("dominio") + "/api/sessao/" + strconv.Itoa(s.CodSessao))
+	respSessao, err := http.Get(
+		"http://" + os.Getenv("dominio") + "/api/sessao/" + strconv.Itoa(s.CodSessao))
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		c.Abort()
 		return
 	}
@@ -121,7 +136,8 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 
     if err := json.Unmarshal(resBody, &s); err != nil {
         log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao conectar com o servidor. Tente novamente mais tarde." })
 		return
     }
 
@@ -134,7 +150,8 @@ func ValidarPermissoesUsuario(c *gin.Context) {
 
 	// verificar se sessão já está fechada
 	if s.Saida.Valid {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Sessão de usuário expirou. Faça login e tente novamente." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"error": "Sessão de usuário expirou. Faça login e tente novamente." })
 		return
 	}
 

@@ -1,4 +1,3 @@
-
 # BonziTech-TCC API
 
 API hospedada em: https://bonzitech-tcc.onrender.com/
@@ -10,6 +9,8 @@ API hospedada em: https://bonzitech-tcc.onrender.com/
 * [Código de sessão](#código-de-sessão-codsessao) 
 * [/api/auth](#apiauth)
 * [/api/categorias](#apicategorias)
+* [/api/clientes](#apiclientes)
+  * [/api/clientes/telefones](#apiclientestelefones)
 * [/api/estoque](#apiestoque)
 * [/api/fabricantes](#apifabricantes)
 * [/api/sessao](#apisessao)
@@ -197,6 +198,205 @@ DELETE /api/categorias/${codCat}
 | `codCat`      | `string` | **Required**. Código da categoria a ser mostrada |
 
 
+## /api/clientes
+
+#### Mostrar todos clientes
+
+```http
+GET /api/clientes
+```
+
+Response:
+```javascript
+{
+  "clientes": []object || null
+}
+```
+
+#### Mostrar dados de um cliente
+
+```http
+GET /api/clientes/${codCli}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codCli`      | `string` | **Required**. Código do cliente a ser mostrado |
+
+Response:
+```javascript
+{
+  "cliente": {
+    "codCli": number,
+    "nomeEmpresa": string,
+    "nome": string,
+    "tipo": string || null,
+    "diaReg": string,
+    "endereco": string || null,
+    "bairro": string || null,
+    "cidade": string,
+    "estado": string,
+    "cep": string || null,
+    "email": string || null,
+    "telefones": []object || null
+  }
+}
+```
+
+#### Cadastrar novo cliente
+
+```http
+POST /api/clientes
+```
+
+Request body:
+```javascript
+{
+  "nomeEmpresa": string,
+  "nome": string,
+  "tipo": string || null,
+  "endereco": string || null,
+  "bairro": string || null,
+  "cidade": string,
+  "estado": string,
+  "cep": string || null,
+  "email": string || null
+}
+```
+
+Exemplo:
+```javascript
+{
+  "nomeEmpresa": "Beer Lanches",
+  "nome": "Alberto",
+  "tipo": null,
+  "endereco": null,
+  "bairro": null,
+  "cidade": "Santa Rosa",
+  "estado": "RS",
+  "cep": null,
+  "email": "beer@lanches.rs"
+}
+```
+
+#### Atualizar cliente
+
+```http
+PUT /api/clientes
+```
+
+Request body:
+```javascript
+{
+  "codCli": number,
+  "nomeEmpresa": string,
+  "nome": string,
+  "tipo": string || null,
+  "endereco": string || null,
+  "bairro": string || null,
+  "cidade": string,
+  "estado": string,
+  "cep": string || null,
+  "email": string || null
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codCli": 2,
+  "nomeEmpresa": "Beer Lanches",
+  "nome": "sr. Beer Lanches",
+  "tipo": null,
+  "endereco": null,
+  "bairro": null,
+  "cidade": "Santa Rosa",
+  "estado": "RS",
+  "cep": null,
+  "email": "beer@lanches.rs"
+}
+```
+
+#### Deletar cliente
+
+```http
+DELETE /api/clientes/${codCli}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codCli`      | `string` | **Required**. Código do cliente a ser removido do estoque |
+
+
+## /api/clientes/telefones
+
+#### Cadastrar novo número de telefone
+
+```http
+POST /api/clientes/telefones
+```
+
+Request body:
+```javascript
+{
+  "codCli": number,
+  "telefone": string,
+  "nomeTel": string, 
+  "tipoContato": string || null,
+  "tipoCli": string || null
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codCli": 1,
+  "telefone": "(19) 99999-9999",
+  "nomeTel": "Telefone pessoal", 
+  "tipoContato": null,
+  "tipoCli": null
+}
+```
+
+#### Atualizar cadastro de telefone
+
+```http
+PUT /api/clientes/telefones
+```
+
+Request body:
+```javascript
+{
+  "codTel": number,
+  "telefone": string,
+  "nomeTel": string, 
+  "tipoContato": string || null,
+  "tipoCli": string || null
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codTel": 1,
+  "telefone": "(19) 99999-9999",
+  "nomeTel": "Telefone pessoal", 
+  "tipoContato": null,
+  "tipoCli": null
+}
+```
+
+#### Excluir telefone
+
+```http
+DELETE /api/clientes/telefones/${codTel}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codTel`      | `string` | **Required**. Código do telefone a ser excluído |
+
+
 ## /api/estoque
 
 #### Mostrar estoque
@@ -284,6 +484,10 @@ Response:
 ```http
 GET /api/fabricantes/${codFab}
 ```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codFab`      | `string` | **Required**. Código do fabricante a ser mostrado |
 
 Response:
 ```javascript
@@ -381,6 +585,9 @@ Exemplo:
 DELETE /api/fabricantes/${codFab}
 ```
 
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codFab`      | `string` | **Required**. Código do fabricante a ser excluído |
 
 ## /api/sessao
 
@@ -536,7 +743,6 @@ DELETE /api/subcategorias/${codSubcat}
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `codSubcat`      | `string` | **Required**. Código da subcategoria a ser excluída |
-
 
 ## /api/usuarios
 

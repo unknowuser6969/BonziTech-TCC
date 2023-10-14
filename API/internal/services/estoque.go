@@ -23,7 +23,8 @@ func MostrarEstoque(c *gin.Context) {
 	var estoque []models.Estoque
 	for rows.Next() {
 		var e models.Estoque
-		err := rows.Scan(&e.CodEstq, &e.CodComp, &e.QuantMin, &e.QuantMax, &e.QuantAtual)
+		err := rows.Scan(&e.CodEstq, &e.CodComp, &e.QuantMin, &e.QuantMax,
+			&e.QuantAtual)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao retornar estoque. Tente novamente mais tarde." })
@@ -41,7 +42,10 @@ func MostrarEstoque(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "estoque": estoque, "message": "Estoque encontrado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"estoque": estoque,
+		"message": "Estoque encontrado com sucesso!",
+	})
 }
 
 
@@ -71,7 +75,8 @@ func AdicionarComponenteEstoque(c *gin.Context) {
 	_, err := DB.Exec(insert, e.CodComp, e.QuantMin, e.QuantMax, e.QuantAtual)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao adicionar componente ao estoque. Cheque se o componente já foi adicionado ou se ele não existe e tente novamente." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao adicionar componente ao estoque. Cheque se o componente já foi adicionado ou se ele não existe e tente novamente." })
 		return
 	}
 

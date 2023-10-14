@@ -51,7 +51,10 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "subcategorias": subcats, "message": "Categorias encontradas com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"subcategorias": subcats,
+		"message": "Categorias encontradas com sucesso!",
+	})
 }
 
 func MostrarComponentesSubcategoria(c *gin.Context) {
@@ -76,10 +79,11 @@ func MostrarComponentesSubcategoria(c *gin.Context) {
 	for rows.Next() {
 		var comp models.Componente
 		err := rows.Scan(
-			&comp.CodComp, &comp.CodPeca, &comp.Especificacao, &comp.CodCat, &comp.CodSubcat,
-			&comp.DiamInterno, &comp.DiamExterno, &comp.DiamNominal, &comp.MedidaD, &comp.Costura,
-			&comp.PrensadoReusavel, &comp.Mangueira, &comp.Material, &comp.Norma, &comp.Bitola,
-			&comp.ValorEntrada, &comp.ValorSaida)
+			&comp.CodComp, &comp.CodPeca, &comp.Especificacao, &comp.CodCat,
+			&comp.CodSubcat, &comp.DiamInterno, &comp.DiamExterno,
+			&comp.DiamNominal, &comp.MedidaD, &comp.Costura,
+			&comp.PrensadoReusavel, &comp.Mangueira, &comp.Material,
+			&comp.Norma, &comp.Bitola, &comp.ValorEntrada, &comp.ValorSaida)
 
 		if err != nil {
 			log.Println(err)
@@ -92,17 +96,95 @@ func MostrarComponentesSubcategoria(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "componentes": componentes, "subcategoria": subcat, "message": "Componentes de categoria encontrados com sucesso!" })	
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"componentes": componentes,
+		"subcategoria": subcat,
+		"message": "Componentes de categoria encontrados com sucesso!",
+	})	
 }
 
 func CriarSubcategoria(c *gin.Context) {
-	// TODO
+	var subcat models.Subcategoria
+	err := c.BindJSON(&subcat)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de subcategoria inválidos." })
+		return
+	}
+
+	if subcat.CodCat == 0 || subcat.Nome == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados para criação de subcategoria insuficientes." })
+		return
+	}
+
+	insert := "INSERT INTO subcategorias (cat_principal, nome_subcat) VALUES(?, ?);"
+	_, err = DB.Exec(insert, subcat.CodCat, subcat.Nome)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao criar subcategoria. Tente novamente mais tarde." })
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Subcategoria criada com sucesso!" })
 }
 
 func AtualizarSubcategoria(c *gin.Context) {
-	// TODO
+	var subcat models.Subcategoria
+	err := c.BindJSON(&subcat)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de subcategoria inválidos." })
+		return
+	}
+
+	if subcat.CodSubcat == 0 || subcat.CodCat == 0 || subcat.Nome == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados para atualização de subcategoria insuficientes." })
+		return
+	}
+
+	// Verificar se subcategoria a ser alterada existe
+	rows := DB.QueryRow("SELECT cod_subcat FROM subcategorias WHERE cod_subcat = ?;", subcat.CodSubcat)
+
+	var codSubcatRows int
+	err = rows.Scan(&codSubcatRows)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Subcategoria não existe, ou não pode ser alterada." })
+		return
+	}
+
+	update := "UPDATE subcategorias SET cat_principal = ?, nome_subcat = ? WHERE cod_subcat = ?;"
+	_, err = DB.Exec(update, subcat.CodCat, subcat.Nome, subcat.CodSubcat)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao editar subcategoria. Tente novamente mais tarde." })
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Subcategoria atualizada com sucesso!" })
 }
 
 func DeletarSubcategoria(c *gin.Context) {
-	// TODO
+	codSubcat := c.Param("codSubcat")
+
+	// Verificar se subcategoria a ser excluída existe
+	rows := DB.QueryRow("SELECT cod_subcat FROM subcategorias WHERE cod_subcat = ?;", codSubcat)
+
+	var codSubcatRows int
+	err := rows.Scan(&codSubcatRows)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Subcategoria não existe, ou não pode ser excluída." })
+		return
+	}
+
+	delete := "DELETE FROM subcategorias WHERE cod_subcat = ?;"
+	_, err = DB.Exec(delete, codSubcat)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao excluir subcategoria. Tente novamente mais tarde." })
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Subcategoria excluída com sucesso!" })
 }

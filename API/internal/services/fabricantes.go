@@ -43,7 +43,10 @@ func MostrarTodosFabricantes(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "fabricantes": fabs, "message": "Fabricantes encontrados com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"fabricantes": fabs,
+		"message": "Fabricantes encontrados com sucesso!",
+	})
 }
 
 func MostrarFabricante(c *gin.Context) {
@@ -60,7 +63,10 @@ func MostrarFabricante(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "fabricante": fab, "message": "Fabricante encontrado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"fabricante": fab,
+		"message": "Fabricante encontrado com sucesso!",
+	})
 }
 
 func AdicionarFabricante(c *gin.Context) {
@@ -123,7 +129,8 @@ func AtualizarFabricante(c *gin.Context) {
 		fab.CEP, fab.CodFab)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar fabricante. Verifique se todos os dados estão corretos e tente novamente." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao atualizar fabricante. Verifique se todos os dados estão corretos e tente novamente." })
 		return
 	}
 
@@ -140,7 +147,7 @@ func DeletarFabricante(c *gin.Context) {
 	err := rows.Scan(&codFabRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Fabricante não existe, ou não pode ser atualizado." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Fabricante não existe, ou não pode ser excluído." })
 		return
 	}
 
@@ -152,5 +159,5 @@ func DeletarFabricante(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusInternalServerError, gin.H{ "message": "Fabricante excluído com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Fabricante excluído com sucesso!" })
 }

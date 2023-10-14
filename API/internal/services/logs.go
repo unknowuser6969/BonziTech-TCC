@@ -4,7 +4,6 @@ package services
 
 import (
 	"log"
-	//"net/http"
 	"strconv"
 	"time"
 
@@ -36,7 +35,8 @@ func CriarLogDBMiddleware(c *gin.Context) {
 	l.StatusRes = c.Writer.Status()
 
 	insert := "INSERT INTO logs (tipo_req, caminho, status_res, cod_sessao, data) VALUES(?, ?, ?, ?, ?);"
-	_, err = DB.Exec(insert, l.TipoReq, l.Caminho, l.StatusRes, l.CodSessao, time.Now().Format("2006-01-02 15:04:05"))
+	_, err = DB.Exec(insert, l.TipoReq, l.Caminho, l.StatusRes, l.CodSessao,
+		time.Now().Format("2006-01-02 15:04:05"))
 	if err != nil {
 		log.Println(err)
 		return

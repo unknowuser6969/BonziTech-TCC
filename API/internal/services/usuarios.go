@@ -63,7 +63,10 @@ func MostrarTodosUsuarios(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "usuarios": usuarios, "message": "Usuários encontrados com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"usuarios": usuarios,
+		"message": "Usuários encontrados com sucesso!",
+	})
 }
 
 func ValidarDadosLogin(c *gin.Context) {
@@ -92,7 +95,10 @@ func ValidarDadosLogin(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "codUsuario": codUsu, "message": "Usuário encontrado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"codUsuario": codUsu,
+		"message": "Usuário encontrado com sucesso!",
+	})
 }
 
 func AdicionarUsuario(c *gin.Context) {
@@ -204,5 +210,5 @@ func DeletarUsuario(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusInternalServerError, gin.H{ "message": "Usuário desativado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário desativado com sucesso!" })
 }

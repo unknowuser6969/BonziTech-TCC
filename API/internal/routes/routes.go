@@ -52,6 +52,22 @@ func CriarRouter() *gin.Engine {
 		comp.DELETE("/:codComp", services.DeletarComponente)
 	}
 
+	cli := r.Group("/api/clientes")
+	{
+		cli.GET("/", services.MostrarTodosClientes)
+		cli.GET("/:codCli", services.MostrarCliente)
+		cli.POST("/", services.CriarCliente)
+		cli.PUT("/", services.AtualizarCliente)
+		cli.DELETE("/:codCli", services.DeletarCliente)
+	}
+
+	cliTel := r.Group("/api/clientes/telefones")
+	{
+		cliTel.POST("/", services.CadastrarTelefone)
+		cliTel.PUT("/", services.AtualizarTelefone)
+		cliTel.DELETE("/:codTel", services.DeletarTelefone)
+	}
+
 	// compEnt := r.Group("/api/componentes/entrada")
 
 	// compSaida := r.Group("/api/componentes/saida")
@@ -82,8 +98,10 @@ func CriarRouter() *gin.Engine {
 
 	subcat := r.Group("/api/subcategorias")
 	{
-		subcat.GET("/categoria/:codCat", services.MostrarSubcategoriasDeCategoria)
-		subcat.GET("/subcategoria/:codSubcat", services.MostrarComponentesSubcategoria) // 
+		subcat.GET("/categoria/:codCat", 
+			services.MostrarSubcategoriasDeCategoria)
+		subcat.GET("/subcategoria/:codSubcat", 
+			services.MostrarComponentesSubcategoria) 
 		subcat.POST("/", services.CriarSubcategoria)
 		subcat.PUT("/", services.AtualizarSubcategoria)
 		subcat.DELETE("/:codSubcat", services.DeletarSubcategoria)

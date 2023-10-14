@@ -23,7 +23,8 @@ func MostrarTodasCategorias(c *gin.Context) {
 	var cats []models.Categoria
 	for rows.Next() {
 		var cat models.Categoria
-		err := rows.Scan(&cat.CodCat, &cat.NomeCat, &cat.UnidMedida, &cat.Montagem, &cat.Apelido)
+		err := rows.Scan(&cat.CodCat, &cat.NomeCat, &cat.UnidMedida,
+			&cat.Montagem, &cat.Apelido)
 		if err != nil {
 			log.Println(err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
@@ -41,7 +42,10 @@ func MostrarTodasCategorias(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "categorias": cats, "message": "Categorias encontradas com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"categorias": cats,
+		"message": "Categorias encontradas com sucesso!",
+	})
 }
 
 func MostrarComponentesCategoria(c *gin.Context) {
@@ -49,7 +53,8 @@ func MostrarComponentesCategoria(c *gin.Context) {
 
 	var cat models.Categoria
 	row := DB.QueryRow("SELECT * FROM categorias WHERE cod_cat = ?;", codCat)
-	err := row.Scan(&cat.CodCat, &cat.NomeCat, &cat.UnidMedida, &cat.Montagem, &cat.Apelido)
+	err := row.Scan(&cat.CodCat, &cat.NomeCat, &cat.UnidMedida, &cat.Montagem,
+		&cat.Apelido)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Erro ao encontrar categoria." })
 		return
@@ -66,10 +71,11 @@ func MostrarComponentesCategoria(c *gin.Context) {
 	for rows.Next() {
 		var comp models.Componente
 		err := rows.Scan(
-			&comp.CodComp, &comp.CodPeca, &comp.Especificacao, &comp.CodCat, &comp.CodSubcat,
-			&comp.DiamInterno, &comp.DiamExterno, &comp.DiamNominal, &comp.MedidaD, &comp.Costura,
-			&comp.PrensadoReusavel, &comp.Mangueira, &comp.Material, &comp.Norma, &comp.Bitola,
-			&comp.ValorEntrada, &comp.ValorSaida)
+			&comp.CodComp, &comp.CodPeca, &comp.Especificacao, &comp.CodCat,
+			&comp.CodSubcat, &comp.DiamInterno, &comp.DiamExterno, 
+			&comp.DiamNominal, &comp.MedidaD, &comp.Costura, 
+			&comp.PrensadoReusavel, &comp.Mangueira, &comp.Material, 
+			&comp.Norma, &comp.Bitola, &comp.ValorEntrada, &comp.ValorSaida)
 
 		if err != nil {
 			log.Println(err)
@@ -82,7 +88,11 @@ func MostrarComponentesCategoria(c *gin.Context) {
 
 	defer rows.Close()
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "componentes": componentes, "categoria": cat, "message": "Componentes de categoria encontrados com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"componentes": componentes,
+		"categoria": cat,
+		"message": "Componentes de categoria encontrados com sucesso!",
+	})
 }
 
 func CriarCategoria(c *gin.Context) {
@@ -111,7 +121,8 @@ func CriarCategoria(c *gin.Context) {
 	_, err := DB.Exec(insert, cat.NomeCat, cat.UnidMedida, cat.Montagem, cat.Apelido)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao criar categoria. Verifique se uma categoria com o mesmo nome já não existe e tente novamente." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"error": "Erro ao criar categoria. Verifique se uma categoria com o mesmo nome já não existe e tente novamente." })
 		return
 	}
 

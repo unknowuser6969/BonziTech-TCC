@@ -32,6 +32,20 @@ type Componente struct {
 	ValorSaida       float64     `json:"valorEntrada"`
 }
 
+type Cliente struct {
+	CodCli      int         `json:"codCli"`
+	NomeEmpresa string      `json:"nomeEmpresa"`
+	NomeCli     string      `json:"nome"`
+	Tipo        null.String `json:"tipo"`
+	DiaReg      string      `json:"diaReg"`
+	Endereco    null.String `json:"endereco"`
+	Bairro      null.String `json:"bairro"`
+	Cidade      string      `json:"cidade"`
+	Estado      string      `json:"estado"`
+	CEP         null.String `json:"cep"`
+	Email       null.String `json:"email"`
+}
+
 type Estoque struct {
 	CodEstq    int     `json:"codEstq"`
 	CodComp    int     `json:"codComp"`
@@ -83,6 +97,15 @@ type Subcategoria struct {
 	CodSubcat int    `json:"codSubcat"`
 	CodCat    int    `json:"codCat"`
 	Nome      string `json:"nome"`
+}
+
+type Telefone struct {
+	CodTel      int         `json:"codTel"`
+	CodCli      int         `json:"codCli"`
+	Telefone    string      `json:"telefone"`
+	NomeTel     string      `json:"nomeTel"`
+	TipoContato null.String `json:"tipoContato`
+	TipoCli     null.String `json:"tipoCli"`
 }
 
 type Usuario struct {

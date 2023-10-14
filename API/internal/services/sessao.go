@@ -76,7 +76,10 @@ func CriarSessao(c *gin.Context) {
 		}
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "codSessao": s.CodSessao, "message": "Sessão criada com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"codSessao": s.CodSessao,
+		"message": "Sessão criada com sucesso!",
+	})
 }
 
 func FecharSessao(c *gin.Context) {
