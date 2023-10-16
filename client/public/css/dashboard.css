@@ -1,10 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@font-face {
+    font-family: 'Mona Sans Regular';
+    src: url(/public/fonts/MonaSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Mona Sans Bold';
+    src: url(/public/fonts/MonaSans-Bold.ttf);
+}
 
 
 :root{
-    --bg: #FFF;
-    --bg-red: #E03150;
-    --text: #212529;
+    --white-100: #FFFFFF;
+    --white-200: #F2F2F2;
+    --gray-100: #E6E6E6;
+    --gray-200: #CBCBCB;
+    --gray-300: #737373;
+    --black: #0A0A0A;
+    --indigo-50: #F5F3FF;
+    --indigo-100: #EDE9FE;
+    --indigo-200: #DDD6FE;
+    --indigo-300: #C4B5FD;
+    --indigo-400: #A78BFA;
+    --indigo-500: #8B5CF6;
+    --indigo-600: #7C3AED;
+    --indigo-700: #6D28D9;
+    --indigo-800: #5B21B6;
+    --red-100: #FEE2E2;
+    --red-200: #FECACA;
+    --red-300: #FCA5A5;
+    --red-600: #DC2626;
+    --red-800: #991B1B;
+    --amber-100: #FEF3C7;
 }
 
 .icon::before {
@@ -22,11 +48,10 @@
 body{
     width: 100vw;
     height: 100vh;
-    font-family: 'inter';
+    font-family: 'Mona Sans Regular';
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--bg);
-    transition: 0.3s;
+    background-color: var(--indigo-50);
 }
 
 aside{
@@ -39,7 +64,7 @@ aside{
     width: 20%;
     top: 0;
     bottom: 0;
-    background-color: #E03150;
+    background-color: var(--white-100);
     user-select: none;
     z-index: 100;
 }
@@ -59,11 +84,8 @@ li{
     list-style: none;
 }
 
-#logo img{
+.logo img{
     width: 100%;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 1rem;
 }
 
 .nav-option{
@@ -71,7 +93,7 @@ li{
     align-items: center;
     gap: 1rem;
     font-size: 1.2rem;
-    color: #fff;
+    color: var(--black);
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     padding: 1rem;
@@ -80,13 +102,13 @@ li{
 }
 
 .nav-option-selected{
-    background-color: #FFF;
-    color: #E03150;
+    background-color: var(--indigo-200);
+    color: var(--indigo-600);
 }
 
 .nav-option:hover{
-    background-color: #FFF;
-    color: #E03150;
+    background-color: var(--indigo-200);
+    color: var(--indigo-600);
 }
 
 .log-out a:hover{
@@ -121,25 +143,25 @@ main{
 }
 
 .top .input-container{
+    background-color: var(--white-100);
     display: flex;
     align-items: center;
-    border: 2px solid #e4e4e4;
+    border: 2px solid var(--gray-100);
     border-radius: 0.4rem;
 }
 
 .top .input-container i{
     padding-left: 1rem;
-    color: #929292;
+    color: var(--gray-200);
 }
 
 .top input{
     font-size: 0.8rem;
-    background-color: transparent;
     padding: 1rem 1rem;
     outline: none;
     border: none;
     border-radius: 0.4rem;
-    font-family: inter;
+    font-family: 'Mona Sans Regular';
     transition: all 0.2s ease-in-out;
 }
 
@@ -150,8 +172,7 @@ main{
 .account .profile{
     width: 4rem;
     height: 4rem;
-    background-color: #E03150;
-    background-image: url(https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80);
+    background-image: url(https://www.fineshare.com/wp-content/uploads/2023/05/bonzi-buddy-text-to-speech-6-800x800.webp);
     background-position: center;
     background-size: cover;
     border-radius: 100%;
@@ -256,43 +277,38 @@ main{
 }
 
 table {
-    border-top: rgba(0, 0, 0, 0.151) 1px solid;
-    border-collapse: collapse;
+    padding: 1rem;
+    background-color: var(--white-100);
+    border-radius: 0.4rem;
+    border: var(--gray-100) 2px solid;
     width: 80%;
 }
+
+thead{
+    border-radius: 0.4rem;
+}
+
+
 th, td {
     text-align: left;
     padding: 0.6rem 1rem;
 }
-th {
-    background-color: transparent;
-    color: #212529;
-}
 
 tr td{
-    padding: 1rem 1rem;
-    border-bottom: rgba(0, 0, 0, 0.151) 1px solid;
+    padding: 1.2rem 1rem;
 }
 
 tr th{
-    color: #929292;
-    font-weight: 100;
+    font-family: 'Mona Sans Regular';
+    color: var(--gray-300);
 }
 
-tr{
-    border-bottom: rgba(0, 0, 0, 0.151) 1px solid;
+table tr{
+    border: #0A0A0A 2px solid;
 }
 
 td button{
     margin: 0 0.4rem;
-}
-
-
-
-.table-icons{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
 
 .table-icons i{
@@ -300,14 +316,14 @@ td button{
 }
 
 .fa-pen-to-square{
-    color: #212529;
+    color: var(--black);
 }
 
 .delete-btn{
     padding: 0.6rem;
     border: none;
     background-color: #f8f9fa;
-    color: #212529;
+    color: var(--black);
     border-radius: 0.4rem;
     cursor: pointer;
     transition: all ease-in-out 0.2s;
@@ -317,7 +333,7 @@ td button{
     padding: 0.6rem;
     border: none;
     background-color: #f8f9fa;
-    color: #212529;
+    color: var(--black);
     border-radius: 0.4rem;
     cursor: pointer;
     transition: all ease-in-out 0.2s;
@@ -328,11 +344,8 @@ td button{
 }
 
 .delete-btn:hover{
-    background-color: #d6d6d6;
-}
-
-.delete-btn:hover .fa-trash-can{
-    color: #E03150;
+    background-color: var(--red-100);
+    color: var(--red-800);
 }
 
 .add-table-row{
@@ -341,19 +354,19 @@ td button{
     right: 3rem;
     border-radius: 4rem;
     border: none;
-    background-color: #E03150;
+    background-color: var(--indigo-500);
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     cursor: pointer;
     transition: all ease-in-out 0.3s;
 }
 
 .add-table-row:hover{
-    box-shadow: 0px 10px 15px -3px #E03150;
+    box-shadow: 0px 10px 15px -3px var(--indigo-400);
 }
 
 .add-table-row i{
     padding: 1.6rem;
-    color: #f2f2f2;
+    color: var(--white-100);
 }
 
 .add-form{
@@ -363,7 +376,7 @@ td button{
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #fff;
+    background-color: var(--white-100);
     width: 30vw;
     height: 100%;
     border-radius: 0px 0px 0px 14px;
@@ -379,7 +392,7 @@ td button{
     width: 70%;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: var(--white-100);
     z-index: 20;
 }
 
@@ -398,7 +411,7 @@ td button{
 }
 
 .add-form-title span:hover{
-    background-color: #e4e4e4;
+    background-color: var(--gray-100);
 }
 
 .add-form h1{
@@ -409,7 +422,7 @@ td button{
     font-family: inter;
     margin-bottom: 1.2rem;
     padding: 0.6rem;
-    border: 1px solid #e4e4e4;
+    border: 1px solid var(--gray-100);
     border-radius: 0.2rem;
     outline: none;
 }
@@ -417,8 +430,8 @@ td button{
 .add-form p{
     border-radius: 0.8rem;
     padding: 1rem;
-    background-color: #fff3f5;
-    color: #45131C;
+    background-color: var(--white-100);
+    color: var(--red-800);
 }
 
 .add-form label{
@@ -429,8 +442,8 @@ td button{
     cursor: pointer;
     font-family: inter;
     border: none;
-    color: #FFF;
-    background-color: #E03150;
+    color: var(--white-100);
+    background-color: var(--indigo-600);
     padding: 0.8rem 2rem;
     font-size: 1rem;
     border-radius: 0.4rem;
@@ -453,7 +466,7 @@ td button{
 }
 
 .cancel-btn:hover{
-    background-color: #e4e4e4;
+    background-color: var(--gray-100);
 }
 
 #close-form{
@@ -477,7 +490,7 @@ td button{
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #fff;
+    background-color: var(--white-100);
     width: 30vw;
     height: 100%;
     border-radius: 0px 0px 0px 14px;
@@ -503,7 +516,7 @@ td button{
     font-family: inter;
     margin-bottom: 1.2rem;
     padding: 0.6rem;
-    border: 1px solid #e4e4e4;
+    border: 1px solid var(--gray-100);
     border-radius: 0.2rem;
     outline: none;
 }
@@ -522,13 +535,13 @@ td button{
 
 /* Mensagem de Erro */
 .error-message{
-    border: 3px solid #fca5a5;
+    border: 3px solid var(--red-300);
     border-radius: 1rem;
     display: none;
     align-items: center;
     padding: 1.6rem;
-    background-color: #fecaca;
-    color: #7f1d1d;
+    background-color: var(--red-200);
+    color: var(--red-800);
     height: 6rem;
     width: 30%;
     right: 10px;
@@ -549,8 +562,8 @@ td button{
 
 .error-message-content ion-icon{
     font-size: 1.4rem;
-    background-color: #ef4444;
-    color: #fff;
+    background-color: var(--red-600);
+    color: var(--white-100);
     padding: 0.4rem;
     border-radius: 50%;
 }
