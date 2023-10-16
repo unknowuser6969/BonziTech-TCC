@@ -1,4 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@font-face {
+    font-family: 'Mona Sans Regular';
+    src: url(/public/fonts/MonaSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Mona Sans Bold';
+    src: url(/public/fonts/MonaSans-Bold.ttf);
+}
+
+:root{
+    --white-100: #FFFFFF;
+    --white-200: #F2F2F2;
+    --gray-100: #CBCBCB;
+    --gray-200: #737373;
+    --black: #0A0A0A;
+    --indigo-50: #F5F3FF;
+    --indigo-100: #EDE9FE;
+    --indigo-200: #DDD6FE;
+    --indigo-300: #C4B5FD;
+    --indigo-400: #A78BFA;
+    --indigo-500: #8B5CF6;
+    --indigo-600: #7C3AED;
+    --indigo-700: #6D28D9;
+    --indigo-800: #5B21B6;
+    --red-100: #FEE2E2;
+    --red-200: #FECACA;
+    --red-300: #FCA5A5;
+    --red-600: #DC2626;
+    --red-800: #991B1B;
+    --amber-100: #FEF3C7;
+}
 
     
     *{
@@ -7,25 +38,43 @@
         box-sizing: border-box;
     }
 
+    body{
+        background-color: var(--white-100);
+    }
+
     .container{
-        font-family: inter;
-        width: 100%;
-        height: 100%;
+        font-family: 'Mona Sans Regular';
+        width: 100vw;
+        height: 100vh;
         display: flex;
+        align-items: center;
+    }
+
+    .left{
+        width: 50%;
+        height: 100%;
+        background-image: url(/public/img/login.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .right{
+        width: 50%;
+        display: flex;
+        align-items: center;
         justify-content: center;
-        margin-top: 10%;
     }
 
     form{
-        background-color: #FFF;
         padding: 4em;
-        box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
         display: flex;
         flex-direction: column;
         border-radius: 1rem;
     }
 
     .form-text{
+        color: var(--black);
         text-align: center;
         margin-bottom: 10%;
         display: flex;
@@ -34,7 +83,7 @@
     }
 
     .form-text h1{
-        font-weight: bold;
+        font-family: 'Mona Sans Bold';
         font-size: 2.4rem;
     }
 
@@ -60,13 +109,13 @@
         font-size: 1rem;
         border-radius: 0.4em;
         padding: 0.6em 1em;
-        border: 1px solid #cccccc;
+        border: 1px solid var(--gray-100);
         outline: none;
         transition: all ease 0.1s;
     }
 
     .input-information input:focus{
-        border: 1px solid #171717;
+        border: 1px solid var(--black);
     }
 
     .input-information input::placeholder{
@@ -84,7 +133,7 @@
         font-family: inter;
         color: #FFF;
         border: none;
-        background-color: #E03150;
+        background-color: var(--indigo-600);
         margin-top: 10%;
         padding: 1em 0em;
         transition: all 0.3s;

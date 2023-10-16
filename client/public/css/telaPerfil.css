@@ -1,4 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@font-face {
+    font-family: 'Mona Sans Regular';
+    src: url(/public/fonts/MonaSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Mona Sans Bold';
+    src: url(/public/fonts/MonaSans-Bold.ttf);
+}
+
+:root{
+    --white-100: #FFFFFF;
+    --white-200: #F2F2F2;
+    --gray-100: #CBCBCB;
+    --gray-200: #737373;
+    --black: #0A0A0A;
+    --indigo-50: #F5F3FF;
+    --indigo-100: #EDE9FE;
+    --indigo-200: #DDD6FE;
+    --indigo-300: #C4B5FD;
+    --indigo-400: #A78BFA;
+    --indigo-500: #8B5CF6;
+    --indigo-600: #7C3AED;
+    --indigo-700: #6D28D9;
+    --indigo-800: #5B21B6;
+    --red-100: #FEE2E2;
+    --red-200: #FECACA;
+    --red-300: #FCA5A5;
+    --red-600: #DC2626;
+    --red-800: #991B1B;
+    --amber-100: #FEF3C7;
+}
 
 *{
     margin: 0;
@@ -6,17 +37,9 @@
     box-sizing: border-box;
     overflow-y: hidden;
 }
-
-:root{
-    --branco: #FFF;
-    --cinzaClaro: #cccccc;
-    --cinza: #bababa;
-    --cinzaEscuro: #171717;
-    --preto: #000;
-}
-
 .container{
-    font-family: 'Inter';
+    background-color: var(--indigo-50);
+    font-family: 'Mona Sans Regular';
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -29,7 +52,7 @@
     align-items: center;
     width: 25rem;
     height: 100vh;
-    border-right: rgba(0, 0, 0, 0.151) 1px solid;
+    background-color: var(--white-100);
 }
 
 ul{
@@ -46,19 +69,21 @@ ul h3{
 .nav-title{
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
+    color: var(--gray-200);
 }
 
 .nav-title ion-icon{
-    font-size: 1.8rem;
-    color: var(--cinzaEscuro);
     border-radius: 50%;
     padding: 0.5rem;
+    font-size: 1.8rem;
+    color: var(--gray-200);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
 
 .nav-title a{
+    width: fit-content;
     text-decoration: none;
 }
 
@@ -81,10 +106,6 @@ ul h3{
     transition: all 0.1s ease-in-out;
 }
 
-.nav-options a:hover{
-    opacity: 40%;
-}
-
 .profile{
     width: 100%;
     height: 100%;
@@ -94,8 +115,8 @@ ul h3{
 
 .profile-top{
     padding: 1rem 4rem;
-    height: 16vh;
-    background: url(/src/img/pattern.png);
+    height: 20vh;
+    background-color: var(--indigo-700);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -103,17 +124,18 @@ ul h3{
 
 .profile-img ion-icon{
     position: absolute;
-    top: 50px;
+    top: 6rem;
     width: 5rem;
     height: 5rem;
     background-color: #FFF;
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     padding: 2rem;
     border-radius: 1rem;
-    color: #E03150;
+    color: var(--indigo-600);
 }
 
 .profile-info{
+    margin-top: 5%;
     padding: 4rem;
     display: flex;
     flex-direction: column;
@@ -137,7 +159,7 @@ ul h3{
 }
 
 .info{
-    border-top: rgba(0, 0, 0, 0.151) 1px solid;
+    border-top: var(--gray-100) 1px solid;
     padding: 3rem 0;
     display: flex;
     flex-direction: column;
@@ -148,5 +170,5 @@ ul h3{
     border-radius: 0.4rem;
     padding: 1rem;
     width: 40%;
-    background-color: #f2f2f2;
+    background-color: var(--indigo-100);
 }

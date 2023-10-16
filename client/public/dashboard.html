@@ -9,6 +9,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/JS/dashboard.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/dashboard.css">
     <title>Dashboard</title>
 </head>
@@ -16,8 +17,8 @@
 <body>
     <aside>
         <ul>
-            <li id="logo">
-                <img src="/img/logo-connect.png" alt="logo">
+            <li class="logo">
+                <img src="/img/logo-bonziboard.svg" alt="logo">
             </li>
 
             <li><a class="nav-option" href="/dashboard" id="nav-visao" data-section="visao-geral">
@@ -80,7 +81,6 @@
                 <div class="profile-menu" id="profile-menu">
                     <div class="profile-menu-content">
                         <li><a href="profile.html">Meu Perfil</a></li>
-                        <li><a href="profile.html">Configurações</a></li>
                         <li id="profile-log-out"><a href="#">Sair</a></li>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                     </tbody>
                 </table>
 
-                <div id="add-form-clientes" style="display: none;">
+                <div class="add-form" id="add-form-clientes">
                     <h1>Adicionar Cliente</h1>
 
                     <form>
@@ -268,7 +268,7 @@
                     </form> 
                 </div>
 
-                <div id="edit-form-clientes">
+                <div class="edit-form" id="edit-form-clientes">
                     <h1>Editar Cliente</h1>
 
                     <form>
@@ -338,7 +338,7 @@
                     </tbody>
                 </table>
 
-                <div id="add-form-fabricantes" style="display: none;">
+                <div class="add-form" id="add-form-fabricantes" style="display: none;">
                     <h1>Adicionar Fabricante</h1>
 
                     <form>
@@ -379,7 +379,7 @@
                     </form>
                 </div>
 
-                <div id="edit-form-fabricantes">
+                <div class="edit-form" id="edit-form-fabricantes">
                     <h1>Editar Fabricante</h1>
 
                     <form>
@@ -455,7 +455,7 @@
                     </tbody>
                 </table>
 
-                <div id="add-form-componentes" style="display: none;">
+                <div class="add-form" id="add-form-componentes" style="display: none;">
                     <h1>Adicionar Componente</h1>
 
                     <form>
@@ -496,7 +496,7 @@
                         <input type="number" id="add-quantidade-min-componentes">
 
                         <label>Quantidade Máxima</label>
-                        <input type="text" id="add-quantidade-max-componentes">
+                        <input type="text" id="add-quantidade-max-componentes-estoque">
 
                         <label>Estoque</label>
                         <input type="text" id="add-estoque-componentes">
@@ -508,14 +508,14 @@
                         <input type="text" id="add-valor-saida-componentes">
 
                         <div class="form-btns">
-                            <button id="update-btn-componentes">Atualizar</button>
+                            <button id="confirm-btn-componentes">Atualizar</button>
                             <button id="cancel-btn-componentes">Cancelar</button>
                         </div>
                     </form>
 
                 </div>
 
-                <div id="edit-form-componentes">
+                <div class="edit-form" id="edit-form-componentes">
                     <h1>Editar Componente</h1>
 
                     <form>
@@ -570,7 +570,7 @@
 
                         <div class="form-btns">
                             <button id="update-btn-componentes">Atualizar</button>
-                            <button id="cancel-btn-componentes">Cancelar</button>
+                            <button id="cancel-btn-edit-componentes">Cancelar</button>
                         </div>
                     </form>
                 </div>
@@ -598,7 +598,7 @@
                     </tbody>
                 </table>
 
-                <div id="add-form-estoque" style="display: none;">
+                <div class="add-form" id="add-form-estoque" style="display: none;">
                     <h1>Adicionar Item</h1>
 
                     <form>
@@ -609,13 +609,13 @@
                         <input type="text" id="add-codigo-componentes-estoque">
 
                         <label>Quantidade Mínima</label>
-                        <input type="text" id="add-quantidade-min-componentes">
+                        <input type="text" id="add-quantidade-min-estoque">
 
                         <label>Quantidade Máxima</label>
-                        <input type="text" id="add-quantidade-max-componentes">
+                        <input type="text" id="add-quantidade-max-estoque">
 
                         <label>Quantidade</label>
-                        <input type="text" id="add-quantidade-componentes">
+                        <input type="text" id="add-quantidade-estoque">
 
                         <div class="form-btns">
                             <button id="confirm-btn-estoque">Adicionar</button>
@@ -624,7 +624,7 @@
                     </form>
                 </div>
 
-                <div id="edit-form-estoque">
+                <div class="edit-form" id="edit-form-estoque">
                     <h1>Editar Item</h1>
 
                     <form>
@@ -632,16 +632,16 @@
                         <input type="text" id="edit-codigo-estoque-estoque">
 
                         <label>Código do Componentes</label>
-                        <input type="text" id="add-codigo-componentes-estoque">
+                        <input type="text" id="edit-codigo-componentes-estoque">
 
                         <label>Quantidade Mínima</label>
-                        <input type="text" id="edit-quantidade-min-componentes">
+                        <input type="text" id="edit-quantidade-min-estoque">
 
                         <label>Quantidade Máxima</label>
-                        <input type="text" id="edit-quantidade-max-componentes">
+                        <input type="text" id="edit-quantidade-max-estoque">
 
                         <label>Quantidade</label>
-                        <input type="text" id="edit-quantidade-componentes">
+                        <input type="text" id="edit-quantidade-estoque">
 
 
                         <div class="form-btns">
@@ -674,7 +674,7 @@
                     </tbody>
                 </table>
 
-                <div id="add-form-entradas" style="display: none;">
+                <div class="add-form" id="add-form-entradas" style="display: none;">
                     <h1>Adicionar Entrada</h1>
 
                     <form>
@@ -701,7 +701,7 @@
                     </form>
                 </div>
 
-                <div id="edit-form-entradas">
+                <div class="edit-form" id="edit-form-entradas">
                     <h1>Editar Entrada</h1>
 
                     <form>
@@ -723,7 +723,7 @@
 
                         <div class="form-btns">
                             <button id="update-btn-entradas">Atualizar</button>
-                            <button id="cancel-btn-entradas">Cancelar</button>
+                            <button id="cancel-btn-edit-entradas">Cancelar</button>
                         </div>
                     </form>
                 </div>
@@ -753,7 +753,7 @@
                     </tbody>
                 </table>
 
-                <div id="add-form-saidas" style="display: none;">
+                <div class="add-form" id="add-form-saidas" style="display: none;">
                     <h1>Adicionar Saída</h1>
 
                     <form>
@@ -786,7 +786,7 @@
                     </form>
                 </div>
 
-                <div id="edit-form-saidas">
+                <div class="edit-form" id="edit-form-saidas">
                     <h1>Editar Saída</h1>
 
                     <form>
