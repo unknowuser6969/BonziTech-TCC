@@ -5,7 +5,9 @@ const funcRouter = express.Router();
 const path = require("path");
 const publicFolder = "../public/";
 
-funcRouter.get("/", (req, res) => {
+const validarSessao = require("../modules/validarSessao");
+
+funcRouter.get("/", validarSessao, (req, res) => {
     fetch(process.env.APIURL + `/usuarios`, {
         method: "GET",
         headers: {
@@ -26,7 +28,7 @@ funcRouter.get("/", (req, res) => {
     });
 });
 
-funcRouter.post("/", (req, res) => {
+funcRouter.post("/", validarSessao, (req, res) => {
     fetch(process.env.APIURL + `/usuarios`, {
         method: "POST",
         headers: {
@@ -43,7 +45,7 @@ funcRouter.post("/", (req, res) => {
     });
 });
 
-funcRouter.put("/", (req, res) => {
+funcRouter.put("/", validarSessao, (req, res) => {
     fetch(process.env.APIURL + `/usuarios`, {
         method: "PUT",
         headers: {
@@ -60,7 +62,7 @@ funcRouter.put("/", (req, res) => {
     });
 });
 
-funcRouter.delete("/:codUsu", (req, res) => {
+funcRouter.delete("/:codUsu", validarSessao, (req, res) => {
     const codUsu = req.params.codUsu;
 
     fetch(process.env.APIURL + `/usuarios/${codUsu}`, {

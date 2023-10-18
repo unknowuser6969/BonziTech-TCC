@@ -1,9 +1,17 @@
 require("dotenv").config();
 const express = require("express");
+const session = require("express-session");
 const app = express();
 
 app.use(express.json());
-//app.use(require("./modules/validarSessao"));
+app.use(session({
+    secret: process.env.key,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false
+    }
+}));
 app.use(express.static("./public/"));
 app.use("/", require("./routes/routes"));
 app.use("/clientes", require("./routes/clientesRoutes"));
