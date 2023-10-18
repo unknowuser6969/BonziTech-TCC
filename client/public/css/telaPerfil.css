@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Mona Sans Regular';
-    src: url(/public/fonts/MonaSans-Regular.ttf);
+    src: url("/fonts/MonaSans-Regular.ttf");
 }
 
 @font-face {
     font-family: 'Mona Sans Bold';
-    src: url(/public/fonts/MonaSans-Bold.ttf);
+    src: url("/fonts/MonaSans-Bold.ttf");
 }
 
 :root{

@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Mona Sans Regular';
-    src: url(/public/fonts/MonaSans-Regular.ttf);
+    src: url("/fonts/MonaSans-Regular.ttf");
 }
 
 @font-face {
     font-family: 'Mona Sans Bold';
-    src: url(/public/fonts/MonaSans-Bold.ttf);
+    src: url("/fonts/MonaSans-Bold.ttf");
 }
 
 
@@ -172,7 +172,7 @@ main{
 .account .profile{
     width: 4rem;
     height: 4rem;
-    background-image: url(https://www.fineshare.com/wp-content/uploads/2023/05/bonzi-buddy-text-to-speech-6-800x800.webp);
+    background-image: url("https://www.fineshare.com/wp-content/uploads/2023/05/bonzi-buddy-text-to-speech-6-800x800.webp");
     background-position: center;
     background-size: cover;
     border-radius: 100%;
@@ -309,6 +309,11 @@ table tr{
 
 td button{
     margin: 0 0.4rem;
+}
+
+.texto-404 {
+    padding: 10vh 0vh;
+    text-align: center;
 }
 
 .table-icons i{
