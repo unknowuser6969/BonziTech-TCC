@@ -84,6 +84,5 @@ function mostrarMensagemErro(erro) {
 
     setTimeout(() => {
         mensagemErroContainer.style.display = "none";
-    }, 5000)
-    
+    }, 5000);
 }
