@@ -16,19 +16,19 @@ func MostrarTodosFabricantes(c *gin.Context) {
 	rows, err := DB.Query("SELECT * FROM fabricantes;")
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde."})
 		return
 	}
 
 	var fabs []models.Fabricante
 	for rows.Next() {
 		var fab models.Fabricante
-		err := rows.Scan(&fab.CodFab, &fab.Nome, &fab.NomeContato, &fab.RazaoSocial, 
+		err := rows.Scan(&fab.CodFab, &fab.Nome, &fab.NomeContato, &fab.RazaoSocial,
 			&fab.Telefone, &fab.Celular, &fab.Fax, &fab.Endereco, &fab.Cidade,
 			&fab.Estado, &fab.CEP)
 		if err != nil {
 			log.Println(err)
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 			return
 		}
 
@@ -37,7 +37,7 @@ func MostrarTodosFabricantes(c *gin.Context) {
 
 	if err := rows.Err(); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 		return
 	}
 
@@ -45,7 +45,7 @@ func MostrarTodosFabricantes(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"fabricantes": fabs,
-		"message": "Fabricantes encontrados com sucesso!",
+		"message":     "Fabricantes encontrados com sucesso!",
 	})
 }
 
@@ -54,18 +54,18 @@ func MostrarFabricante(c *gin.Context) {
 
 	var fab models.Fabricante
 	row := DB.QueryRow("SELECT * FROM fabricantes WHERE cod_fab = ?;", codFab)
-	err := row.Scan(&fab.CodFab, &fab.Nome, &fab.NomeContato, &fab.RazaoSocial, 
-			&fab.Telefone, &fab.Celular, &fab.Fax, &fab.Endereco, &fab.Cidade,
-			&fab.Estado, &fab.CEP)
+	err := row.Scan(&fab.CodFab, &fab.Nome, &fab.NomeContato, &fab.RazaoSocial,
+		&fab.Telefone, &fab.Celular, &fab.Fax, &fab.Endereco, &fab.Cidade,
+		&fab.Estado, &fab.CEP)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Fabricante não encontrado." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Fabricante não encontrado."})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"fabricante": fab,
-		"message": "Fabricante encontrado com sucesso!",
+		"message":    "Fabricante encontrado com sucesso!",
 	})
 }
 
@@ -73,12 +73,12 @@ func AdicionarFabricante(c *gin.Context) {
 	var fab models.Fabricante
 	if err := c.BindJSON(&fab); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de fabricante inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de fabricante inválidos."})
 		return
 	}
 
 	if fab.Nome == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nome de fabricante não pode estar vazio." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Nome de fabricante não pode estar vazio."})
 		return
 	}
 
@@ -89,23 +89,23 @@ func AdicionarFabricante(c *gin.Context) {
 		fab.Celular, fab.NomeContato, fab.Endereco, fab.Cidade, fab.Estado, fab.CEP)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao cadastrar fabricante. Verifique se todos os dados estão corretos e tente novamente." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao cadastrar fabricante. Verifique se todos os dados estão corretos e tente novamente."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Fabricante registrado com sucesso!" })
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Fabricante registrado com sucesso!"})
 }
 
 func AtualizarFabricante(c *gin.Context) {
 	var fab models.Fabricante
 	if err := c.BindJSON(&fab); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de fabricante inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de fabricante inválidos."})
 		return
 	}
 
 	if fab.CodFab == 0 || fab.Nome == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nome e código de fabricante são obrigatórios." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Nome e código de fabricante são obrigatórios."})
 		return
 	}
 
@@ -116,7 +116,7 @@ func AtualizarFabricante(c *gin.Context) {
 	err := rows.Scan(&codFabRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Fabricante não existe, ou não pode ser atualizado." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Fabricante não existe, ou não pode ser atualizado."})
 		return
 	}
 
@@ -125,16 +125,16 @@ func AtualizarFabricante(c *gin.Context) {
 		nome_contato = ?, endereco = ?, cidade = ?, estado = ?, cep = ?
 		WHERE cod_fab = ?;`
 	_, err = DB.Exec(update, fab.Nome, fab.RazaoSocial, fab.Telefone, fab.Fax,
-		fab.Celular, fab.NomeContato, fab.Endereco, fab.Cidade, fab.Estado, 
+		fab.Celular, fab.NomeContato, fab.Endereco, fab.Cidade, fab.Estado,
 		fab.CEP, fab.CodFab)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"error": "Erro ao atualizar fabricante. Verifique se todos os dados estão corretos e tente novamente." })
+			"error": "Erro ao atualizar fabricante. Verifique se todos os dados estão corretos e tente novamente."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Fabricante atualizado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Fabricante atualizado com sucesso!"})
 }
 
 func DeletarFabricante(c *gin.Context) {
@@ -147,7 +147,7 @@ func DeletarFabricante(c *gin.Context) {
 	err := rows.Scan(&codFabRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Fabricante não existe, ou não pode ser excluído." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Fabricante não existe, ou não pode ser excluído."})
 		return
 	}
 
@@ -155,9 +155,9 @@ func DeletarFabricante(c *gin.Context) {
 	_, err = DB.Exec(delete, codFab)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao excluir fabricante. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao excluir fabricante. Tente novamente mais tarde."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Fabricante excluído com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Fabricante excluído com sucesso!"})
 }

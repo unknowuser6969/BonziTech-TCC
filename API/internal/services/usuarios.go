@@ -1,6 +1,6 @@
-// usuarios.go contém as funcionalidades de manejo 
+// usuarios.go contém as funcionalidades de manejo
 // de usuários da aplicação
-package services 
+package services
 
 import (
 	"log"
@@ -22,23 +22,21 @@ func MostrarUsuario(c *gin.Context) {
 	err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Ativo)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro procurar usuário. Tente novamente." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Usuário não encontrado."})
 		return
 	}
 
-	if u.Permissoes == "" {
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário não encontrado." })
-		return
-	} 
-
-	c.IndentedJSON(http.StatusOK, u)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"usuario": u,
+		"message": "Usuário encontrado com sucesso!",
+	})
 }
 
 func MostrarTodosUsuarios(c *gin.Context) {
 	rows, err := DB.Query("SELECT cod_usu, permissoes, nome, email, ativo FROM usuarios WHERE ativo = TRUE;")
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 		return
 	}
 
@@ -48,7 +46,7 @@ func MostrarTodosUsuarios(c *gin.Context) {
 		err := rows.Scan(&u.CodUsuario, &u.Permissoes, &u.Nome, &u.Email, &u.Ativo)
 		if err != nil {
 			log.Println(err)
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 			return
 		}
 
@@ -57,7 +55,7 @@ func MostrarTodosUsuarios(c *gin.Context) {
 
 	if err := rows.Err(); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 		return
 	}
 
@@ -65,7 +63,7 @@ func MostrarTodosUsuarios(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"usuarios": usuarios,
-		"message": "Usuários encontrados com sucesso!",
+		"message":  "Usuários encontrados com sucesso!",
 	})
 }
 
@@ -74,12 +72,12 @@ func ValidarDadosLogin(c *gin.Context) {
 	err := c.BindJSON(&u)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de usuário inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de usuário inválidos."})
 		return
 	}
 
 	if u.Email == "" || u.Senha == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Email e senha não podem estar vazios." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Email e senha não podem estar vazios."})
 		return
 	}
 
@@ -91,13 +89,13 @@ func ValidarDadosLogin(c *gin.Context) {
 	var codUsu int
 	err = rows.Scan(&codUsu)
 	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário ou senha incorretos." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Usuário ou senha incorretos."})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"codUsuario": codUsu,
-		"message": "Usuário encontrado com sucesso!",
+		"message":    "Usuário encontrado com sucesso!",
 	})
 }
 
@@ -106,23 +104,23 @@ func AdicionarUsuario(c *gin.Context) {
 	err := c.BindJSON(&novoUsuario)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de usuário inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de usuário inválidos."})
 		return
 	}
 
 	if len(novoUsuario.Senha) < 8 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Senha precisa de pelo menos 8 caracteres." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Senha precisa de pelo menos 8 caracteres."})
 		return
 	}
 	if novoUsuario.Permissoes == "" {
 		novoUsuario.Permissoes = "Leitura"
 	}
 	if novoUsuario.Nome == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nome de usuário não pode estar vazio." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Nome de usuário não pode estar vazio."})
 		return
 	}
 	if novoUsuario.Email == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Email inválido." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Email inválido."})
 		return
 	}
 
@@ -132,11 +130,11 @@ func AdicionarUsuario(c *gin.Context) {
 	_, err = DB.Exec(insert, novoUsuario.Permissoes, novoUsuario.Nome, novoUsuario.Email, novoUsuario.Senha)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao inserir usuário no banco de dados." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao inserir usuário no banco de dados."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário cadastrado com sucesso!" })
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Usuário cadastrado com sucesso!"})
 }
 
 func AtualizarUsuario(c *gin.Context) {
@@ -144,12 +142,12 @@ func AtualizarUsuario(c *gin.Context) {
 	err := c.BindJSON(&u)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao atualizar usuário. Tente novamente."})
 		return
 	}
 
 	if u.CodUsuario == 0 || u.Permissoes == "" || u.Nome == "" || u.Email == "" || u.Senha == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Parâmetros insuficientes." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Parâmetros insuficientes."})
 		return
 	}
 
@@ -164,7 +162,7 @@ func AtualizarUsuario(c *gin.Context) {
 	err = rows.Scan(&codUsuRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Sua senha está incorreta, ou você não tem permissões para editar este usuário." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Sua senha está incorreta, ou você não tem permissões para editar este usuário."})
 		return
 	}
 
@@ -174,19 +172,19 @@ func AtualizarUsuario(c *gin.Context) {
 	err = rows.Scan(&codUsuRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário não existe, ou não pode ser atualizado." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Usuário não existe, ou não pode ser atualizado."})
 		return
 	}
-	
+
 	update := "UPDATE usuarios SET permissoes = ?, nome = ?, email = ? WHERE cod_usu = ?;"
 	_, err = DB.Exec(update, u.Permissoes, u.Nome, u.Email, u.CodUsuario)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar usuário. Tente novamente." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao atualizar usuário. Tente novamente."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário atualizado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Usuário atualizado com sucesso!"})
 }
 
 func DeletarUsuario(c *gin.Context) {
@@ -198,7 +196,7 @@ func DeletarUsuario(c *gin.Context) {
 	err := rows.Scan(&codUsuRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Usuário não existe, ou não pode ser deletado." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Usuário não existe, ou não pode ser deletado."})
 		return
 	}
 
@@ -206,9 +204,9 @@ func DeletarUsuario(c *gin.Context) {
 	_, err = DB.Exec(update, codUsu)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao desativar usuário." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao desativar usuário."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Usuário desativado com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Usuário desativado com sucesso!"})
 }

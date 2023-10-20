@@ -16,7 +16,7 @@ func MostrarEstoque(c *gin.Context) {
 	rows, err := DB.Query("SELECT * FROM estoque;")
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar ao banco de dados. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar ao banco de dados. Tente novamente mais tarde."})
 		return
 	}
 
@@ -27,7 +27,7 @@ func MostrarEstoque(c *gin.Context) {
 			&e.QuantAtual)
 		if err != nil {
 			log.Println(err)
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao retornar estoque. Tente novamente mais tarde." })
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao retornar estoque. Tente novamente mais tarde."})
 			return
 		}
 
@@ -36,7 +36,7 @@ func MostrarEstoque(c *gin.Context) {
 
 	if err := rows.Err(); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 		return
 	}
 
@@ -48,12 +48,11 @@ func MostrarEstoque(c *gin.Context) {
 	})
 }
 
-
 func AdicionarComponenteEstoque(c *gin.Context) {
 	var e models.Estoque
 	if err := c.BindJSON(&e); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de estoque inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de estoque inválidos."})
 		return
 	}
 
@@ -61,11 +60,11 @@ func AdicionarComponenteEstoque(c *gin.Context) {
 		e.QuantMax = 10000000
 	}
 	if e.QuantMin > e.QuantMax {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "A quantidade mínima deve ser maior ou igual à máxima." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "A quantidade mínima deve ser maior ou igual à máxima."})
 		return
 	}
 	if e.QuantAtual < 0 || e.QuantMax < 0 || e.QuantMin < 0 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Nenhuma quantidade pode ser inferior a 0." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Nenhuma quantidade pode ser inferior a 0."})
 		return
 	}
 
@@ -76,23 +75,25 @@ func AdicionarComponenteEstoque(c *gin.Context) {
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"error": "Erro ao adicionar componente ao estoque. Cheque se o componente já foi adicionado ou se ele não existe e tente novamente." })
+			"error": "Erro ao adicionar componente ao estoque. Cheque se o componente já foi adicionado ou se ele não existe e tente novamente."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Componente adicionado ao estoque com sucesso!" })
+	//TODO: Adicionar também em Entradas
+
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Componente adicionado ao estoque com sucesso!"})
 }
 
 func AtualizarEstoque(c *gin.Context) {
 	var e models.Estoque
 	if err := c.BindJSON(&e); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de estoque inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de estoque inválidos."})
 		return
 	}
 
 	if e.QuantMax <= 0 || e.QuantMin < 0 || e.QuantAtual < 0 {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "A quantidade máxima deve ser superior a 0. E nenhuma quantidade pode ser inferior a 0." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "A quantidade máxima deve ser superior a 0. E nenhuma quantidade pode ser inferior a 0."})
 		return
 	}
 
@@ -101,7 +102,7 @@ func AtualizarEstoque(c *gin.Context) {
 	var codEstqRow int
 	if err := row.Scan(&codEstqRow); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Componente não existe no estoque." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Componente não existe no estoque."})
 		return
 	}
 
@@ -109,11 +110,11 @@ func AtualizarEstoque(c *gin.Context) {
 	_, err := DB.Exec(update, e.QuantMin, e.QuantMax, e.QuantAtual, e.CodComp)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao atualizar dados no estoque. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao atualizar dados no estoque. Tente novamente mais tarde."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Dados de componente atualizado no estoque com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Dados de componente atualizado no estoque com sucesso!"})
 }
 
 func DeletarComponenteEstoque(c *gin.Context) {
@@ -124,7 +125,7 @@ func DeletarComponenteEstoque(c *gin.Context) {
 	var codEstqRow int
 	if err := row.Scan(&codEstqRow); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Componente não existe no estoque." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Componente não existe no estoque."})
 		return
 	}
 
@@ -132,9 +133,9 @@ func DeletarComponenteEstoque(c *gin.Context) {
 	_, err := DB.Exec(delete, codComp)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao excluir dados do estoque. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao excluir dados do estoque. Tente novamente mais tarde."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Dados de componente excluídos do estoque com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Dados de componente excluídos do estoque com sucesso!"})
 }

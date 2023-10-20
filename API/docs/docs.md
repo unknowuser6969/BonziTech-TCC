@@ -11,6 +11,7 @@ API hospedada em: https://bonzitech-tcc.onrender.com/
 * [/api/categorias](#apicategorias)
 * [/api/clientes](#apiclientes)
   * [/api/clientes/telefones](#apiclientestelefones)
+* [/api/componentes](#apicomponentes)
 * [/api/estoque](#apiestoque)
 * [/api/fabricantes](#apifabricantes)
 * [/api/sessao](#apisessao)
@@ -396,6 +397,168 @@ DELETE /api/clientes/telefones/${codTel}
 | :-------- | :------- | :-------------------------------- |
 | `codTel`      | `string` | **Required**. Código do telefone a ser excluído |
 
+
+## /api/componentes
+
+#### Mostrar todos componentes
+
+```http
+GET /api/componentes
+```
+
+Response:
+```javascript
+{
+  "componentes": []object || null
+}
+```
+
+#### Mostrar componente
+
+```http
+GET /api/componentes/${codComp}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codComp`      | `string` | **Required**. Código de componente a ser mostrado |
+
+Response:
+```javascript
+{
+  "componente": {
+    "codComp": Number,
+    "codPeca": Number,
+    "especificacao": string,
+    "codCat": Number,
+    "codSubcat": Number || null,
+    "diamInterno": string || null,
+    "diamExterno": Number || null,
+    "diamNominal": string || null,
+    "medidaD": Number || null,
+    "costura": boolean || null,
+    "prensadoReusavel": string || null,
+    "mangueira": string || null,
+    "material": string || null,
+    "norma": string || null,
+    "bitola": Number || null,
+    "valorEntrada": Number,
+    "valorVenda": Number
+  }
+}
+```
+
+#### Criar novo componente
+
+```http
+POST /api/componentes
+```
+
+Request body:
+```javascript
+{
+  "codPeca": Number,
+  "especificacao": string,
+  "codCat": Number,
+  "codSubcat": Number || null,
+  "diamInterno": string || null,
+  "diamExterno": Number || null,
+  "diamNominal": string || null,
+  "medidaD": Number || null,
+  "costura": boolean || null,
+  "prensadoReusavel": string || null,
+  "mangueira": string || null,
+  "material": string || null,
+  "norma": string || null,
+  "bitola": Number || null,
+  "valorEntrada": Number,
+  "valorVenda": Number
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codPeca": "ABCDE",
+  "especificacao": "sla man",
+  "codCat": 2,
+  "codSubcat": null,
+  "diamInterno": null,
+  "diamExterno": null,
+  "diamNominal": null,
+  "medidaD": null,
+  "costura": null,
+  "prensadoReusavel": null,
+  "mangueira": null,
+  "material": null,
+  "norma": null,
+  "bitola": null,
+  "valorEntrada": 10,
+  "valorVenda": 85
+}
+```
+
+#### Atualizar componente
+
+```http
+PUT /api/componentes
+```
+
+Request body:
+```javascript
+{
+  "codComp": Number,
+  "codPeca": Number,
+  "especificacao": string,
+  "codCat": Number,
+  "codSubcat": Number || null,
+  "diamInterno": string || null,
+  "diamExterno": Number || null,
+  "diamNominal": string || null,
+  "medidaD": Number || null,
+  "costura": boolean || null,
+  "prensadoReusavel": string || null,
+  "mangueira": string || null,
+  "material": string || null,
+  "norma": string || null,
+  "bitola": Number || null,
+  "valorEntrada": Number,
+  "valorVenda": Number
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codComp": 1,
+  "codPeca": "ABCDE",
+  "especificacao": "sla man",
+  "codCat": 2,
+  "codSubcat": null,
+  "diamInterno": null,
+  "diamExterno": null,
+  "diamNominal": null,
+  "medidaD": null,
+  "costura": null,
+  "prensadoReusavel": null,
+  "mangueira": null,
+  "material": null,
+  "norma": null,
+  "bitola": null,
+  "valorEntrada": 10,
+  "valorVenda": 85
+}
+```
+
+#### Deletar componente
+
+```http
+DELETE /api/componentes/${codComp}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codComp`      | `string` | **Required**. Código do componente a ser removido do estoque |
 
 ## /api/estoque
 

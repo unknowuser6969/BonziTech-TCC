@@ -19,14 +19,14 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 	err := row.Scan(&codCat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Erro ao encontrar categoria." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Erro ao encontrar categoria."})
 		return
 	}
 
 	rows, err := DB.Query("SELECT * FROM subcategorias WHERE cat_principal = ?;", codCat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar ao banco de dados. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar ao banco de dados. Tente novamente mais tarde."})
 		return
 	}
 
@@ -36,7 +36,7 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 		err := rows.Scan(&subcat.CodSubcat, &subcat.CodCat, &subcat.Nome)
 		if err != nil {
 			log.Println(err)
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 			return
 		}
 
@@ -45,7 +45,7 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 
 	if err := rows.Err(); err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados."})
 		return
 	}
 
@@ -53,7 +53,7 @@ func MostrarSubcategoriasDeCategoria(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"subcategorias": subcats,
-		"message": "Categorias encontradas com sucesso!",
+		"message":       "Categorias encontradas com sucesso!",
 	})
 }
 
@@ -64,14 +64,14 @@ func MostrarComponentesSubcategoria(c *gin.Context) {
 	row := DB.QueryRow("SELECT * FROM subcategorias WHERE cod_subcat = ?;", codSubcat)
 	err := row.Scan(&subcat.CodSubcat, &subcat.CodCat, &subcat.Nome)
 	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Erro ao encontrar subcategoria." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Erro ao encontrar subcategoria."})
 		return
 	}
 
 	rows, err := DB.Query("SELECT * FROM componentes WHERE cod_subcat = ?;", subcat.CodSubcat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde."})
 		return
 	}
 
@@ -87,7 +87,7 @@ func MostrarComponentesSubcategoria(c *gin.Context) {
 
 		if err != nil {
 			log.Println(err)
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde." })
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao conectar com o banco de dados. Tente novamente mais tarde."})
 			return
 		}
 
@@ -97,10 +97,10 @@ func MostrarComponentesSubcategoria(c *gin.Context) {
 	defer rows.Close()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"componentes": componentes,
+		"componentes":  componentes,
 		"subcategoria": subcat,
-		"message": "Componentes de categoria encontrados com sucesso!",
-	})	
+		"message":      "Componentes de categoria encontrados com sucesso!",
+	})
 }
 
 func CriarSubcategoria(c *gin.Context) {
@@ -108,12 +108,12 @@ func CriarSubcategoria(c *gin.Context) {
 	err := c.BindJSON(&subcat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de subcategoria inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de subcategoria inválidos."})
 		return
 	}
 
 	if subcat.CodCat == 0 || subcat.Nome == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados para criação de subcategoria insuficientes." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados para criação de subcategoria insuficientes."})
 		return
 	}
 
@@ -121,11 +121,11 @@ func CriarSubcategoria(c *gin.Context) {
 	_, err = DB.Exec(insert, subcat.CodCat, subcat.Nome)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao criar subcategoria. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar subcategoria. Tente novamente mais tarde."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Subcategoria criada com sucesso!" })
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Subcategoria criada com sucesso!"})
 }
 
 func AtualizarSubcategoria(c *gin.Context) {
@@ -133,12 +133,12 @@ func AtualizarSubcategoria(c *gin.Context) {
 	err := c.BindJSON(&subcat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados de subcategoria inválidos." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados de subcategoria inválidos."})
 		return
 	}
 
 	if subcat.CodSubcat == 0 || subcat.CodCat == 0 || subcat.Nome == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{ "error": "Dados para atualização de subcategoria insuficientes." })
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados para atualização de subcategoria insuficientes."})
 		return
 	}
 
@@ -149,7 +149,7 @@ func AtualizarSubcategoria(c *gin.Context) {
 	err = rows.Scan(&codSubcatRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Subcategoria não existe, ou não pode ser alterada." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Subcategoria não existe, ou não pode ser alterada."})
 		return
 	}
 
@@ -157,11 +157,11 @@ func AtualizarSubcategoria(c *gin.Context) {
 	_, err = DB.Exec(update, subcat.CodCat, subcat.Nome, subcat.CodSubcat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao editar subcategoria. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao editar subcategoria. Tente novamente mais tarde."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Subcategoria atualizada com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Subcategoria atualizada com sucesso!"})
 }
 
 func DeletarSubcategoria(c *gin.Context) {
@@ -174,7 +174,7 @@ func DeletarSubcategoria(c *gin.Context) {
 	err := rows.Scan(&codSubcatRows)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusNotFound, gin.H{ "error": "Subcategoria não existe, ou não pode ser excluída." })
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Subcategoria não existe, ou não pode ser excluída."})
 		return
 	}
 
@@ -182,9 +182,9 @@ func DeletarSubcategoria(c *gin.Context) {
 	_, err = DB.Exec(delete, codSubcat)
 	if err != nil {
 		log.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{ "error": "Erro ao excluir subcategoria. Tente novamente mais tarde." })
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao excluir subcategoria. Tente novamente mais tarde."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "Subcategoria excluída com sucesso!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Subcategoria excluída com sucesso!"})
 }

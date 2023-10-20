@@ -17,7 +17,7 @@ type Componente struct {
 	CodPeca          string      `json:"codPeca"`
 	Especificacao    string      `json:"especificacao"`
 	CodCat           int         `json:"codCat"`
-	CodSubcat        null.Int    `json:"codCat"`
+	CodSubcat        null.Int    `json:"codSubcat"`
 	DiamInterno      null.String `json:"diamInterno"`
 	DiamExterno      null.Float  `json:"diamExterno"`
 	DiamNominal      null.String `json:"diamNominal"`
@@ -29,7 +29,7 @@ type Componente struct {
 	Norma            null.String `json:"norma"`
 	Bitola           null.Int    `json:"bitola"`
 	ValorEntrada     float64     `json:"valorEntrada"`
-	ValorSaida       float64     `json:"valorEntrada"`
+	ValorSaida       float64     `json:"valorVenda"`
 }
 
 type Cliente struct {
@@ -78,16 +78,16 @@ type Log struct {
 }
 
 type Sessao struct {
-	CodSessao  int    	   `json:"codSessao"`
-	CodUsuario int    	   `json:"codUsuario"`
-	Entrada    string 	   `json:"entrada"`
+	CodSessao  int         `json:"codSessao"`
+	CodUsuario int         `json:"codUsuario"`
+	Entrada    string      `json:"entrada"`
 	Saida      null.String `json:"saida"`
 }
 
 type SessaoResponse struct {
-	CodSessao  int    	   `json:"codSessao"`
-	CodUsuario int    	   `json:"codUsuario"`
-	Entrada    string 	   `json:"entrada"`
+	CodSessao  int         `json:"codSessao"`
+	CodUsuario int         `json:"codUsuario"`
+	Entrada    string      `json:"entrada"`
 	Saida      null.String `json:"saida"`
 	Error      string      `json:"error"`
 	Message    string      `json:"message"`
@@ -104,25 +104,25 @@ type Telefone struct {
 	CodCli      int         `json:"codCli"`
 	Telefone    string      `json:"telefone"`
 	NomeTel     string      `json:"nomeTel"`
-	TipoContato null.String `json:"tipoContato`
+	TipoContato null.String `json:"tipoContato"`
 	TipoCli     null.String `json:"tipoCli"`
 }
 
 type Usuario struct {
-	CodUsuario int 	  `json:"codUsuario"`
+	CodUsuario int    `json:"codUsuario"`
 	Permissoes string `json:"permissoes"`
-	Nome 	   string `json:"nome"`
-	Email	   string `json:"email"`
-	Senha	   string `json:"senha"`
+	Nome       string `json:"nome"`
+	Email      string `json:"email"`
+	Senha      string `json:"senha"`
 	Ativo      bool   `json:"ativo"`
 }
 
 type UsuarioResponse struct {
-	CodUsuario int 	  `json:"codUsuario"`
+	CodUsuario int    `json:"codUsuario"`
 	Permissoes string `json:"permissoes"`
-	Nome 	   string `json:"nome"`
-	Email	   string `json:"email"`
-	Senha	   string `json:"senha"`
+	Nome       string `json:"nome"`
+	Email      string `json:"email"`
+	Senha      string `json:"senha"`
 	Ativo      bool   `json:"ativo"`
 	Error      string `json:"error"`
 	Message    string `json:"message"`

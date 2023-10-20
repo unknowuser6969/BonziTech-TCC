@@ -22,12 +22,12 @@ func CriarRouter() *gin.Engine {
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-        AllowMethods:     []string{"PUT", "GET", "POST", "DELETE"},
-        AllowHeaders: 	  []string{"*"},
-        AllowCredentials: true,
+		AllowMethods:     []string{"PUT", "GET", "POST", "DELETE"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
 	}))
 
-	/* Rotas */	
+	/* Rotas */
 	auth := r.Group("/api/auth")
 	{
 		auth.POST("/login", services.ValidarLogin)
@@ -37,7 +37,7 @@ func CriarRouter() *gin.Engine {
 	cat := r.Group("/api/categorias")
 	{
 		cat.GET("/", services.MostrarTodasCategorias)
-		cat.GET("/:codCat", services.MostrarComponentesCategoria) 
+		cat.GET("/:codCat", services.MostrarComponentesCategoria)
 		cat.POST("/", services.CriarCategoria)
 		cat.PUT("/", services.AtualizarCategoria)
 		cat.DELETE("/:codCat", services.DeletarCategoria)
@@ -51,6 +51,10 @@ func CriarRouter() *gin.Engine {
 		comp.PUT("/", services.AtualizarComponente)
 		comp.DELETE("/:codComp", services.DeletarComponente)
 	}
+
+	// compEnt := r.Group("/api/componentes/entrada")
+
+	// compSaida := r.Group("/api/componentes/saida")
 
 	cli := r.Group("/api/clientes")
 	{
@@ -67,10 +71,6 @@ func CriarRouter() *gin.Engine {
 		cliTel.PUT("/", services.AtualizarTelefone)
 		cliTel.DELETE("/:codTel", services.DeletarTelefone)
 	}
-
-	// compEnt := r.Group("/api/componentes/entrada")
-
-	// compSaida := r.Group("/api/componentes/saida")
 
 	estq := r.Group("/api/estoque")
 	{
@@ -98,16 +98,16 @@ func CriarRouter() *gin.Engine {
 
 	subcat := r.Group("/api/subcategorias")
 	{
-		subcat.GET("/categoria/:codCat", 
+		subcat.GET("/categoria/:codCat",
 			services.MostrarSubcategoriasDeCategoria)
-		subcat.GET("/subcategoria/:codSubcat", 
-			services.MostrarComponentesSubcategoria) 
+		subcat.GET("/subcategoria/:codSubcat",
+			services.MostrarComponentesSubcategoria)
 		subcat.POST("/", services.CriarSubcategoria)
 		subcat.PUT("/", services.AtualizarSubcategoria)
 		subcat.DELETE("/:codSubcat", services.DeletarSubcategoria)
 	}
 
-	usu := r.Group("/api/usuarios") 
+	usu := r.Group("/api/usuarios")
 	{
 		usu.GET("/", services.MostrarTodosUsuarios)
 		usu.GET("/:codUsu", services.MostrarUsuario)
@@ -118,10 +118,10 @@ func CriarRouter() *gin.Engine {
 	}
 
 	r.GET("/api/ping", pong)
-		
+
 	return r
 }
 
 func pong(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{ "message": "pong!" })
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "pong!"})
 }
