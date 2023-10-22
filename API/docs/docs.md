@@ -560,6 +560,146 @@ DELETE /api/componentes/${codComp}
 | :-------- | :------- | :-------------------------------- |
 | `codComp`      | `string` | **Required**. Código do componente a ser removido do estoque |
 
+## /api/entradas
+
+#### Mostrar todas entradas
+
+```http
+GET /api/entradas
+```
+
+Response:
+```javascript
+{
+  "entradas": []object || null
+}
+```
+
+#### Mostrar entrada
+
+```http
+GET /api/entradas/${codEntd}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codEntd`      | `string` | **Required**. Código da entrada a ser retornada |
+
+Response:
+```javascript
+{
+  "entrada": {
+    "codEntd": Number,
+    "codFab": Number || null,
+    "nomeFab": string || null,
+    "dataVenda": Date,
+    "notaFiscal": string || null,
+    "valorTotal": Number
+  },
+  "componentes": []object || null
+}
+```
+
+#### Criar entrada
+
+```http
+POST /api/entradas
+```
+
+Request body:
+```javascript
+{
+  "codFab": Number || null,
+  "dataVenda": Date,
+  "notaFiscal": string || null
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codFab": 3,
+  "dataVenda": new Date(),
+  "notaFiscal": null
+}
+```
+
+#### Registrar componentes de uma entrada
+
+```http
+POST /api/entradas/componentes
+```
+
+Vale notar que, este endpoint permite que você envie múltiplos objetos de
+uma só vez por meio de uma array.
+
+Request body:
+```javascript
+[
+  {
+    "codEntd": Number,
+    "codComp": Number,
+    "quantidade": Number,
+    "valorUnit": Number
+  },
+  ...
+]
+```
+
+#### Atualizar entrada
+
+```http
+PUT /api/entradas
+```
+
+Request body:
+```javascript
+{
+  "codEntd": Number,
+  "codFab": Number || null,
+  "dataVenda": Date,
+  "notaFiscal": string || null
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codEntd": 1,
+  "codFab": null,
+  "dataVenda": new Date(),
+  "notaFiscal": null
+}
+```
+
+#### Atualizar componente de uma entrada
+
+```http
+PUT /api/entradas/componentes
+```
+
+Request body:
+```javascript
+{
+  "codCompEntd": Number,
+  "codEntd": Number,
+  "codComp": Number,
+  "quantidade": Number,
+  "valorUnit": Number
+}
+```
+
+#### Deletar entrada
+
+```http
+DELETE /api/entradas/${codEntd}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codEntd`      | `string` | **Required**. Código da entrada a ser excluída |
+
+
 ## /api/estoque
 
 #### Mostrar estoque

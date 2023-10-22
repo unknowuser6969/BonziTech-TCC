@@ -2,7 +2,11 @@
 // banco de dados da aplicação
 package models
 
-import "gopkg.in/guregu/null.v3"
+import (
+	"time"
+
+	"gopkg.in/guregu/null.v3"
+)
 
 type Categoria struct {
 	CodCat     int    `json:"codCat"`
@@ -32,6 +36,22 @@ type Componente struct {
 	ValorSaida       float64     `json:"valorVenda"`
 }
 
+type ComponenteEntrada struct {
+	CodCompEntd int     `json:"codCompEntd"`
+	CodEntd     int     `json:"codEntd"`
+	CodComp     int     `json:"codComp"`
+	Quantidade  float64 `json:"quantidade"`
+	ValorUnit   float64 `json:"valorUnit"`
+}
+
+type ComponenteSaida struct {
+	CodCompVenda int     `json:"codCompVenda"`
+	CodVenda     int     `json:"codVenda"`
+	CodComp      int     `json:"codComp"`
+	Quantidade   float64 `json:"quantidade"`
+	ValorUnit    float64 `json:"valorUnit"`
+}
+
 type Cliente struct {
 	CodCli      int         `json:"codCli"`
 	NomeEmpresa string      `json:"nomeEmpresa"`
@@ -44,6 +64,15 @@ type Cliente struct {
 	Estado      string      `json:"estado"`
 	CEP         null.String `json:"cep"`
 	Email       null.String `json:"email"`
+}
+
+type Entrada struct {
+	CodEntd    int         `json:"codEntd"`
+	CodFab     null.Int    `json:"codFab"`
+	NomeFab    string      `json:"nomeFab"`
+	DataVenda  time.Time   `json:"dataVenda"`
+	NotaFiscal null.String `json:"notaFiscal"`
+	ValorTotal float64     `json:"valorTotal"`
 }
 
 type Estoque struct {
@@ -126,4 +155,14 @@ type UsuarioResponse struct {
 	Ativo      bool   `json:"ativo"`
 	Error      string `json:"error"`
 	Message    string `json:"message"`
+}
+
+type Venda struct {
+	CodVenda   int         `json:"codVenda"`
+	DataVenda  time.Time   `json:"dataVenda"`
+	CodCli     null.Int    `json:"codCli"`
+	NomeCli    null.String `json:"nomeCli"`
+	CodOS      int         `json:"codOS"`
+	ValorTotal float64     `json:"valorTotal"`
+	Descricao  null.String `json:"descricao"`
 }

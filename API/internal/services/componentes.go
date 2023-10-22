@@ -141,7 +141,7 @@ func AtualizarComponente(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Componente atualizado com sucesso!"})
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Componente atualizado com sucesso!"})
 }
 
 func DeletarComponente(c *gin.Context) {

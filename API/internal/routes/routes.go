@@ -52,10 +52,6 @@ func CriarRouter() *gin.Engine {
 		comp.DELETE("/:codComp", services.DeletarComponente)
 	}
 
-	// compEnt := r.Group("/api/componentes/entrada")
-
-	// compSaida := r.Group("/api/componentes/saida")
-
 	cli := r.Group("/api/clientes")
 	{
 		cli.GET("/", services.MostrarTodosClientes)
@@ -70,6 +66,17 @@ func CriarRouter() *gin.Engine {
 		cliTel.POST("/", services.CadastrarTelefone)
 		cliTel.PUT("/", services.AtualizarTelefone)
 		cliTel.DELETE("/:codTel", services.DeletarTelefone)
+	}
+
+	ent := r.Group("/api/entradas")
+	{
+		ent.GET("/", services.MostrarTodasEntradas)
+		ent.GET("/:codEntd", services.MostrarEntrada)
+		ent.POST("/", services.AdicionarEntrada)
+		ent.POST("/componentes", services.AdicionarComponentesEntrada)
+		ent.PUT("/", services.AtualizarEntrada)
+		ent.PUT("/componentes", services.AtualizarComponenteEntrada)
+		ent.DELETE("/:codEntd", services.DeletarEntrada)
 	}
 
 	estq := r.Group("/api/estoque")
@@ -117,11 +124,22 @@ func CriarRouter() *gin.Engine {
 		usu.DELETE("/:codUsu", services.DeletarUsuario)
 	}
 
+	venda := r.Group("/api/vendas")
+	{
+		venda.GET("/", services.MostrarTodasVendas)
+		venda.GET("/:codVenda", services.MostrarVenda)
+		venda.POST("/", services.AdicionarVenda)
+		venda.PUT("/", services.AtualizarVenda)
+		venda.PUT("/componentes/codCompVenda", services.AtualizarComponenteVenda)
+		venda.DELETE("/", services.DeletarVenda)
+	}
+
 	r.GET("/api/ping", pong)
 
 	return r
 }
 
+// Retorna "pong!" para mostrar que conexão à API foi bem sucedida
 func pong(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "pong!"})
 }
