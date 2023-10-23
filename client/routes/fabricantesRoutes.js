@@ -63,10 +63,10 @@ fabRouter.put("/", validarSessao, (req, res) => {
     });
 });
 
-fabRouter.delete("/:codUsu", validarSessao, (req, res) => {
-    const codUsu = req.params.codUsu;
+fabRouter.delete("/:codFab", validarSessao, (req, res) => {
+    const codFab = req.params.codFab;
 
-    fetch(process.env.APIURL + `/fabricantes/${codUsu}`, {
+    fetch(process.env.APIURL + `/fabricantes/${codFab}`, {
         method: "DELETE",
         headers: {
             "Content-type": "Application/JSON",
