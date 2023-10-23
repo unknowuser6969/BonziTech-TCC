@@ -46,7 +46,6 @@ router.post("/login", (req, res) => {
 
         // Criar sessão de usuário
         req.session.codSessao = response.codSessao;
-        console.log(req.session.codSessao);
         res.status(200).json({ message: response.message });
     })
     .catch((err) => {

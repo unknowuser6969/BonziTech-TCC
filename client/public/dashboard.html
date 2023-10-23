@@ -322,18 +322,18 @@
                     <thead>
                         <tr>
                             <th>Fabricante</th>
+                            <th>Nome contato</th>
                             <th>Razão Social</th>
                             <th>Telefone</th>
                             <th>Fax</th>
                             <th>Celular</th>
-                            <th>Contato</th>
                             <th>Endereço</th>
                             <th>Cidade</th>
                             <th>Estado</th>
                             <th>Cep</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-fabricantes">
 
                     </tbody>
                 </table>
@@ -343,7 +343,10 @@
 
                     <form>
                         <label>Fabricante</label>
-                        <input type="text" id="add-fabricante-fabricantes">
+                        <input type="text" id="add-fabricante-fabricantes" required>
+
+                        <label>Nome contato</label>
+                        <input type="text" id="add-nome-contato-fabricantes">
 
                         <label>Razão Social</label>
                         <input type="text" id="add-razao-social-fabricantes">
@@ -356,9 +359,6 @@
 
                         <label>Celular</label>
                         <input type="tel" id="add-celular-fabricantes">
-
-                        <label>Contato</label>
-                        <input type="tel" id="add-contato-fabricantes">
 
                         <label>Endereço</label>
                         <input type="text" id="add-endereco-fabricantes">
@@ -384,7 +384,10 @@
 
                     <form>
                         <label>Fabricante</label>
-                        <input type="text" id="edit-fabricante-fabricantes">
+                        <input type="text" id="edit-fabricante-fabricantes" required>
+
+                        <label>Nome contato</label>
+                        <input type="tel" id="edit-nome-contato-fabricantes">
 
                         <label>Razão Social</label>
                         <input type="text" id="edit-razao-social-fabricantes">
@@ -397,9 +400,6 @@
 
                         <label>Celular</label>
                         <input type="tel" id="edit-celular-fabricantes">
-
-                        <label>Contato</label>
-                        <input type="tel" id="edit-contato-fabricantes">
 
                         <label>Endereço</label>
                         <input type="text" id="edit-endereco-fabricantes">

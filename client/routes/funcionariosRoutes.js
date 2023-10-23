@@ -12,7 +12,7 @@ funcRouter.get("/", validarSessao, (req, res) => {
         method: "GET",
         headers: {
             "Content-type": "Application/JSON",
-            // "codSessao": 
+            "codSessao": req.session.codSessao
         }
     })
     .then((response) => response.json())
@@ -33,7 +33,7 @@ funcRouter.post("/", validarSessao, (req, res) => {
         method: "POST",
         headers: {
             "Content-type": "Application/JSON",
-            // "codSessao": 
+            "codSessao": req.session.codSessao
         },
         body: JSON.stringify(req.body)
     })
@@ -50,7 +50,7 @@ funcRouter.put("/", validarSessao, (req, res) => {
         method: "PUT",
         headers: {
             "Content-type": "Application/JSON",
-            // "codSessao": 
+            "codSessao": req.session.codSessao
         },
         body: JSON.stringify(req.body)
     })
@@ -62,14 +62,14 @@ funcRouter.put("/", validarSessao, (req, res) => {
     });
 });
 
-funcRouter.delete("/:codUsu", validarSessao, (req, res) => {
-    const codUsu = req.params.codUsu;
+funcRouter.delete("/:codFab", validarSessao, (req, res) => {
+    const codFab = req.params.codFab;
 
-    fetch(process.env.APIURL + `/usuarios/${codUsu}`, {
+    fetch(process.env.APIURL + `/usuarios/${codFab}`, {
         method: "DELETE",
         headers: {
             "Content-type": "Application/JSON",
-            // "codSessao": 
+            "codSessao": req.session.codSessao
         }
     })
     .then((response) => response.json())
