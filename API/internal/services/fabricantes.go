@@ -23,8 +23,8 @@ func MostrarTodosFabricantes(c *gin.Context) {
 	var fabs []models.Fabricante
 	for rows.Next() {
 		var fab models.Fabricante
-		err := rows.Scan(&fab.CodFab, &fab.Nome, &fab.NomeContato, &fab.RazaoSocial,
-			&fab.Telefone, &fab.Celular, &fab.Fax, &fab.Endereco, &fab.Cidade,
+		err := rows.Scan(&fab.CodFab, &fab.Nome, &fab.RazaoSocial, &fab.Telefone,
+			&fab.Fax, &fab.Celular, &fab.NomeContato, &fab.Endereco, &fab.Cidade,
 			&fab.Estado, &fab.CEP)
 		if err != nil {
 			log.Println(err)
@@ -54,8 +54,8 @@ func MostrarFabricante(c *gin.Context) {
 
 	var fab models.Fabricante
 	row := DB.QueryRow("SELECT * FROM fabricantes WHERE cod_fab = ?;", codFab)
-	err := row.Scan(&fab.CodFab, &fab.Nome, &fab.NomeContato, &fab.RazaoSocial,
-		&fab.Telefone, &fab.Celular, &fab.Fax, &fab.Endereco, &fab.Cidade,
+	err := row.Scan(&fab.CodFab, &fab.Nome, &fab.RazaoSocial, &fab.Telefone,
+		&fab.Fax, &fab.Celular, &fab.NomeContato, &fab.Endereco, &fab.Cidade,
 		&fab.Estado, &fab.CEP)
 	if err != nil {
 		log.Println(err)
@@ -120,12 +120,12 @@ func AtualizarFabricante(c *gin.Context) {
 		return
 	}
 
-	update := `UPDATE fabricantes SET 
-		nome_fab = ?, razao_social = ?, telefone = ?, fax = ?, celular = ?, 
-		nome_contato = ?, endereco = ?, cidade = ?, estado = ?, cep = ?
-		WHERE cod_fab = ?;`
-	_, err = DB.Exec(update, fab.Nome, fab.RazaoSocial, fab.Telefone, fab.Fax,
-		fab.Celular, fab.NomeContato, fab.Endereco, fab.Cidade, fab.Estado,
+	update := `
+		UPDATE fabricantes SET nome_fab = ?, nome_contato = ?, razao_social = ?,
+		telefone = ?, celular = ?, fax = ?, endereco = ?, cidade = ?, estado = ?,
+		cep = ? WHERE cod_fab = ?;`
+	_, err = DB.Exec(update, fab.Nome, fab.NomeContato, fab.RazaoSocial,
+		fab.Telefone, fab.Celular, fab.Fax, fab.Endereco, fab.Cidade, fab.Estado,
 		fab.CEP, fab.CodFab)
 	if err != nil {
 		log.Println(err)

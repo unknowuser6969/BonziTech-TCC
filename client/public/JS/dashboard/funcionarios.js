@@ -178,6 +178,7 @@ async function criarFuncionario(permissoes, nome, email, senha) {
 
 /**
  * Envia dados de funcionário para atualização à API.
+ * @param {Number} codUsuario - Código do usuário a ser alterado.
  * @param {string} permissoes - Permissões do funcionário.
  * @param {string} nome - Nome funcionário.
  * @param {string} email - Email funcionário.
@@ -236,7 +237,7 @@ async function inativarFuncionario(codUsu) {
 
 /**
  * Confirma se o usuário realmente deseja inativar o funcionário.
- * @returns {boolean} - Retorna confirmação do usuário
+ * @returns {boolean} - Retorna confirmação do usuário.
  */
 function confirmarInativacaoFuncionario() {
     return confirm("Você tem certeza que deseja inativar este funcionário?");
