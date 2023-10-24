@@ -59,11 +59,16 @@ func MostrarTodasEntradas(c *gin.Context) {
 func MostrarEntrada(c *gin.Context) {
 	codEntd := c.Param("codEntd")
 
-	row := DB.QueryRow("SELECT * FROM entradas WHERE cod_entd = ?;", codEntd)
+	row := DB.QueryRow(`
+		SELECT entradas.*, fabricantes.nome_fab
+		FROM entradas
+		INNER JOIN fabricantes ON entradas.cod_fab = fabricantes.cod_fab
+		WHERE cod_entd = ?;`,
+		codEntd)
 
 	var entd models.Entrada
 	err := row.Scan(&entd.CodEntd, &entd.CodFab, &entd.DataVenda,
-		&entd.NotaFiscal, &entd.ValorTotal)
+		&entd.NotaFiscal, &entd.ValorTotal, &entd.NomeFab)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Entrada não encontrada."})
@@ -92,18 +97,24 @@ func AdicionarEntrada(c *gin.Context) {
 		return
 	}
 
-	if entd.CodEntd == 0 || entd.ValorTotal != 0 {
+	if entd.CodFab.IsZero() || entd.ValorTotal != 0 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados insuficientes para registro de entrada."})
 		return
 	}
 
-	if entd.DataVenda.IsZero() {
-		entd.DataVenda = time.Now()
+	if entd.DataVenda == "" {
+		entd.DataVenda = time.Now().Format("2006-01-02")
+	}
+
+	if !fabricanteExiste(int(entd.CodFab.Int64)) {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"error": "Fornecedor de componente não encontrado no sistema. Cadastre-o e tente novamente."})
+		return
 	}
 
 	insert := `
 		INSERT INTO entradas (cod_fab, data_venda, nota_fiscal, valor_total)
-		VALUES(?, ?, ?, ?, ?);`
+		VALUES(?, ?, ?, ?);`
 
 	_, err := DB.Exec(insert, entd.CodFab, entd.DataVenda,
 		entd.NotaFiscal, entd.ValorTotal)
@@ -124,11 +135,23 @@ func AdicionarComponentesEntrada(c *gin.Context) {
 		return
 	}
 
+	codEntd := componentesEntd[0].CodEntd
+
+	if !entradaExiste(strconv.Itoa(codEntd)) {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Entrada não encontrada."})
+		return
+	}
+
 	insert := `
 		INSERT INTO componentes_entrada (cod_entd, cod_comp, quantidade,
-		valor_unit) VALUES(?, ?, ?);`
+		valor_unit) VALUES(?, ?, ?, ?);`
 
 	for _, comp := range componentesEntd {
+		if codEntd != comp.CodEntd {
+			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Você só pode atualizar os componentes de uma entrada por vez."})
+			return
+		}
+
 		if comp.CodComp == 0 || comp.CodEntd == 0 || comp.Quantidade <= 0 ||
 			comp.ValorUnit <= 0 {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Componente(s) inválido(s)."})
@@ -153,7 +176,12 @@ func AdicionarComponentesEntrada(c *gin.Context) {
 		}
 	}
 
-	// TODO: Calcular valor total entrada
+	err := atualizarValorTotalEntrada(codEntd)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao calcular valor total de entrada."})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Componentes criados com sucesso!"})
 }
@@ -166,13 +194,13 @@ func AtualizarEntrada(c *gin.Context) {
 		return
 	}
 
-	if entd.CodEntd == 0 || entd.ValorTotal == 0 {
+	if entd.CodEntd == 0 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Dados insuficientes para registro de entrada."})
 		return
 	}
 
-	if entd.DataVenda.IsZero() {
-		entd.DataVenda = time.Now()
+	if entd.DataVenda == "" {
+		entd.DataVenda = time.Now().Format("2006-01-02")
 	}
 
 	if !entradaExiste(strconv.Itoa(entd.CodEntd)) {
@@ -180,11 +208,17 @@ func AtualizarEntrada(c *gin.Context) {
 		return
 	}
 
+	if !fabricanteExiste(int(entd.CodFab.Int64)) {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"error": "Fornecedor de componente não encontrado no sistema. Cadastre-o e tente novamente."})
+		return
+	}
+
 	update := `
-		UPDATE entradas SET cod_fab = ?, data_venda = ?, quantidade = ?, 
-		nota_fiscal = ?, valor_total = ? WHERE cod_entd = ?;`
+		UPDATE entradas SET cod_fab = ?, data_venda = ?, nota_fiscal = ?
+		WHERE cod_entd = ?;`
 	_, err := DB.Exec(update, entd.CodFab, entd.DataVenda, entd.NotaFiscal,
-		entd.ValorTotal, entd.CodEntd)
+		entd.CodEntd)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao atualizar entrada. Tente novamente mais tarde."})
@@ -202,7 +236,7 @@ func AtualizarComponenteEntrada(c *gin.Context) {
 		return
 	}
 
-	if compEntd.CodCompEntd == 0 || compEntd.CodComp == 0 || compEntd.CodEntd == 0 ||
+	if compEntd.CodCompEntd == 0 || compEntd.CodComp == 0 ||
 		compEntd.Quantidade <= 0 || compEntd.ValorUnit <= 0 {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Componente inválido."})
 		return
@@ -218,14 +252,26 @@ func AtualizarComponenteEntrada(c *gin.Context) {
 		return
 	}
 
+	if codEntdRow != compEntd.CodEntd {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Entrada do componente não pode ser alterada."})
+		return
+	}
+
 	update := `
-		UPDATE componentes_entrada SET cod_entd = ?, cod_comp = ?, quantidade = ?,
+		UPDATE componentes_entrada SET cod_comp = ?, quantidade = ?,
 		valor_unit = ? WHERE cod_comp_entd = ?;`
-	_, err := DB.Exec(update, compEntd.CodEntd, compEntd.CodComp,
-		compEntd.Quantidade, compEntd.ValorUnit, compEntd.CodCompEntd)
+	_, err := DB.Exec(update, compEntd.CodComp, compEntd.Quantidade,
+		compEntd.ValorUnit, compEntd.CodCompEntd)
 	if err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao atualizar componente. Tente novamente mais tarde."})
+		return
+	}
+
+	err = atualizarValorTotalEntrada(compEntd.CodEntd)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao calcular valor total de entrada."})
 		return
 	}
 
@@ -259,6 +305,37 @@ func DeletarEntrada(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "Entrada excluída com sucesso!"})
 }
 
+func DeletarComponenteEntrada(c *gin.Context) {
+	codCompEntd := c.Param("codCompEntd")
+
+	selectComp := "SELECT cod_entd FROM componentes_entrada WHERE cod_comp_entd = ?;"
+	row := DB.QueryRow(selectComp, codCompEntd)
+
+	var codEntd int
+	if err := row.Scan(&codEntd); err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Componente a ser excluído não encontrado."})
+		return
+	}
+
+	delete := "DELETE FROM componentes_entrada WHERE cod_comp_entd = ?;"
+	_, err := DB.Exec(delete, codCompEntd)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao excluir componente de entrada."})
+		return
+	}
+
+	err = atualizarValorTotalEntrada(codEntd)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao calcular valor total de entrada."})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Componente excluído com sucesso!"})
+}
+
 // Função que retorna componentes de uma dada entrada por meio de seu código
 func getComponentesEntrada(codEntd string) ([]models.ComponenteEntrada, error) {
 	rows, err := DB.Query("SELECT * FROM componentes_entrada WHERE cod_entd = ?;", codEntd)
@@ -270,7 +347,7 @@ func getComponentesEntrada(codEntd string) ([]models.ComponenteEntrada, error) {
 	for rows.Next() {
 		var compEntd models.ComponenteEntrada
 		err := rows.Scan(&compEntd.CodCompEntd, &compEntd.CodEntd,
-			&compEntd.CodComp, &compEntd.ValorUnit)
+			&compEntd.CodComp, &compEntd.Quantidade, &compEntd.ValorUnit)
 		if err != nil {
 			return nil, err
 		}
@@ -286,12 +363,45 @@ func getComponentesEntrada(codEntd string) ([]models.ComponenteEntrada, error) {
 	return componentesEntd, nil
 }
 
+// Calcula o valor total pago em uma entrada a partir de seus componentes
+func atualizarValorTotalEntrada(codEntd int) error {
+	componentes, err := getComponentesEntrada(strconv.Itoa(codEntd))
+	if err != nil {
+		return err
+	}
+
+	var valorTotal float64
+	for _, comp := range componentes {
+		valorTotal += comp.Quantidade * comp.ValorUnit
+	}
+
+	_, err = DB.Exec("UPDATE entradas SET valor_total = ? WHERE cod_entd = ?;",
+		valorTotal, codEntd)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Verifica se entrada com dado código existe
 func entradaExiste(codEntd string) bool {
 	row := DB.QueryRow("SELECT cod_entd FROM entradas WHERE cod_entd = ?;", codEntd)
 
 	var codEntdRow int
 	if err := row.Scan(&codEntdRow); err != nil {
+		return false
+	}
+
+	return true
+}
+
+// Verifica se fabricante com dado código existe
+func fabricanteExiste(codFab int) bool {
+	row := DB.QueryRow("SELECT cod_fab FROM fabricantes WHERE cod_fab = ?;", codFab)
+
+	var codFabRow int
+	if err := row.Scan(&codFabRow); err != nil {
 		return false
 	}
 

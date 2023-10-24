@@ -79,8 +79,6 @@ func AdicionarComponenteEstoque(c *gin.Context) {
 		return
 	}
 
-	//TODO: Adicionar também em Entradas
-
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "Componente adicionado ao estoque com sucesso!"})
 }
 

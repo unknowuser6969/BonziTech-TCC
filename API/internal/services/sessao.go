@@ -85,7 +85,7 @@ func CriarSessao(c *gin.Context) {
 func FecharSessao(c *gin.Context) {
 	codSessao := c.Request.Header["Codsessao"]
 	if codSessao == nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Você precisa estar logado para ter acesso ao sistema"})
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Você precisa estar logado para ter acesso ao sistema."})
 		c.Abort()
 		return
 	}

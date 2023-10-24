@@ -1,6 +1,6 @@
-# Connect API
+# BonziBoard API
 
-Esta pasta engloba todos os códigos relacionados à API do sistema Connect.
+Esta pasta engloba todos os códigos relacionados à API do sistema do BonziBoard.
 
 Aqui, você encontra:
 * Documentação dos endpoints

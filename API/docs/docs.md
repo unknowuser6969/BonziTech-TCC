@@ -12,6 +12,7 @@ API hospedada em: https://bonzitech-tcc.onrender.com/
 * [/api/clientes](#apiclientes)
   * [/api/clientes/telefones](#apiclientestelefones)
 * [/api/componentes](#apicomponentes)
+* [/api/entradas](#apientradas)
 * [/api/estoque](#apiestoque)
 * [/api/fabricantes](#apifabricantes)
 * [/api/sessao](#apisessao)
@@ -331,32 +332,40 @@ DELETE /api/clientes/${codCli}
 
 ## /api/clientes/telefones
 
-#### Cadastrar novo número de telefone
+#### Cadastrar números de telefone de cliente
 
 ```http
 POST /api/clientes/telefones
 ```
 
+Vale notar que este endpoint permite que você envie múltiplos objetos de
+uma só vez por meio de uma array.
+
 Request body:
 ```javascript
-{
-  "codCli": number,
-  "telefone": string,
-  "nomeTel": string, 
-  "tipoContato": string || null,
-  "tipoCli": string || null
-}
+[
+  {
+    "codCli": number,
+    "telefone": string,
+    "nomeTel": string, 
+    "tipoContato": string || null,
+    "tipoCli": string || null
+  },
+  ...
+]
 ```
 
 Exemplo:
 ```javascript
-{
-  "codCli": 1,
-  "telefone": "(19) 99999-9999",
-  "nomeTel": "Telefone pessoal", 
-  "tipoContato": null,
-  "tipoCli": null
-}
+[
+  {
+    "codCli": 1,
+    "telefone": "(19) 99999-9999",
+    "nomeTel": "Telefone pessoal", 
+    "tipoContato": null,
+    "tipoCli": null
+  }
+]
 ```
 
 #### Atualizar cadastro de telefone
@@ -655,7 +664,7 @@ PUT /api/entradas
 Request body:
 ```javascript
 {
-  "codEntd": Number,
+  "codCompEntd": Number,
   "codFab": Number || null,
   "dataVenda": Date,
   "notaFiscal": string || null
@@ -665,7 +674,7 @@ Request body:
 Exemplo:
 ```javascript
 {
-  "codEntd": 1,
+  "codCompEntd": 1,
   "codFab": null,
   "dataVenda": new Date(),
   "notaFiscal": null

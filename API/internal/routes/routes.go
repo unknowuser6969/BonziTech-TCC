@@ -77,6 +77,7 @@ func CriarRouter() *gin.Engine {
 		ent.PUT("/", services.AtualizarEntrada)
 		ent.PUT("/componentes", services.AtualizarComponenteEntrada)
 		ent.DELETE("/:codEntd", services.DeletarEntrada)
+		ent.DELETE("/componentes/:codCompEntd", services.DeletarComponenteEntrada)
 	}
 
 	estq := r.Group("/api/estoque")

@@ -2,11 +2,7 @@
 // banco de dados da aplicação
 package models
 
-import (
-	"time"
-
-	"gopkg.in/guregu/null.v3"
-)
+import "gopkg.in/guregu/null.v3"
 
 type Categoria struct {
 	CodCat     int    `json:"codCat"`
@@ -70,7 +66,7 @@ type Entrada struct {
 	CodEntd    int         `json:"codEntd"`
 	CodFab     null.Int    `json:"codFab"`
 	NomeFab    string      `json:"nomeFab"`
-	DataVenda  time.Time   `json:"dataVenda"`
+	DataVenda  string      `json:"dataVenda"`
 	NotaFiscal null.String `json:"notaFiscal"`
 	ValorTotal float64     `json:"valorTotal"`
 }
@@ -159,7 +155,7 @@ type UsuarioResponse struct {
 
 type Venda struct {
 	CodVenda   int         `json:"codVenda"`
-	DataVenda  time.Time   `json:"dataVenda"`
+	DataVenda  string      `json:"dataVenda"`
 	CodCli     null.Int    `json:"codCli"`
 	NomeCli    null.String `json:"nomeCli"`
 	CodOS      int         `json:"codOS"`
