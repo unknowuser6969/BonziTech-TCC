@@ -7,10 +7,16 @@ mostrarTabelaDashboard(tabelaSelecionada);
 const profileBtn = document.getElementById("profile");
 const profileMenu = document.getElementById("profile-menu");
 profileBtn.addEventListener("click", mostrarMenuPerfilUsuario);
-document.addEventListener("click", (event) => {
+document.addEventListener("click", (e) => {
     // Fecha o menu de perfil quando a página é clicada
-    if (!profileMenu.contains(event.target) && event.target !== profileBtn)
+    if (!profileMenu.contains(e.target) && e.target !== profileBtn)
         profileMenu.style.display = "none";
+});
+
+const logoutBtn = document.getElementById("profile-log-out");
+logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault(); 
+    fazerLogout();
 });
 
 
@@ -68,6 +74,28 @@ function mostrarMenuPerfilUsuario() {
     } else {
         profileMenu.style.display = "block";
     }
+}
+
+/**
+ * Faz logout do sistema.
+ */
+function fazerLogout() {
+    fetch("/sessao", {
+        method: "DELETE"
+    })
+    .then((res) => res.json())
+    .then((res) => {
+        if (res.error) {
+            mostrarMensagemErro(res.error);
+            return;
+        }
+
+        window.location.reload();
+    })
+    .catch((err) => {
+        mostrarMensagemErro("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        console.error(err);
+    });
 }
 
 /**

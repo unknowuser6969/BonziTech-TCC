@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/JS/perfil.js" defer></script>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/css/telaPerfil.css">
     <title> BonziBoard - Perfil </title>
@@ -36,30 +37,33 @@
 
             <div class="profile-info">
                 <div class="profile-name">
-                    <h1>Sr. Chaves</h1>
+                    <h1 id="nome-usuario">Carregando...</h1>
                 </div>
 
                 <div class="info-field">
                     <div class="info-title">
-                        <h2>Informações</h2>
-                        <p>Abaixo estão as Informações da sua conta</p>
+                        <h2>Funções</h2>
+                        <p id="funcao-usuario"></p>
                     </div>
 
                     <div class="infos">
                         <div class="info">
-                            <h3>Telefone</h3>
-                            <p>(13) 93619-7432</p>
-                        </div>
-
-                        <div class="info">
                             <h3>Email</h3>
-                            <p>senhorchaves@gmail.com</p>
+                            <p id="email-usuario">exemplo@email.com</p>
                         </div>
                     </div>
                 </div>
             </div>
 
         </section>
+
+        <!-- Mensagem de Erro -->
+        <div id="mensagem-erro-container" class="error-message">
+            <div class="error-message-content">
+                <ion-icon name="close"></ion-icon>
+                <p id="mensagem-erro"></p>
+            </div>
+        </div>
     </div>
 </body>
 

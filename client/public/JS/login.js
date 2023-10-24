@@ -1,5 +1,4 @@
 const btnLogin = document.getElementById("btn-login");
-
 btnLogin.addEventListener("click", (event) => {
     event.preventDefault();
     btnLogin.innerHTML = "<span class='loader'></span>";
@@ -17,7 +16,7 @@ btnLogin.addEventListener("click", (event) => {
  * @param {string} senha - Senha do usuário
  */
 async function login(email, senha) {
-    await fetch("/login", {
+    await fetch("/sessao/login", {
         method: "POST",
         headers: {
             "Content-type": "Application/JSON"
