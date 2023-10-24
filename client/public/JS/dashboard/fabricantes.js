@@ -156,6 +156,9 @@ async function fetchFabricantes() {
     return await fetch("/fabricantes")
     .then((res) => res.json())
     .then((res) => {
+        if (res == null) 
+            return null
+
         if (res.error) {
             mostrarMensagemErro(res.error);
             return new Error(res.error);

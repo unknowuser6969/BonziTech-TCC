@@ -2,9 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const fabRouter = express.Router();
 
-const path = require("path");
-const publicFolder = "../public/";
-
 const validarSessao = require("../modules/validarSessao");
 
 fabRouter.get("/", validarSessao, (req, res) => {

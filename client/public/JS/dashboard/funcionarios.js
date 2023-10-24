@@ -117,7 +117,7 @@ async function mostrarTabelaFuncionarios(dadosTabela) {
 /**
  * Pega todos os funcionários cadastrados pela API e
  * os insere na tabela.
- * @returns {object} - Resposta da API ou Objeto de erro.
+ * @returns {object} - Resposta da API.
  * @throws Retorna erro em caso de falha de conexão com a 
  * API ou servidor.
  */
@@ -125,6 +125,9 @@ async function fetchFuncionarios() {
     return await fetch("/funcionarios")
     .then((res) => res.json())
     .then((res) => {
+        if (res == null) 
+            return null
+
         if (res.error) {
             mostrarMensagemErro(res.error);
             return new Error(res.error);
