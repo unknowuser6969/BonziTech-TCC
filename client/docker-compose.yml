@@ -1,0 +1,16 @@
+version: '3'
+services:
+  client-bonzitech:
+    build: ./
+    container_name: client-bonzitech
+    volumes:
+      - .:/home/client-bonzitech
+    ports:
+      - 3302:3302
+    command: npm start
+    restart: always
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
