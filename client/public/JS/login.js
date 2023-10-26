@@ -16,7 +16,7 @@ btnLogin.addEventListener("click", (event) => {
  * @param {string} senha - Senha do usuário
  */
 async function login(email, senha) {
-    await fetch("/sessa/login", {
+    await fetch("/sessao/login", {
         method: "POST",
         headers: {
             "Content-type": "Application/JSON"
