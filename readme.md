@@ -26,4 +26,4 @@ Neste repositório você encontra:
 * <a href="https://github.com/TulioTheGreat"> TulioTheGreat </a> - UI/UX Designer & Dev Front-End
 * <a href="https://github.com/unknowuser6969"> unkaraujo </a> - Tester
 * <a href="https://github.com/vidacalura"> vidacalura </a> - Dev Fullstack
-* <a href="https://github.com/Vinicius-Chaves22"> Vinicius-Chaves22 </a> - Auxiliar de documentação e front-end
+* <a href="https://github.com/Vinicius-Chaves22"> Vinicius-Chaves22 </a> - Auxiliar de documentação
