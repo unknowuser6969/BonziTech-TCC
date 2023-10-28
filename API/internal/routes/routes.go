@@ -59,13 +59,9 @@ func CriarRouter() *gin.Engine {
 		cli.POST("/", services.CriarCliente)
 		cli.PUT("/", services.AtualizarCliente)
 		cli.DELETE("/:codCli", services.DeletarCliente)
-	}
-
-	cliTel := r.Group("/api/clientes/telefones")
-	{
-		cliTel.POST("/", services.CadastrarTelefone)
-		cliTel.PUT("/", services.AtualizarTelefone)
-		cliTel.DELETE("/:codTel", services.DeletarTelefone)
+		cli.POST("/telefones", services.CadastrarTelefone)
+		cli.PUT("/telefones", services.AtualizarTelefone)
+		cli.DELETE("/telefones/:codTel", services.DeletarTelefone)
 	}
 
 	ent := r.Group("/api/entradas")

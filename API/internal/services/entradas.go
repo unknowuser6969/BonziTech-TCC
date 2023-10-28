@@ -166,6 +166,8 @@ func AdicionarComponentesEntrada(c *gin.Context) {
 			return
 		}
 
+		// TODO: Inserir em estoque se não existir ainda
+
 		// Atualizar estoque
 		update := "UPDATE estoque SET quantidade = quantidade + ? WHERE cod_comp = ?;"
 		_, err = DB.Exec(update, comp.Quantidade, comp.CodComp)
@@ -268,6 +270,8 @@ func AtualizarComponenteEntrada(c *gin.Context) {
 		return
 	}
 
+	// TODO: Atualizar estoque
+
 	err = atualizarValorTotalEntrada(compEntd.CodEntd)
 	if err != nil {
 		log.Println(err)
@@ -302,6 +306,8 @@ func DeletarEntrada(c *gin.Context) {
 		return
 	}
 
+	// TODO: remover componentes de estoque
+
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "Entrada excluída com sucesso!"})
 }
 
@@ -332,6 +338,8 @@ func DeletarComponenteEntrada(c *gin.Context) {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Erro ao calcular valor total de entrada."})
 		return
 	}
+
+	// TODO: remover componentes de estoque
 
 	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Componente excluído com sucesso!"})
 }

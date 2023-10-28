@@ -239,9 +239,9 @@ Response:
     "cidade": string,
     "estado": string,
     "cep": string || null,
-    "email": string || null,
-    "telefones": []object || null
-  }
+    "email": string || null
+  },
+  "telefones": []object || null
 }
 ```
 
@@ -290,7 +290,7 @@ PUT /api/clientes
 Request body:
 ```javascript
 {
-  "codCli": number,
+  "codCli": Number,
   "nomeEmpresa": string,
   "nome": string,
   "tipo": string || null,
