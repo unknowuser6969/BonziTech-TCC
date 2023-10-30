@@ -93,6 +93,14 @@ func CriarRouter() *gin.Engine {
 		fab.DELETE("/:codFab", services.DeletarFabricante)
 	}
 
+	os := r.Group("/api/ordem-servico")
+	{
+		os.GET("/", services.MostrarTodasOrdensServico)
+		os.POST("/", services.CriarOrdemServico)
+		os.PUT("/", services.AtualizarOrdemServico)
+		os.DELETE("/:codOS", services.DeletarOrdemServico)
+	}
+
 	sessao := r.Group("/api/sessao")
 	{
 		sessao.GET("/:codSessao", services.GetSessao)

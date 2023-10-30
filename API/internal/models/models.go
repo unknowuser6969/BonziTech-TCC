@@ -102,6 +102,15 @@ type Log struct {
 	Data      string `json:"data"`
 }
 
+type OrdemServico struct {
+	CodOS       int         `json:"codOS"`
+	DataEmissao string      `json:"dataEmissao"`
+	CodCli      int         `json:"codCli"`
+	NomeCli     string      `json:"nomeCli"`
+	Pedido      null.String `json:"pedido"`
+	Concluida   bool        `json:"concluida"`
+}
+
 type Sessao struct {
 	CodSessao  int         `json:"codSessao"`
 	CodUsuario int         `json:"codUsuario"`

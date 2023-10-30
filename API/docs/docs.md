@@ -15,6 +15,7 @@ API hospedada em: https://bonzitech-tcc.onrender.com/
 * [/api/entradas](#apientradas)
 * [/api/estoque](#apiestoque)
 * [/api/fabricantes](#apifabricantes)
+* [/api/ordem-servico](#apiordem-servico)
 * [/api/sessao](#apisessao)
 * [/api/subcategorias](#apisubcategorias)
 * [/api/usuarios](#apiusuarios)
@@ -601,7 +602,7 @@ Response:
     "codEntd": Number,
     "codFab": Number || null,
     "nomeFab": string || null,
-    "dataVenda": Date,
+    "dataVenda": string,
     "notaFiscal": string || null,
     "valorTotal": Number
   },
@@ -619,7 +620,7 @@ Request body:
 ```javascript
 {
   "codFab": Number || null,
-  "dataVenda": Date,
+  "dataVenda": string,
   "notaFiscal": string || null
 }
 ```
@@ -628,7 +629,7 @@ Exemplo:
 ```javascript
 {
   "codFab": 3,
-  "dataVenda": new Date(),
+  "dataVenda": "2022-01-01",
   "notaFiscal": null
 }
 ```
@@ -666,7 +667,7 @@ Request body:
 {
   "codCompEntd": Number,
   "codFab": Number || null,
-  "dataVenda": Date,
+  "dataVenda": string,
   "notaFiscal": string || null
 }
 ```
@@ -676,7 +677,7 @@ Exemplo:
 {
   "codCompEntd": 1,
   "codFab": null,
-  "dataVenda": new Date(),
+  "dataVenda": "2022-01-01",
   "notaFiscal": null
 }
 ```
@@ -900,6 +901,110 @@ DELETE /api/fabricantes/${codFab}
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `codFab`      | `string` | **Required**. Código do fabricante a ser excluído |
+
+
+## /api/ordem-servico
+
+#### Mostrar todas ordens de serviço
+
+```http
+GET /api/ordem-servico
+```
+
+Response:
+```javascript
+{
+  "ordensServico": []object || null
+}
+```
+
+#### Mostrar dados de oderm de serviço
+
+```http
+GET /api/ordem-servico/${codOS}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codOS`      | `string` | **Required**. Código da ordem de serviço a ser retornada |
+
+Response:
+```javascript
+{
+  "ordemServico": {
+    "codOs": Number,
+    "dataEmissao": string,
+    "codCli": Number,
+    "pedido": string,
+    "concluida": boolean
+  }
+}
+```
+
+#### Criar nova ordem de serviço
+
+```http
+POST /api/ordem-servico
+```
+
+Request body:
+```javascript
+{
+  "dataEmissao": string,
+  "codCli": Number,
+  "pedido": string,
+  "concluida": boolean
+}
+```
+
+Exemplo:
+```javascript
+{
+  "dataEmissao": "1970-01-01",
+  "codCli": 2,
+  "pedido": "1 km de mangueira",
+  "concluida": false
+}
+```
+
+#### Atualizar ordem de serviço
+
+```http
+PUT /api/ordem-servico
+```
+
+Request body:
+```javascript
+{
+  "codOS": Number,
+  "dataEmissao": string,
+  "codCli": Number,
+  "pedido": string,
+  "concluida": boolean
+}
+```
+
+Exemplo:
+```javascript
+{
+  "codOS": 1,
+  "dataEmissao": "1970-01-01",
+  "codCli": 2,
+  "pedido": "1 km de mangueira",
+  "concluida": false
+}
+```
+
+#### Deletar ordem de serviço
+
+```http
+DELETE /api/ordem-servico/${codOS}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `codOS`      | `string` | **Required**. Código da ordem de serviço a ser excluída |
+
 
 ## /api/sessao
 
