@@ -50,6 +50,11 @@
                     <i class="fa-solid fa-box-archive"></i>
                     <span class="nav-item">Estoque</span>
                 </a></li>
+            
+            <li><a class="nav-option" href="/dashboard?tabela=ordem-servico" id="nav-ordem-servico">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="nav-item">Ordem de Serviço</span>
+                </a></li>
 
             <li><a class="nav-option" href="/dashboard?tabela=entradas" id="nav-entradas">
                     <i class="fa-solid fa-circle-arrow-up"></i>
@@ -221,7 +226,7 @@
                             <th>Email</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-clientes">
 
                     </tbody>
                 </table>
@@ -230,17 +235,14 @@
                     <h1>Adicionar Cliente</h1>
 
                     <form>
-                        <label for="nome">Empresa</label>
-                        <input type="text" id="add-empresa-clientes">
+                        <label>Empresa *</label>
+                        <input type="text" id="add-empresa-clientes" required>
 
-                        <label>Cliente</label>
-                        <input type="text" id="add-cliente-clientes">
+                        <label>Cliente *</label>
+                        <input type="text" id="add-cliente-clientes" required>
 
                         <label>Tipo</label>
                         <input type="text" id="add-tipo-clientes">
-
-                        <label>Registro</label>
-                        <input type="text" id="add-registro-clientes">
 
                         <label>Endereço</label>
                         <input type="text" id="add-endereco-clientes">
@@ -248,11 +250,11 @@
                         <label>Bairro</label>
                         <input type="text" id="add-bairro-clientes">
 
-                        <label>Cidade</label>
-                        <input type="text" id="add-cidade-clientes">
+                        <label>Cidade *</label>
+                        <input type="text" id="add-cidade-clientes" required>
 
-                        <label>Estado</label>
-                        <input type="text" id="add-estado-clientes">
+                        <label>Estado *</label>
+                        <input type="text" id="add-estado-clientes" required>
 
                         <label>Cep</label>
                         <input type="text" id="add-cep-clientes">
@@ -273,34 +275,31 @@
 
                     <form>
                         <label>Empresa</label>
-                        <input type="text" id="edit-empresa-clientes">
+                        <input type="text" id="edit-empresa-clientes" required>
 
                         <label>Cliente</label>
-                        <input type="text" id="edit-cliente-clientes">
+                        <input type="text" id="edit-cliente-clientes" required>
 
                         <label>Tipo</label>
-                        <input type="text" id="edit-tipo-clientes">
-
-                        <label>Registro</label>
-                        <input type="text" id="edit-registro-clientes">
+                        <input type="text" id="edit-tipo-clientes" required>
 
                         <label>Endereço</label>
-                        <input type="text" id="edit-endereco-clientes">
+                        <input type="text" id="edit-endereco-clientes" required>
 
                         <label>Bairro</label>
-                        <input type="text" id="edit-bairro-clientes">
+                        <input type="text" id="edit-bairro-clientes" required>
 
                         <label>Cidade</label>
-                        <input type="text" id="edit-cidade-clientes">
+                        <input type="text" id="edit-cidade-clientes" required>
 
                         <label>Estado</label>
-                        <input type="text" id="edit-estado-clientes">
+                        <input type="text" id="edit-estado-clientes" required>
 
                         <label>Cep</label>
-                        <input type="text" id="edit-cep-clientes">
+                        <input type="text" id="edit-cep-clientes" required>
 
                         <label>Email</label>
-                        <input type="text" id="edit-email-clientes">
+                        <input type="text" id="edit-email-clientes" required>
 
 
                         <div class="form-btns">
@@ -821,6 +820,79 @@
             </div>
 
             <button class="add-table-row" id="add-table-row-saidas"><i class="fa-solid fa-plus fa-2x"></i></button>
+        </section>
+
+        <section id="ordem-servico" class="hero">
+            <div class="table-area">
+                <table id="tabela-ordem-servico">
+                    <thead>
+                        <tr>
+                            <th>Data de Emissão</th>
+                            <th>Código do Cliente</th>
+                            <th>Nome do Cliente</th>
+                            <th>Pedido</th>
+                            <th>Concluída</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+                <div class="add-form" id="add-form-ordem-servico" style="display: none;">
+                    <h1>Adicionar Item</h1>
+
+                    <form>
+                        <label>Data de Emissão</label>
+                        <input type="text" id="add-data-emissao-ordem-servico">
+
+                        <label>Código do Cliente</label>
+                        <input type="text" id="add-codigo-cliente-ordem-servico">
+
+                        <label>Nome do Cliente</label>
+                        <input type="text" id="add-nome-cliente-ordem-servico">
+
+                        <label>Pedido</label>
+                        <input type="text" id="add-pedido-ordem-servico">
+
+                        <label>Concluída</label>
+                        <input type="text" id="add-concluida-ordem-servico">
+
+                        <div class="form-btns">
+                            <button id="confirm-btn-ordem-servico">Adicionar</button>
+                            <button id="cancel-btn-ordem-servico">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="edit-form" id="edit-form-ordem-servico">
+                    <h1>Editar Item</h1>
+
+                    <form>
+                        <label>Data de Emissão</label>
+                        <input type="text" id="edit-data-emissao-ordem-servico">
+
+                        <label>Código do Cliente</label>
+                        <input type="text" id="edit-codigo-cliente-ordem-servico">
+
+                        <label>Nome do Cliente</label>
+                        <input type="text" id="edit-nome-cliente-ordem-servico">
+
+                        <label>Pedido</label>
+                        <input type="text" id="edit-pedido-ordem-servico">
+
+                        <label>Concluída</label>
+                        <input type="text" id="edit-concluida-ordem-servico">
+
+                        <div class="form-btns">
+                            <button id="update-btn-ordem-servico">Adicionar</button>
+                            <button id="cancel-btn-edit-ordem-servico">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <button class="add-table-row" id="add-table-row-ordem-servico"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
         <!-- Mensagem de Erro -->

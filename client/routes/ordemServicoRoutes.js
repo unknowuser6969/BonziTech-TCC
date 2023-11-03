@@ -1,11 +1,11 @@
 require("dotenv").config();
 const express = require("express");
-const compRouter = express.Router();
+const osRouter = express.Router();
 
 const validarSessao = require("../modules/validarSessao");
 
-compRouter.get("/", validarSessao, (req, res) => {
-    fetch(process.env.APIURL + `/componentes`, {
+osRouter.get("/", validarSessao, (req, res) => {
+    fetch(process.env.APIURL + `/ordem-servico`, {
         method: "GET",
         headers: {
             "Content-type": "Application/JSON",
@@ -20,10 +20,10 @@ compRouter.get("/", validarSessao, (req, res) => {
     });
 });
 
-compRouter.get("/:codComp", validarSessao, (req, res) => {
-    const codComp = req.params.codComp;
+osRouter.get("/:codOS", validarSessao, (req, res) => {
+    const codOS = req.params.codOS;
 
-    fetch(process.env.APIURL + `/componentes/${codComp}`, {
+    fetch(process.env.APIURL + `/ordem-servico/${codOS}`, {
         method: "GET",
         headers: {
             "Content-type": "Application/JSON",
@@ -38,8 +38,8 @@ compRouter.get("/:codComp", validarSessao, (req, res) => {
     });
 });
 
-compRouter.post("/", validarSessao, (req, res) => {
-    fetch(process.env.APIURL + `/componentes`, {
+osRouter.post("/", validarSessao, (req, res) => {
+    fetch(process.env.APIURL + `/ordem-servico`, {
         method: "POST",
         headers: {
             "Content-type": "Application/JSON",
@@ -55,8 +55,8 @@ compRouter.post("/", validarSessao, (req, res) => {
     });
 });
 
-compRouter.put("/", validarSessao, (req, res) => {
-    fetch(process.env.APIURL + `/componentes`, {
+osRouter.put("/", validarSessao, (req, res) => {
+    fetch(process.env.APIURL + `/ordem-servico`, {
         method: "PUT",
         headers: {
             "Content-type": "Application/JSON",
@@ -72,10 +72,10 @@ compRouter.put("/", validarSessao, (req, res) => {
     });
 });
 
-compRouter.delete("/:codComp", validarSessao, (req, res) => {
-    const codComp = req.params.codComp;
+osRouter.delete("/:codOS", validarSessao, (req, res) => {
+    const codOS = req.params.codOS;
 
-    fetch(process.env.APIURL + `/componentes/${codComp}`, {
+    fetch(process.env.APIURL + `/ordem-servico/${codOS}`, {
         method: "DELETE",
         headers: {
             "Content-type": "Application/JSON",
@@ -89,5 +89,3 @@ compRouter.delete("/:codComp", validarSessao, (req, res) => {
         res.status(500).json({ error: "Erro ao conectar com o servidor." });
     });
 });
-
-module.exports = compRouter;
