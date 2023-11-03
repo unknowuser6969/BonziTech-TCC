@@ -575,34 +575,14 @@ td button{
 
 
 /* Display das Tabelas */
-#visao-geral{
-    display: none;
-}
-
-#funcionarios{
-    display: none;
-}
-
-#clientes{
-    display: none;
-}
-
-#fabricantes{
-    display: none;
-}
-
-#componentes{
-    display: none;
-}
-
-#estoque{
-    display: none;
-}
-
-#entradas{
-    display: none;
-}
-
+#visao-geral,
+#funcionarios,
+#clientes,
+#fabricantes,
+#componentes,
+#estoque,
+#entradas,
+#ordem-servico,
 #saidas{
     display: none;
 }

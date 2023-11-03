@@ -18,8 +18,8 @@ cancelarEdicaoFabricanteBtn.addEventListener("click", (e) => {
 
 const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("keyup", () => {
-    const funcArr = procurarFabricantes(searchBar.value.trim(), dadosFabricantes);
-    mostrarTabelaFabricantes(funcArr);
+    const fabArr = procurarFabricantes(searchBar.value.trim(), dadosFabricantes);
+    mostrarTabelaFabricantes(fabArr);
 });
 
 const confirmarCriacaoFabricanteBtn = document.getElementById("confirm-btn-fabricantes");
@@ -117,7 +117,7 @@ async function mostrarTabelaFabricantes(dadosTabela) {
 
         const acoesCell = document.createElement("td");
 
-        // Botão de inativação de funcionário
+        // Botão de inativação 
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("delete-btn");
         btnDelete.addEventListener("click", () => {
@@ -126,7 +126,7 @@ async function mostrarTabelaFabricantes(dadosTabela) {
         });
         btnDelete.innerHTML = '<i class="fa-solid fa-ban"> </i>';
 
-        // Botão de edição de funcionário
+        // Botão de edição 
         const btnEdit = document.createElement("button");
         btnEdit.classList.add("update-btn-icon");
         btnEdit.addEventListener("click", (event) => {
@@ -306,7 +306,7 @@ function confirmarExclusaoFabricante() {
 
 /**
  * Mostra o forms para edição de dados de fabricante.
- * @param {object} func - Dados do funcionário a ser alterado.
+ * @param {object} fab - Dados do fabricante a ser alterado.
  */
 function mostrarFormEdicaoFabricante(fab) {
     const editFabricanteForm = document.getElementById("edit-form-fabricantes");

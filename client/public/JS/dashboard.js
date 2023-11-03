@@ -34,6 +34,7 @@ function mostrarTituloTabela(nomeTabela) {
     titulosTabelas.set("estoque", "Estoque");
     titulosTabelas.set("fabricantes", "Fabricantes");
     titulosTabelas.set("funcionarios", "Funcionários");
+    titulosTabelas.set("ordemServico", "Ordens de serviço");
     titulosTabelas.set("saidas", "Saídas");
 
     if (titulosTabelas.get(nomeTabela)) {
