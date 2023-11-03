@@ -54,10 +54,10 @@ estqRouter.put("/", validarSessao, (req, res) => {
     });
 });
 
-estqRouter.delete("/:codEstq", validarSessao, (req, res) => {
-    const codEstq = req.params.codEstq;
+estqRouter.delete("/:codComp", validarSessao, (req, res) => {
+    const codComp = req.params.codComp;
 
-    fetch(process.env.APIURL + `/estoque/${codEstq}`, {
+    fetch(process.env.APIURL + `/estoque/${codComp}`, {
         method: "DELETE",
         headers: {
             "Content-type": "Application/JSON",
