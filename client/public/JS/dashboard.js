@@ -115,3 +115,22 @@ function mostrarMensagemErro(erro) {
         mensagemErroContainer.style.display = "none";
     }, 5000);
 }
+
+// Abre o menu na tela do celular
+function toggleMenu() {
+    const aside = document.getElementById('aside');
+    if (aside.style.display === 'block') {
+        aside.style.display = 'none';
+    } else {
+        aside.style.display = 'block';
+    }
+}
+
+//Fecha o menu da tela do celular
+function closeMenu() {
+    if (aside.style.display === 'none') {
+        aside.style.display = 'block';
+    } else {
+        aside.style.display = 'none';
+    }
+}
