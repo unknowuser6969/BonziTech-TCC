@@ -125,7 +125,7 @@ function toggleMenu() {
   }
 
 /**
- * Fecha o menu de tabelas do mobile
+ * Fecha o menu de tabelas do mobile ao clicar no ícone X
  */
 function closeMenu() {
     const aside = document.querySelector("aside");
