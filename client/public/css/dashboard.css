@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Mona Sans Regular';
-    src: url("/fonts/MonaSans-Regular.ttf");
+    src: url(/fonts/MonaSans-Regular.ttf);
 }
 
 @font-face {
     font-family: 'Mona Sans Bold';
-    src: url("/fonts/MonaSans-Bold.ttf");
+    src: url(/fonts/MonaSans-Bold.ttf);
 }
 
 
@@ -33,12 +33,6 @@
     --amber-100: #FEF3C7;
 }
 
-.icon::before {
-    display: inline-block;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-  }
-
 *{
     margin: 0;
     padding: 0;
@@ -55,18 +49,22 @@ body{
 }
 
 aside{
+    position: fixed;
     display: flex;
     flex-direction: column;
     gap: 4rem;
     align-items: center;
     padding: 3rem 3rem;
     height: 100%;
-    width: 20%;
+    width: 25rem;
     top: 0;
     bottom: 0;
     background-color: var(--white-100);
-    user-select: none;
     z-index: 100;
+}
+
+.close{
+    display: none;
 }
 
 ul{
@@ -78,6 +76,10 @@ ul{
 
 ul img{
     margin-bottom: 20%;
+}
+
+ul #mini-logo{
+    display: none;
 }
 
 li{
@@ -111,15 +113,16 @@ li{
     color: var(--indigo-600);
 }
 
-.log-out a:hover{
-    background-color: #FFF;
+.fa-xmark{
+    display: none;
 }
-
 
 /* ASIDE END */
 
 main{
-    width: 80%;
+    position: relative;
+    left: 25rem;
+    width: calc(100% - 25rem);
 }
 
 
@@ -130,6 +133,13 @@ main{
     justify-content: space-between;
     width: 100%;
     z-index: 1;
+}
+
+.menu-bar{
+    display: none;
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
 }
 
 .top h1{
@@ -144,6 +154,7 @@ main{
 
 .top .input-container{
     background-color: var(--white-100);
+    width: 100%;
     display: flex;
     align-items: center;
     border: 2px solid var(--gray-100);
@@ -156,13 +167,13 @@ main{
 }
 
 .top input{
+    width: 100%;
     font-size: 0.8rem;
     padding: 1rem 1rem;
     outline: none;
     border: none;
     border-radius: 0.4rem;
     font-family: 'Mona Sans Regular';
-    transition: all 0.2s ease-in-out;
 }
 
 .top input::placeholder{
@@ -172,7 +183,7 @@ main{
 .account .profile{
     width: 4rem;
     height: 4rem;
-    background-image: url("https://www.fineshare.com/wp-content/uploads/2023/05/bonzi-buddy-text-to-speech-6-800x800.webp");
+    background-image: url(https://www.fineshare.com/wp-content/uploads/2023/05/bonzi-buddy-text-to-speech-6-800x800.webp);
     background-position: center;
     background-size: cover;
     border-radius: 100%;
@@ -187,8 +198,8 @@ main{
     justify-content: left;
     border-radius: 0.4rem;
     background-color: #FFF;
-    top: 120px;
-    right: 30px;
+    top: 7.5rem;
+    right: 1.8rem;
     box-shadow: 0px 10px 20px 0px rgba(100, 100, 100, 0.1);
     z-index: 9;
 }
@@ -250,8 +261,10 @@ main{
 
 .squares{
     padding: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     gap: 4rem;
 }
 
@@ -262,7 +275,7 @@ main{
     gap: 1rem;
     border-radius: 1rem;
     padding: 3rem;
-    width: 20rem;
+    width: 40%;
     height: 20rem;
     background-color: #FFF;
     box-shadow: 0px 10px 20px rgba(134, 134, 134, 0.1);
@@ -281,7 +294,7 @@ table {
     background-color: var(--white-100);
     border-radius: 0.4rem;
     border: var(--gray-100) 2px solid;
-    width: 80%;
+    width: 100%;
 }
 
 thead{
@@ -309,11 +322,6 @@ table tr{
 
 td button{
     margin: 0 0.4rem;
-}
-
-.texto-404 {
-    padding: 10vh 0vh;
-    text-align: center;
 }
 
 .table-icons i{
@@ -387,7 +395,6 @@ td button{
     border-radius: 0px 0px 0px 14px;
     -webkit-border-radius: 0px 0px 0px 14px;
     -moz-border-radius: 0px 0px 0px 14px;
-    animation: transform 0.3s ease-in;
     z-index: 30;
 }
 
@@ -424,7 +431,7 @@ td button{
 }
 
 .add-form input{
-    font-family: inter;
+    font-family: 'Mona Sans Regular';
     margin-bottom: 1.2rem;
     padding: 0.6rem;
     border: 1px solid var(--gray-100);
@@ -435,7 +442,7 @@ td button{
 .add-form p{
     border-radius: 0.8rem;
     padding: 1rem;
-    background-color: var(--white-100);
+    background-color: var(--red-100);
     color: var(--red-800);
 }
 
@@ -518,7 +525,7 @@ td button{
 }
 
 .edit-form input{
-    font-family: inter;
+    font-family: 'Mona Sans Regular';
     margin-bottom: 1.2rem;
     padding: 0.6rem;
     border: 1px solid var(--gray-100);
@@ -582,23 +589,17 @@ td button{
 #componentes,
 #estoque,
 #entradas,
-#ordem-servico,
+#ordemServico,
 #saidas{
     display: none;
 }
 
-#componentes table{
-    font-size: 0.8rem;
-    margin-left: 5%;
-}
-
 /* Responsividade */
-@media (max-width: 1370px){
+@media (max-width: 1370px) {
 
     aside{
-        width: fit-content;
+        width: 10rem;
         padding: 2rem 2rem;
-        height: 100%;
     }
 
     aside ul{
@@ -613,13 +614,81 @@ td button{
         display: none;
     }
 
-    .squares .square{
-        padding: 2rem;
-        width: 15rem;
-        height: 15rem;
+    aside #mini-logo{
+        display: block;
+        width: 4rem;
+        height: 4rem;
     }
+
+    main{
+        left: 10rem;
+        width: calc(100% - 10rem);
+    }
+
     .square h3{
         font-size: 1rem;
     }
 
+    .add-form{
+        width: 40vw;
+    }
+
+    .edit-form{
+        width: 40vw;
+    }
+
 }
+
+@media (max-width: 900px) {
+    
+    main{
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+    }
+
+    .aside{
+        display: none;
+        background-color: var(--white-100);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        align-items: start;
+        padding: 4rem 2rem;
+    }
+
+    .aside ul{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .aside #mini-logo{
+        display: none;
+    }
+
+    .aside span{
+        display: block;
+    }
+
+    .fa-xmark{
+        display: block;
+        padding: 1rem 0rem;
+    }
+
+    .top{
+        padding: 3rem 2rem;
+        gap: 2rem;
+    }
+
+    .top h1{
+        display: none;
+    }
+
+    .top .menu-bar{
+        display: block;
+    }
+
+}   

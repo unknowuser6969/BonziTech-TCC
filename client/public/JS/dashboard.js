@@ -115,3 +115,19 @@ function mostrarMensagemErro(erro) {
         mensagemErroContainer.style.display = "none";
     }, 5000);
 }
+
+/**
+ * Abre o menu de tabelas do mobile
+ */
+function toggleMenu() {
+    const aside = document.getElementById("aside");
+    aside.style.display = aside.style.display === "block" ? "none" : "block";
+  }
+
+/**
+ * Fecha o menu de tabelas do mobile ao clicar no ícone X
+ */
+function closeMenu() {
+    const aside = document.querySelector("aside");
+    aside.style.display = "none";
+  }

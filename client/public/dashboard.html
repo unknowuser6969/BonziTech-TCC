@@ -15,11 +15,14 @@
 </head>
 
 <body>
-    <aside>
+    <aside id="aside" class="aside">
         <ul>
             <li class="logo">
                 <img src="/img/logo-bonziboard.svg" alt="logo">
+                <img id="mini-logo" src="/img/logo-bonziboard-mini.svg" alt="">
             </li>
+
+            <i onclick="closeMenu()" class="fa-solid fa-xmark fa-2xl"></i>
 
             <li><a class="nav-option" href="/dashboard" id="nav-visao" data-section="visao-geral">
                     <i class="fa-solid fa-house"></i>
@@ -51,7 +54,7 @@
                     <span class="nav-item">Estoque</span>
                 </a></li>
             
-            <li><a class="nav-option" href="/dashboard?tabela=ordem-servico" id="nav-ordem-servico">
+            <li><a class="nav-option" href="/dashboard?tabela=ordemServico" id="nav-ordem-servico">
                     <i class="fa-solid fa-list-check"></i>
                     <span class="nav-item">Ordem de Serviço</span>
                 </a></li>
@@ -73,6 +76,7 @@
     <main>
 
         <div class="top">
+            <ion-icon onclick="toggleMenu()" class="menu-bar" name="menu"></ion-icon>
             <h1 id="titulo-tabela">Visão Geral</h1>
             <div class="right">
                 <div class="input-container">
@@ -819,7 +823,7 @@
             <button class="add-table-row" id="add-table-row-saidas"><i class="fa-solid fa-plus fa-2x"></i></button>
         </section>
 
-        <section id="ordem-servico" class="hero">
+        <section id="ordemServico" class="hero">
             <div class="table-area">
                 <table id="tabela-ordem-servico">
                     <thead>
