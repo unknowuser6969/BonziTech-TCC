@@ -1,6 +1,6 @@
 # BonziTech-TCC API
 
-API hospedada em: https://bonzitech-tcc.onrender.com/
+API hospedada em: http://154.56.41.79:3304/
 
 ## Sumário
 
