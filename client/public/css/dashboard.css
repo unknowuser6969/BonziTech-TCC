@@ -263,6 +263,8 @@ main{
     padding: 2rem;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     gap: 4rem;
 }
 
@@ -619,6 +621,7 @@ td button{
     }
 
     main{
+        left: 10rem;
         width: calc(100% - 10rem);
     }
 
@@ -639,6 +642,8 @@ td button{
 @media (max-width: 900px) {
     
     main{
+        width: 100%;
+        left: 0;
         margin-left: 0;
     }
 

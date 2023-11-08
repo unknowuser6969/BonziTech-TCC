@@ -116,21 +116,18 @@ function mostrarMensagemErro(erro) {
     }, 5000);
 }
 
-// Abre o menu na tela do celular
+/**
+ * Abre o menu de tabelas do mobile
+ */
 function toggleMenu() {
-    const aside = document.getElementById('aside');
-    if (aside.style.display === 'block') {
-        aside.style.display = 'none';
-    } else {
-        aside.style.display = 'block';
-    }
-}
+    const aside = document.getElementById("aside");
+    aside.style.display = aside.style.display === "block" ? "none" : "block";
+  }
 
-//Fecha o menu da tela do celular
+/**
+ * Fecha o menu de tabelas do mobile
+ */
 function closeMenu() {
-    if (aside.style.display === 'none') {
-        aside.style.display = 'block';
-    } else {
-        aside.style.display = 'none';
-    }
-}
+    const aside = document.querySelector("aside");
+    aside.style.display = "none";
+  }
